@@ -6,29 +6,28 @@ Usage
 Installation
 ------------
 
-To use Lumache, first install it using pip:
+To use Simplay, first decide how you want to use it.
+Three components exist:
+ - SimPlay (the python library allowing you to generate the EventQueue)
+ - SimPlay-Web (the npm packages allowing you to render the EventQueue)
+ - SimPlay-Jupyter (the python package allowing you to use both within jupyter)
+
+
+To install SimPlay:
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   (.venv) $ pip install SimPlay
 
-Creating recipes
-----------------
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
+To install SimPlay-Web:
 
-.. autofunction:: lumache.get_random_ingredients
+.. code-block:: console
 
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
+   $ npm install simplay-web
 
-.. autoexception:: lumache.InvalidKindError
+To install the jupyter extension:
 
-For example:
+.. code-block:: console
 
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
-
+   $ pip install SimPlay-Jupyter
