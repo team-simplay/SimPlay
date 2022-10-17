@@ -1,0 +1,5 @@
+# SimPlay
+
+```
+$ pip install simplay
+```
