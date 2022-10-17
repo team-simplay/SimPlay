@@ -1,0 +1,8 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "SimPlay"
+authors = [{name = "David Kühnhanss", email = "david.kuehnhanss@ost.ch"}, {name = "Moritz Schiesser", email = "moritz.schiesser@ost.ch"}]
+dynamic = ["version", "description"]
