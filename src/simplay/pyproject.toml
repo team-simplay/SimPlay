@@ -17,6 +17,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  'simpy ~= 4.0.1',
+  'jsons ~= 1.6.3',
+]
 
 [project.urls]
 "Homepage" = "https://github.com/team-simplay/simplay"
