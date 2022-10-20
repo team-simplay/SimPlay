@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simplay"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="David Kühnhanss", email="david.kuehnhanss@ost.ch" },
   { name="Moritz Schiesser", email="moritz.schiesser@ost.ch" },
@@ -25,3 +25,4 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/team-simplay/simplay"
 "Bug Tracker" = "https://github.com/team-simplay/simplay/issues"
+"Documentation" = "https://simplay.readthedocs.io/en/latest/"
