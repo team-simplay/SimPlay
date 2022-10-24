@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "simplay"
+version = "0.0.2"
+authors = [
+  { name="David Kühnhanss", email="david.kuehnhanss@ost.ch" },
+  { name="Moritz Schiesser", email="moritz.schiesser@ost.ch" },
+]
+description = "A library to generate an EventQueue to visualize with simplay-web"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  'simpy ~= 4.0.1',
+  'jsons ~= 1.6.3',
+]
+
+[project.urls]
+"Homepage" = "https://github.com/team-simplay/simplay"
+"Bug Tracker" = "https://github.com/team-simplay/simplay/issues"
+"Documentation" = "https://simplay.readthedocs.io/en/latest/"
