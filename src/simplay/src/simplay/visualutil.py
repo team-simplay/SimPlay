@@ -1,6 +1,6 @@
 from typing import Union
-from components import VisualComponent
-from events import (
+from simplay.components import VisualComponent
+from simplay.events import (
     ContainerSetCapacity,
     ContainerSetLevel,
     MoveNear,

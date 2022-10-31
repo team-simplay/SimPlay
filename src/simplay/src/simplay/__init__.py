@@ -3,6 +3,8 @@ The ``simplay`` module aggregates SimPlay's classes and
 functions. It is the only module that is imported by default when importing
 SimPlay.
 
+The following tables list all of the available components in this module.
+
 {toc}
 
 """
@@ -10,9 +12,15 @@ SimPlay.
 from pkgutil import extend_path
 from typing import List, Tuple, Type
 
-from pkg_resources import get_distribution
-from .components import (
+#from pkg_resources import get_distribution
+
+from .core import (
+    VisualComponent,
     VisualEnvironment,
+    VisualizationManager,
+)
+
+from .components import (
     VisualProcess,
     VisualResource,
     VisualContainer,
@@ -29,7 +37,7 @@ from .visualutil import (
     StoreVisualUtil,
 )
 
-from .visualization import VisualizationManager, VisualGrid
+from .visualization import VisualGrid
 
 from .events import (
     VisualEvent,
@@ -52,6 +60,7 @@ from .events import (
 
 __all__ = [
     "VisualEnvironment",
+    "VisualComponent",
     "VisualProcess",
     "VisualResource",
     "VisualContainer",
@@ -100,10 +109,10 @@ def _compile_toc(
 
 
 _toc = (
+    ("Core", (VisualEnvironment, VisualComponent, VisualizationManager)),
     (
         "Components",
         (
-            VisualEnvironment,
             VisualProcess,
             VisualResource,
             VisualContainer,
@@ -124,10 +133,7 @@ _toc = (
     ),
     (
         "Visualization",
-        (
-            VisualizationManager,
-            VisualGrid,
-        ),
+        (VisualGrid,),
     ),
     (
         "Events",
@@ -157,4 +163,4 @@ if __doc__:
     assert set(__all__) == {obj.__name__ for _, objs in _toc for obj in objs}
 
 __path__: List[str] = list(extend_path(__path__, __name__))
-__version__: str = get_distribution(__name__).version
+#__version__: str = get_distribution(__name__).version
