@@ -7,7 +7,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "prettify": "prettier --write .",
+    "prepare": "cd ../.. && husky install src/simplay-web/.husky"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,11 @@
   },
   "homepage": "https://github.com/team-simplay/SimPlay#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.41.0",
+    "@typescript-eslint/parser": "5.41.0",
+    "eslint": "8.26.0",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
     "typescript": "4.8.4"
   }
 }

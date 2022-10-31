@@ -19,7 +19,19 @@ export interface Area {
 }
 
 export interface EventUnserialized {
-  action: "log" | "system" | "setDecoratingText" | "setPosition" | "setVisible" | "setRemoveInteracting" | "setCreateInteracting" | "setNotInteracting" | "moveNear" | "moveNearPoint" | "container.setLevel" | "resource.setUtilization"; // TODO what else should be available?
+  action:
+    | "log"
+    | "system"
+    | "setDecoratingText"
+    | "setPosition"
+    | "setVisible"
+    | "setRemoveInteracting"
+    | "setCreateInteracting"
+    | "setNotInteracting"
+    | "moveNear"
+    | "moveNearPoint"
+    | "container.setLevel"
+    | "resource.setUtilization"; // TODO what else should be available?
   args: Args;
   forId: string;
   timestamp: number;
@@ -68,7 +80,6 @@ export interface ResourceUtilizationEvent extends Event {
   capacity: number;
   usage: number;
 }
-export interface ResourceDecreaseUsage extends Event {}
 
 export interface Args {
   x?: number;
