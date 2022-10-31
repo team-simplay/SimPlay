@@ -18,13 +18,17 @@ jobs:
           cd src/simplay-web 
           npm i
           npm run build
-          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+  update-version: 
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - uses: actions/checkout@v3
       - name: update versions
         run: |
           cd src/simplay-web 
-          npm version minor
+          npm version patch
       - name: commit changes
         uses: EndBug/add-and-commit@v9
         with: 
