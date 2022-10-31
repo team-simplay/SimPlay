@@ -9,22 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: |
-          cd src/simplay-web 
-          npm i
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - name: build & publish dependencies
+      - name: install & build & publish
         run: |
+          cd src/simplay-web 
+          npm i
           npm run build
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
       - name: update versions
         run: |
+          cd src/simplay-web 
           npm version minor
       - name: commit changes
         uses: EndBug/add-and-commit@v9
