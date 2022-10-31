@@ -24,14 +24,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: publish
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
       - name: update versions
         run: |
           cd src/simplay-web 
+          npm i
           npm version patch
       - name: commit changes
         uses: EndBug/add-and-commit@v9
         with: 
-          message: "Update to next version after release"
-          fetch: true
-
+          message: 'Update to next version after release'
