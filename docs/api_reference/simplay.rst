@@ -1,0 +1,6 @@
+=========
+``simplay``
+=========
+
+.. automodule:: simplay
+
