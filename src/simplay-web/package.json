@@ -1,12 +1,13 @@
 {
   "name": "simplay-web",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
+  "scope": "simplay",
+  "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,6 @@
   },
   "homepage": "https://github.com/team-simplay/SimPlay#readme",
   "devDependencies": {
-    "typescript": "^4.8.4"
+    "typescript": "4.8.4"
   }
 }
