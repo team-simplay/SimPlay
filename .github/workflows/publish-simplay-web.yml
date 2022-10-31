@@ -13,11 +13,11 @@ jobs:
         run: |
           cd src/simplay-web 
           npm i
-      - name: build & publish dependencies
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+      - name: build & publish dependencies
         run: |
           npm build
           npm publish
