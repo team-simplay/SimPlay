@@ -4,7 +4,7 @@ from events import (
     ContainerSetCapacity,
     ContainerSetLevel,
     MoveNear,
-    MoveNearPoint,
+    MoveNearCell,
     ResourceSetCapacity,
     ResourceSetUtilization,
     SetDecoratingText,
@@ -75,16 +75,16 @@ class BasicVisualUtil:
         )
 
     @staticmethod
-    def move_near_point(component: VisualComponent, x: int, y: int):
+    def move_near_cell(component: VisualComponent, x: int, y: int):
         """
-        Adds an MoveNearPoint event for the given component to the EventQueue.
+        Adds an MoveNearCell event for the given component to the EventQueue.
 
         :param component: The component to create the event for.
-        :param x: The x coordinate of the target point.
-        :param y: The y coordinate of the target point.
+        :param x: The x coordinate of the target cell.
+        :param y: The y coordinate of the target cell.
         """
         component.env.visualization_manager.add_event(
-            MoveNearPoint(component.id, component.env.now, x, y)
+            MoveNearCell(component.id, component.env.now, x, y)
         )
 
     @staticmethod
