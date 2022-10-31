@@ -92,19 +92,19 @@ class MoveNear(VisualEvent):
         super().__init__(for_id, timestamp, "MOVE_NEAR", target_id=target_id)
 
 
-class MoveNearPoint(VisualEvent):
+class MoveNearCell(VisualEvent):
     """
-    Event to move a component near a point.
+    Event to move a component near a cell in the grid.
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, x: int, y: int):
         """
         :param for_id: The id of the component this event is for.
         :param timestamp: The timestamp of the event.
-        :param x: The x coordinate of the point.
-        :param y: The y coordinate of the point.
+        :param x: The x coordinate (column) of the cell.
+        :param y: The y coordinate (row) of the cell.
         """
-        super().__init__(for_id, timestamp, "MOVE_NEAR_POINT", x=x, y=y)
+        super().__init__(for_id, timestamp, "MOVE_NEAR_CELL", x=x, y=y)
 
 
 class SetTintColor(VisualEvent):

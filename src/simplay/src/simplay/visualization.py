@@ -33,8 +33,8 @@ class VisualGrid:
         :param name: The name of the area.
         :param height: The height of the area in rows.
         :param width: The width of the area in columns.
-        :param x: The x coordinate of the top left corner of the area.
-        :param y: The y coordinate of the top left corner of the area.
+        :param x: The x coordinate (column) of the top left corner of the area.
+        :param y: The y coordinate (row) of the top left corner of the area.
         :param color: The color of the area.
         """
         self.areas.append(
