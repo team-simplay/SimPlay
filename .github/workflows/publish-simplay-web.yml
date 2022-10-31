@@ -18,6 +18,7 @@ jobs:
           cd src/simplay-web 
           npm i
           npm run build
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
   update-version: 
@@ -27,7 +28,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with: 
-          ref: 29-project-setup-npm-package
+          ref: main
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
