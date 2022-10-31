@@ -6,21 +6,24 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        cd src/simplay-web
-        npm i
-        npm run lint
+      - name: lint
+        run: |
+          cd src/simplay-web
+          npm i
+          npm run lint
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        cd src/simplay-web
-        npm i
-        npm run test
+      - name: run tests
+        run: |
+          cd src/simplay-web
+          npm i
+          npm run test
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        cd src/simplay-web
-        npm i
-        npm run build
+      - name: run build 
+        run: |
+          cd src/simplay-web
+          npm i
+          npm run build
