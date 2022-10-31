@@ -41,3 +41,4 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with: 
           message: 'Update to next version after release'
+          add: 'package.json'
