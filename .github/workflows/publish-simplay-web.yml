@@ -27,7 +27,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with: 
-          ref: main
+          ref: 29-project-setup-npm-package
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -36,7 +36,6 @@ jobs:
       - name: update versions
         run: |
           cd src/simplay-web 
-          npm i
           npm version patch
       - name: commit changes
         uses: EndBug/add-and-commit@v9
