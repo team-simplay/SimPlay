@@ -1,0 +1,45 @@
+# This workflow will upload a npm package when a release is created
+
+name: Publish Package to npmjs
+on:
+  release:
+    types: [created]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: install & build & publish
+        run: |
+          cd src/simplay-web 
+          npm i
+          npm run build
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+  update-version: 
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with: 
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: update versions
+        run: |
+          cd src/simplay-web 
+          npm version patch
+      - name: commit changes
+        uses: EndBug/add-and-commit@v9
+        with: 
+          message: 'Update to next version after release'
+          add: 'package.json'

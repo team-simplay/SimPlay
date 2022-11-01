@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext" /*This is a library and if needed can be transpiled by users.*/,
+    "module": "ESNext",
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "declaration": true
+  },
+  "exclude": ["node_modules", "test", "dist"]
+}
