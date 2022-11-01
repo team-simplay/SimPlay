@@ -50,7 +50,7 @@ class VisualizationManager:
         """
         self.entities = []
         """
-        The entities which exist in the simulation.
+        The entities of the simulation.
         """
         self.visuals = []
         """
