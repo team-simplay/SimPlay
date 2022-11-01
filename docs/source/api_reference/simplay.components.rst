@@ -2,31 +2,32 @@
 ``simplay.components`` --- Components
 =============================================
 
-.. automodule:: simplay.components
-
-    .. autoclass:: VisualEnvironment
-       :inherited-members:
-    
-    .. autoclass:: VisualComponent
-       :inherited-members:
+.. automodule:: simplay.components  
     
     .. autoclass:: VisualProcess
-       :inherited-members:
+       :members:
+       :show-inheritance:
     
     .. autoclass:: VisualResource
-       :inherited-members:
+       :members:
+       :show-inheritance:
     
     .. autoclass:: VisualPreemptiveResource
-       :inherited-members:
+       :members:
+       :show-inheritance:
     
     .. autoclass:: VisualPriorityResource
-       :inherited-members:
+       :members:
+       :show-inheritance:
     
     .. autoclass:: VisualStore
-       :inherited-members:
+       :members:
+       :show-inheritance:
     
     .. autoclass:: VisualFilterStore
-       :inherited-members:
+       :members:
+       :show-inheritance:
 
     .. autoclass:: VisualContainer
-       :inherited-members:
+       :members:
+       :show-inheritance:

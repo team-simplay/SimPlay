@@ -1,4 +1,4 @@
-Welcome to SimPlay's documentation!
+Overview
 ===================================
 
 **SimPlay** is a project that aims to bring simple animation capabilities to the SimPy project.
@@ -6,14 +6,9 @@ Welcome to SimPlay's documentation!
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
 
+The API documentation is available at :ref:`api`.
+
 .. note::
 
    This project is under active development, everything is a WIP and no installations are actually possible.
 
-Contents
---------
-
-.. toctree::
-
-   usage
-   api

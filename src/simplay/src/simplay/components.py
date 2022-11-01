@@ -1,6 +1,5 @@
 from typing import Any, Callable, Union
 from simpy import (
-    Environment,
     Resource,
     PreemptiveResource,
     PriorityResource,
@@ -12,73 +11,38 @@ from simpy import (
 from simpy.resources.resource import Request, Release, PriorityRequest
 from simpy.resources.container import ContainerAmount, ContainerPut, ContainerGet
 from simpy.resources.store import StoreGet, StorePut, FilterStoreGet
-from simpy.core import SimTime
-
-from visualization import VisualizationManager
-from visualutil import ContainerVisualUtil, ResourceVisualUtil, StoreVisualUtil
-
-
-class VisualEnvironment(Environment):
-    """Extends the :class:`~simpy.core.Environment` class with visualization."""
-
-    def __init__(self, initial_time: SimTime = 0):
-        super().__init__(initial_time)
-        self.visualization_manager = VisualizationManager(self)
-
-
-class VisualComponent:
-    """
-    Base class for all visual components.
-    """
-
-    def __init__(
-        self, env: VisualEnvironment, id: str, type: str, graphic: str, tint: int
-    ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param type: The type of the component, one of ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'PROCESS'`` or ``'CUSTOM'``.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
-        self.env = env
-        self.id = id
-        self.type = type
-        self.graphic = graphic
-        self.tint = tint
-        self.env.visualization_manager.add_entity(self, type)
+from simplay.core import VisualEnvironment, VisualComponent
+from simplay.visualutil import ResourceVisualUtil, ContainerVisualUtil, StoreVisualUtil
 
 
 class VisualProcess(VisualComponent):
     """
     Shorthand for creating an entity of type ``'PROCESS'``.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(self, env: VisualEnvironment, id: str, graphic: str, tint: int):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         super().__init__(env, id, "PROCESS", graphic, tint)
 
 
 class VisualResource(VisualComponent, Resource):
     """
     Extends the :class:`~simpy.resources.resource.Resource` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the resource.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the resource.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         Resource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -98,18 +62,17 @@ class VisualResource(VisualComponent, Resource):
 class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     """
     Extends the :class:`~simpy.resources.resource.PreemptiveResource` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the resource.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the resource.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         PreemptiveResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -129,18 +92,17 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
 class VisualPriorityResource(VisualComponent, PriorityResource):
     """
     Extends the :class:`~simpy.resources.resource.PriorityResource` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the resource.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the resource.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         PriorityResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -160,6 +122,13 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
 class VisualContainer(VisualComponent, Container):
     """
     Extends the :class:`~simpy.resources.container.Container` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the container.
+    :param init: The initial amount of the container.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
@@ -171,14 +140,6 @@ class VisualContainer(VisualComponent, Container):
         capacity: ContainerAmount = float("inf"),
         init: ContainerAmount = 0,
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the container.
-        :param init: The initial amount of the container.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "CONTAINER", graphic, tint)
         Container.__init__(self, env, capacity, init)
         ContainerVisualUtil.set_capacity(self, capacity)
@@ -198,6 +159,12 @@ class VisualContainer(VisualComponent, Container):
 class VisualStore(VisualComponent, Store):
     """
     Extends the :class:`~simpy.resources.store.Store` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the store.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
@@ -208,13 +175,6 @@ class VisualStore(VisualComponent, Store):
         tint: int,
         capacity: Union[float, int] = float("inf"),
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the store.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
         Store.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
@@ -233,18 +193,17 @@ class VisualStore(VisualComponent, Store):
 class VisualFilterStore(VisualComponent, FilterStore):
     """
     Extends the :class:`~simpy.resources.store.FilterStore` class with visualization.
+
+    :param env: The environment instance.
+    :param id: The id of the component.
+    :param capacity: The capacity of the store.
+    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
+    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
-        """
-        :param env: The environment instance.
-        :param id: The id of the component.
-        :param capacity: The capacity of the store.
-        :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-        :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
-        """
         VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
         FilterStore.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)

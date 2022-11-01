@@ -13,6 +13,7 @@ components.
    :maxdepth: 1
 
    simplay
+   simplay.core
    simplay.visualization
    simplay.visualutil
    simplay.components
