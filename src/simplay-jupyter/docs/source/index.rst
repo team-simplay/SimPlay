@@ -1,5 +1,5 @@
 
-simplay-jupyter
+simplay_jupyter
 =====================================
 
 Version: |release|
@@ -10,13 +10,13 @@ Animate SimPy simulations in jupyter notebook
 Quickstart
 ----------
 
-To get started with simplay-jupyter, install with pip::
+To get started with simplay_jupyter, install with pip::
 
-    pip install simplay-jupyter
+    pip install simplay_jupyter
 
 or with conda::
 
-    conda install simplay-jupyter
+    conda install simplay_jupyter
 
 
 Contents

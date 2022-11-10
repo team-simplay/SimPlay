@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = simplay-jupyter
+SPHINXPROJ    = simplay_jupyter
 SOURCEDIR     = source
 BUILDDIR      = build
 

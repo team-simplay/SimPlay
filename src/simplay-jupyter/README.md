@@ -1,8 +1,8 @@
 
-# simplay
+# SimPlay
 
-[![Build Status](https://travis-ci.org/team-simplay/simplay.svg?branch=master)](https://travis-ci.org/team-simplay/simplay-jupyter)
-[![codecov](https://codecov.io/gh/team-simplay/simplay/branch/master/graph/badge.svg)](https://codecov.io/gh/team-simplay/simplay)
+[![Build Status](https://travis-ci.org/team-simplay/SimPlay.svg?branch=master)](https://travis-ci.org/team-simplay/simplay_jupyter)
+[![codecov](https://codecov.io/gh/team-simplay/SimPlay/branch/master/graph/badge.svg)](https://codecov.io/gh/team-simplay/SimPlay)
 
 
 Animate SimPy simulations in jupyter notebook
@@ -12,21 +12,21 @@ Animate SimPy simulations in jupyter notebook
 You can install using `pip`:
 
 ```bash
-pip install simplay-jupyter
+pip install simplay_jupyter
 ```
 
 If you are using Jupyter Notebook 5.2 or earlier, you may also need to enable
 the nbextension:
 ```bash
-jupyter nbextension enable --py [--sys-prefix|--user|--system] simplay-jupyter
+jupyter nbextension enable --py [--sys-prefix|--user|--system] simplay_jupyter
 ```
 
 ## Development Installation
 
 Create a dev environment:
 ```bash
-conda create -n simplay-jupyter-dev -c conda-forge nodejs yarn python jupyterlab
-conda activate simplay-jupyter-dev
+conda create -n simplay_jupyter-dev -c conda-forge nodejs yarn python jupyterlab
+conda activate simplay_jupyter-dev
 ```
 
 Install the python. This will also build the TS package.
@@ -45,8 +45,8 @@ yarn run build
 For classic notebook, you need to run:
 
 ```
-jupyter nbextension install --sys-prefix --symlink --overwrite --py simplay-jupyter
-jupyter nbextension enable --sys-prefix --py simplay-jupyter
+jupyter nbextension install --sys-prefix --symlink --overwrite --py simplay_jupyter
+jupyter nbextension enable --sys-prefix --py simplay_jupyter
 ```
 
 Note that the `--symlink` flag doesn't work on Windows, so you will here have to run

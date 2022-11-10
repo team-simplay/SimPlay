@@ -6,7 +6,7 @@ define(function() {
     window['requirejs'].config({
         map: {
             '*': {
-                'simplay-jupyter': 'nbextensions/simplay-jupyter/index',
+                'simplay_jupyter': 'nbextensions/simplay_jupyter/index',
             },
         }
     });

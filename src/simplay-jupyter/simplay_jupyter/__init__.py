@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Copyright (c) SimPlay.
+# Copyright (c) team-simplay.
 # Distributed under the terms of the Modified BSD License.
 
 from .example import ExampleWidget
@@ -21,7 +21,7 @@ def _jupyter_labextension_paths():
     """
     return [{
         'src': 'labextension',
-        'dest': 'simplay-jupyter',
+        'dest': 'simplay_jupyter',
     }]
 
 
@@ -44,6 +44,6 @@ def _jupyter_nbextension_paths():
     return [{
         'section': 'notebook',
         'src': 'nbextension',
-        'dest': 'simplay-jupyter',
-        'require': 'simplay-jupyter/extension'
+        'dest': 'simplay_jupyter',
+        'require': 'simplay_jupyter/extension'
     }]

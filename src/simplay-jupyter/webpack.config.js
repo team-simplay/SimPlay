@@ -27,7 +27,7 @@ module.exports = [
     entry: './src/extension.ts',
     output: {
       filename: 'index.js',
-      path: path.resolve(__dirname, 'simplay-jupyter', 'nbextension'),
+      path: path.resolve(__dirname, 'simplay_jupyter', 'nbextension'),
       libraryTarget: 'amd',
       publicPath: '',
     },
@@ -40,7 +40,7 @@ module.exports = [
   },
 
   /**
-   * Embeddable simplay-jupyter bundle
+   * Embeddable simplay_jupyter bundle
    *
    * This bundle is almost identical to the notebook extension bundle. The only
    * difference is in the configuration of the webpack public path for the
@@ -55,8 +55,8 @@ module.exports = [
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'amd',
-        library: "simplay-jupyter",
-        publicPath: 'https://unpkg.com/simplay-jupyter@' + version + '/dist/'
+        library: "simplay_jupyter",
+        publicPath: 'https://unpkg.com/simplay_jupyter@' + version + '/dist/'
     },
     devtool: 'source-map',
     module: {
@@ -77,7 +77,7 @@ module.exports = [
     output: {
       filename: 'embed-bundle.js',
       path: path.resolve(__dirname, 'docs', 'source', '_static'),
-      library: "simplay-jupyter",
+      library: "simplay_jupyter",
       libraryTarget: 'amd'
     },
     module: {

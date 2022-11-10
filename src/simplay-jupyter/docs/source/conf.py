@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# simplay-jupyter documentation build configuration file
+# simplay_jupyter documentation build configuration file
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -58,9 +58,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'simplay-jupyter'
-copyright = '2022, SimPlay'
-author = 'SimPlay'
+project = 'simplay_jupyter'
+copyright = '2022, team-simplay'
+author = 'team-simplay'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -73,7 +73,7 @@ author = 'SimPlay'
 import os
 here = os.path.dirname(__file__)
 repo = os.path.join(here, '..', '..')
-_version_py = os.path.join(repo, 'simplay-jupyter', '_version.py')
+_version_py = os.path.join(repo, 'simplay_jupyter', '_version.py')
 version_ns = {}
 with open(_version_py) as f:
     exec(f.read(), version_ns)
@@ -120,7 +120,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'simplay-jupyterdoc'
+htmlhelp_basename = 'simplay_jupyterdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -147,8 +147,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'simplay-jupyter.tex', 'simplay-jupyter Documentation',
-     'SimPlay', 'manual'),
+    (master_doc, 'simplay_jupyter.tex', 'simplay_jupyter Documentation',
+     'team-simplay', 'manual'),
 ]
 
 
@@ -158,8 +158,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc,
-    'simplay-jupyter',
-    'simplay-jupyter Documentation',
+    'simplay_jupyter',
+    'simplay_jupyter Documentation',
      [author], 1)
 ]
 
@@ -171,10 +171,10 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc,
-     'simplay-jupyter',
-     'simplay-jupyter Documentation',
+     'simplay_jupyter',
+     'simplay_jupyter Documentation',
      author,
-     'simplay-jupyter',
+     'simplay_jupyter',
      'Animate SimPy simulations in jupyter notebook',
      'Miscellaneous'),
 ]

@@ -3,11 +3,11 @@ Developer install
 =================
 
 
-To install a developer version of simplay-jupyter, you will first need to clone
+To install a developer version of simplay_jupyter, you will first need to clone
 the repository::
 
-    git clone https://github.com/team-simplay/simplay
-    cd simplay
+    git clone https://github.com/team-simplay/SimPlay
+    cd SimPlay
 
 Next, install it with a develop install using pip::
 
@@ -17,9 +17,9 @@ Next, install it with a develop install using pip::
 If you are planning on working on the JS/frontend code, you should also do
 a link installation of the extension::
 
-    jupyter nbextension install [--sys-prefix / --user / --system] --symlink --py simplay-jupyter
+    jupyter nbextension install [--sys-prefix / --user / --system] --symlink --py simplay_jupyter
 
-    jupyter nbextension enable [--sys-prefix / --user / --system] --py simplay-jupyter
+    jupyter nbextension enable [--sys-prefix / --user / --system] --py simplay_jupyter
 
 with the `appropriate flag`_. Or, if you are using Jupyterlab::
 

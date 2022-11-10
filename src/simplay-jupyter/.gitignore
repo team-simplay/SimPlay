@@ -145,11 +145,11 @@ $RECYCLE.BIN/
 # ----
 
 **/node_modules/
-simplay-jupyter/nbextension/index.*
+simplay_jupyter/nbextension/index.*
 
 # Coverage data
 # -------------
 **/coverage/
 
 # Packed lab extensions
-simplay-jupyter/labextension
+simplay_jupyter/labextension

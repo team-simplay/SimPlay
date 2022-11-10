@@ -1,5 +1,5 @@
 {
-  "name": "simplay-jupyter",
+  "name": "simplay_jupyter",
   "version": "0.1.0",
   "description": "Animate SimPy simulations in jupyter notebook",
   "keywords": [
@@ -13,20 +13,20 @@
     "dist/*.js",
     "css/*.css"
   ],
-  "homepage": "https://github.com/team-simplay/simplay",
+  "homepage": "https://github.com/team-simplay/SimPlay",
   "bugs": {
-    "url": "https://github.com/team-simplay/simplay/issues"
+    "url": "https://github.com/team-simplay/SimPlay/issues"
   },
   "license": "BSD-3-Clause",
   "author": {
-    "name": "SimPlay",
-    "email": "david.kuehnhanss@ost.ch, moritz.schiesser@ost.ch"
+    "name": "team-simplay",
+    "email": "moritz.schiesser@ost.ch"
   },
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/team-simplay/simplay"
+    "url": "https://github.com/team-simplay/SimPlay"
   },
   "scripts": {
     "build": "yarn run build:lib && yarn run build:nbextension && yarn run build:labextension:dev",
@@ -37,8 +37,8 @@
     "build:nbextension": "webpack",
     "clean": "yarn run clean:lib && yarn run clean:nbextension && yarn run clean:labextension",
     "clean:lib": "rimraf lib",
-    "clean:labextension": "rimraf simplay-jupyter/labextension",
-    "clean:nbextension": "rimraf simplay-jupyter/nbextension/static/index.js",
+    "clean:labextension": "rimraf simplay_jupyter/labextension",
+    "clean:nbextension": "rimraf simplay_jupyter/nbextension/static/index.js",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:check": "eslint . --ext .ts,.tsx",
     "prepack": "yarn run build:lib",
@@ -84,7 +84,7 @@
   },
   "jupyterlab": {
     "extension": "lib/plugin",
-    "outputDir": "simplay-jupyter/labextension/",
+    "outputDir": "simplay_jupyter/labextension/",
     "sharedPackages": {
       "@jupyter-widgets/base": {
         "bundled": false,

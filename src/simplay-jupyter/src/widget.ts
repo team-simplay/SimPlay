@@ -1,4 +1,4 @@
-// Copyright (c) SimPlay
+// Copyright (c) team-simplay
 // Distributed under the terms of the Modified BSD License.
 
 import {

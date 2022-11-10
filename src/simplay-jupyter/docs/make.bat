@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
-set SPHINXPROJ=simplay-jupyter
+set SPHINXPROJ=simplay_jupyter
 
 if "%1" == "" goto help
 

@@ -1,2 +1,2 @@
 [run]
-omit = simplay-jupyter/tests/*
+omit = simplay_jupyter/tests/*

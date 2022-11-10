@@ -6,13 +6,13 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "simplay-jupyter"
+name = "simplay_jupyter"
 description = "Animate SimPy simulations in jupyter notebook"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.7"
 authors = [
-    { name = "SimPlay", email = "david.kuehnhanss@ost.ch, moritz.schiesser@ost.ch" },
+    { name = "team-simplay", email = "moritz.schiesser@ost.ch" },
 ]
 keywords = [
     "IPython",
@@ -55,20 +55,20 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/team-simplay/simplay"
+Homepage = "https://github.com/team-simplay/SimPlay"
 
 [tool.hatch.build]
 artifacts = [
-    "simplay-jupyter/nbextension/index.*",
-    "simplay-jupyter/labextension/*.tgz",
-    "simplay-jupyter/labextension",
+    "simplay_jupyter/nbextension/index.*",
+    "simplay_jupyter/labextension/*.tgz",
+    "simplay_jupyter/labextension",
 ]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"simplay-jupyter/nbextension" = "share/jupyter/nbextensions/simplay-jupyter"
-"simplay-jupyter/labextension" = "share/jupyter/labextensions/simplay-jupyter"
-"./install.json" = "share/jupyter/labextensions/simplay-jupyter/install.json"
-"./simplay-jupyter.json" = "etc/jupyter/nbconfig/notebook.d/simplay-jupyter.json"
+"simplay_jupyter/nbextension" = "share/jupyter/nbextensions/simplay_jupyter"
+"simplay_jupyter/labextension" = "share/jupyter/labextensions/simplay_jupyter"
+"./install.json" = "share/jupyter/labextensions/simplay_jupyter/install.json"
+"./simplay_jupyter.json" = "etc/jupyter/nbconfig/notebook.d/simplay_jupyter.json"
 
 [tool.hatch.build.targets.sdist]
 exclude = [
@@ -78,12 +78,12 @@ exclude = [
 [tool.hatch.build.hooks.jupyter-builder]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "simplay-jupyter/nbextension/index.js",
-    "simplay-jupyter/labextension/package.json",
+    "simplay_jupyter/nbextension/index.js",
+    "simplay_jupyter/labextension/package.json",
 ]
 skip-if-exists = [
-    "simplay-jupyter/nbextension/index.js",
-    "simplay-jupyter/labextension/package.json",
+    "simplay_jupyter/nbextension/index.js",
+    "simplay_jupyter/labextension/package.json",
 ]
 dependencies = [
     "hatch-jupyter-builder>=0.5.0",
@@ -100,7 +100,7 @@ field = [
 ]
 file = [
     { src = "pyproject.toml", version_template = "version = \"{major}.{minor}.{patch}{channel}{release}\"" },
-    { src = "simplay-jupyter/_version.py" },
+    { src = "simplay_jupyter/_version.py" },
 ]
 
 [tool.tbump.version]
