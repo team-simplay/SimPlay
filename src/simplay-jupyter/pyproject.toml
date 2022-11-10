@@ -12,7 +12,8 @@ readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.7"
 authors = [
-    { name = "team-simplay", email = "moritz.schiesser@ost.ch" },
+    { name = "David Kühnhanss", email = "david.kuehnhanss@ost.ch" },
+    { name = "Moritz Schiesser", email = "moritz.schiesser@ost.ch" },
 ]
 keywords = [
     "IPython",
