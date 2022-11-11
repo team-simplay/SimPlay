@@ -56,10 +56,11 @@ export class SimPlayHostView extends DOMWidgetView {
   }
 
   simulationdata_changed() {
-    console.log('simulationdata_changed');
     const container = document.createElement('div');
     container.id = 'simplay-container';
     this.el.appendChild(container);
+    // this would be the implementation to use simplay-web, but it does not work right now
+    // leaving it here for future reference
     // this.simspooler = new simplayweb.SimulationSpooler(
     //   this.model.get('simulationdata'),
     //   container
@@ -67,7 +68,6 @@ export class SimPlayHostView extends DOMWidgetView {
     const span = document.createElement('span');
     span.innerHTML = this.model.get('simulationdata');
     this.el.appendChild(span);
-    console.log(this.model.get('simulationdata'));
   }
 
   height_changed() {

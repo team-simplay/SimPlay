@@ -6,9 +6,9 @@
 
 import pytest
 
-from ..simplayhost import ExampleWidget
+from ..simplayhost import SimPlayHost
 
 
 def test_example_creation_blank():
-    w = ExampleWidget()
-    assert w.value == 'Hello World'
+    w = SimPlayHost()
+    assert w.simulationdata == '{}'
