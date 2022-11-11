@@ -12,17 +12,21 @@ import { MODULE_NAME, MODULE_VERSION } from './version';
 // Import the CSS
 import '../css/widget.css';
 
-export class ExampleModel extends DOMWidgetModel {
+import * as simplayweb from 'simplay-web';
+
+export class SimPlayHostModel extends DOMWidgetModel {
   defaults() {
     return {
       ...super.defaults(),
-      _model_name: ExampleModel.model_name,
-      _model_module: ExampleModel.model_module,
-      _model_module_version: ExampleModel.model_module_version,
-      _view_name: ExampleModel.view_name,
-      _view_module: ExampleModel.view_module,
-      _view_module_version: ExampleModel.view_module_version,
-      value: 'Hello World',
+      _model_name: SimPlayHostModel.model_name,
+      _model_module: SimPlayHostModel.model_module,
+      _model_module_version: SimPlayHostModel.model_module_version,
+      _view_name: SimPlayHostModel.view_name,
+      _view_module: SimPlayHostModel.view_module,
+      _view_module_version: SimPlayHostModel.view_module_version,
+      simulationdata: '{}',
+      height: '500px',
+      width: '500px',
     };
   }
 
@@ -31,23 +35,46 @@ export class ExampleModel extends DOMWidgetModel {
     // Add any extra serializers here
   };
 
-  static model_name = 'ExampleModel';
+  static model_name = 'SimPlayHostModel';
   static model_module = MODULE_NAME;
   static model_module_version = MODULE_VERSION;
-  static view_name = 'ExampleView'; // Set to null if no view
+  static view_name = 'SimPlayHostView'; // Set to null if no view
   static view_module = MODULE_NAME; // Set to null if no view
   static view_module_version = MODULE_VERSION;
 }
 
-export class ExampleView extends DOMWidgetView {
+export class SimPlayHostView extends DOMWidgetView {
+  simspooler: simplayweb.SimulationSpooler;
   render() {
     this.el.classList.add('custom-widget');
-
-    this.value_changed();
-    this.model.on('change:value', this.value_changed, this);
+    this.model.on('change:simulationdata', this.simulationdata_changed, this);
+    this.model.on('change:height', this.height_changed, this);
+    this.model.on('change:width', this.width_changed, this);
+    this.simulationdata_changed();
+    this.height_changed();
+    this.width_changed();
   }
 
-  value_changed() {
-    this.el.textContent = this.model.get('value');
+  simulationdata_changed() {
+    console.log('simulationdata_changed');
+    const container = document.createElement('div');
+    container.id = 'simplay-container';
+    this.el.appendChild(container);
+    // this.simspooler = new simplayweb.SimulationSpooler(
+    //   this.model.get('simulationdata'),
+    //   container
+    // );
+    const span = document.createElement('span');
+    span.innerHTML = this.model.get('simulationdata');
+    this.el.appendChild(span);
+    console.log(this.model.get('simulationdata'));
+  }
+
+  height_changed() {
+    this.el.style.height = this.model.get('height');
+  }
+
+  width_changed() {
+    this.el.style.width = this.model.get('width');
   }
 }

@@ -6,21 +6,21 @@
 
 import { createTestModel } from './utils';
 
-import { ExampleModel } from '..';
+import { SimPlayHostModel } from '..';
 
 describe('Example', () => {
-  describe('ExampleModel', () => {
+  describe('SimPlayHostModel', () => {
     it('should be createable', () => {
-      const model = createTestModel(ExampleModel);
-      expect(model).toBeInstanceOf(ExampleModel);
-      expect(model.get('value')).toEqual('Hello World');
+      const model = createTestModel(SimPlayHostModel);
+      expect(model).toBeInstanceOf(SimPlayHostModel);
+      expect(model.get('simulationdata')).toEqual('{}');
     });
 
     it('should be createable with a value', () => {
-      const state = { value: 'Foo Bar!' };
-      const model = createTestModel(ExampleModel, state);
-      expect(model).toBeInstanceOf(ExampleModel);
-      expect(model.get('value')).toEqual('Foo Bar!');
+      const state = { simulationdata: '{}' };
+      const model = createTestModel(SimPlayHostModel, state);
+      expect(model).toBeInstanceOf(SimPlayHostModel);
+      expect(model.get('simulationdata')).toEqual('{}');
     });
   });
 });
