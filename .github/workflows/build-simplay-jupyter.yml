@@ -41,7 +41,7 @@ jobs:
 
       - name: Check docs can be build + links
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        working-directory: docs
+        working-directory: src/simplay-jupyter/docs
         run: |
           sudo apt install -y pandoc
           make html
