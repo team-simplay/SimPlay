@@ -1,16 +1,16 @@
 from typing import List
 import jsons
 from simpy.core import SimTime, Environment
-from simplay.events import VisualEvent
+from .events import VisualEvent
+from .visualization import VisualGrid
 
-from simplay.visualization import VisualGrid
 
 class VisualEnvironment(Environment):
     """Extends the :class:`~simpy.core.Environment` class with visualization."""
 
     def __init__(self, initial_time: SimTime = 0):
         super().__init__(initial_time)
-        self.visualization_manager = VisualizationManager(self)
+        self.visualization_manager = VisualizationManager()
 
 
 class VisualComponent:
@@ -27,6 +27,16 @@ class VisualComponent:
     def __init__(
         self, env: VisualEnvironment, id: str, type: str, graphic: str, tint: int
     ):
+        if type not in ["RESOURCE", "CONTAINER", "STORE", "PROCESS", "CUSTOM"]:
+            raise ValueError("Invalid component type.")
+        if not isinstance(id, str):
+            raise ValueError("Id must be a string.")
+        if not isinstance(env, VisualEnvironment):
+            raise ValueError("Env must be of type VisualEnvironment.")
+        if not isinstance(graphic, str):
+            raise ValueError("Graphic must be a string.")
+        if not isinstance(tint, int):
+            raise ValueError("Tint must be an integer.")
         self.env = env
         self.id = id
         self.type = type
@@ -41,9 +51,6 @@ class VisualizationManager:
     """
 
     def __init__(self):
-        """
-        The simulation environment that is visualized.
-        """
         self.events = []
         """
         The events that happened in the simulation.
@@ -72,11 +79,16 @@ class VisualizationManager:
         :param entity: The entity to add.
         :param type: The type of the entity, one of ``'PROCESS'``, ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'CUSTOM'``.
         """
+        if type not in ["PROCESS", "RESOURCE", "CONTAINER", "STORE", "CUSTOM"]:
+            raise ValueError("Invalid entity type.")
+        if not isinstance(entity, VisualComponent):
+            raise ValueError("Entity must be of type VisualComponent.")
+
         self.entities.append(
             {
                 "id": entity.id,
                 "type": type,
-                "visual": entity.graphic,
+                "graphic": entity.graphic,
                 "tint": entity.tint,
             }
         )
@@ -90,14 +102,23 @@ class VisualizationManager:
         self.events.append(event)
         self.events.sort(key=lambda x: x.timestamp)
 
-    def register_visual(self, id: str, visual: str):
+    def register_visual(self, id: str, path: str):
         """
         Register a visual with the manager.
 
         :param id: The id of the visual, it must be unique and can be used to reference the graphic in components.
-        :param visual: The path to the visual.
+        :param path: The path to the visual.
         """
-        self.visuals.append({"id": id, "visual": visual})
+        for v in self.visuals:
+            if v["id"] == id:
+                raise ValueError("Visual id must be unique.")
+        if path is None or path == "":
+            raise ValueError("Visual path must not be None / empty.")
+        if not isinstance(path, str):
+            raise ValueError("Visual path must be a string.")
+        if not isinstance(id, str):
+            raise ValueError("Visual id must be a string.")
+        self.visuals.append({"id": id, "path": path})
 
     def register_sprite(self, id: str, frames: List[str]):
         """
@@ -106,6 +127,16 @@ class VisualizationManager:
         :param id: The id of the sprite, it must be unique and can be used to reference the graphic in components.
         :param frames: A list of paths to the frames of the sprite.
         """
+        for s in self.sprites:
+            if s["id"] == id:
+                raise ValueError("Sprite id must be unique.")
+        if frames is None or len(frames) == 0:
+            raise ValueError("Sprite frames must not be None / empty.")
+        if not all(isinstance(f, str) for f in frames):
+            raise ValueError("Sprite frames must be a list of strings.")
+        if not isinstance(id, str):
+            raise ValueError("Sprite id must be a string.")
+
         self.sprites.append({"id": id, "frames": frames})
 
     def set_grid(self, grid: VisualGrid):
@@ -114,6 +145,11 @@ class VisualizationManager:
 
         :param grid: The grid to use.
         """
+        if grid is None:
+            raise ValueError("Grid must not be None.")
+
+        if not isinstance(grid, VisualGrid):
+            raise ValueError("Grid must be of type VisualGrid.")
         self.grid = grid
 
     def serialize(self) -> str:
@@ -140,4 +176,3 @@ class VisualizationManager:
         """
         with open(filename, "w") as f:
             f.write(self.serialize())
-

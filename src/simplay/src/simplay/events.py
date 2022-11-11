@@ -17,7 +17,7 @@ class VisualEvent:
         self.for_id = for_id
         self.timestamp = timestamp
         self.action = action
-        self.kwargs = kwargs
+        self.args = kwargs
 
 
 class SetVisible(VisualEvent):

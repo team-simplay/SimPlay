@@ -11,8 +11,8 @@ from simpy import (
 from simpy.resources.resource import Request, Release, PriorityRequest
 from simpy.resources.container import ContainerAmount, ContainerPut, ContainerGet
 from simpy.resources.store import StoreGet, StorePut, FilterStoreGet
-from simplay.core import VisualEnvironment, VisualComponent
-from simplay.visualutil import ResourceVisualUtil, ContainerVisualUtil, StoreVisualUtil
+from .core import VisualEnvironment, VisualComponent
+from .visualutil import ResourceVisualUtil, ContainerVisualUtil, StoreVisualUtil
 
 
 class VisualProcess(VisualComponent):
@@ -43,6 +43,10 @@ class VisualResource(VisualComponent, Resource):
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
+        if not isinstance(capacity, int):
+            raise ValueError("Capacity must be a positive integer.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer.")
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         Resource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -140,6 +144,10 @@ class VisualContainer(VisualComponent, Container):
         capacity: ContainerAmount = float("inf"),
         init: ContainerAmount = 0,
     ):
+        if not isinstance(capacity, (int, float)):
+            raise ValueError("Capacity must be a positive integer or float.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer or float.")
         VisualComponent.__init__(self, env, id, "CONTAINER", graphic, tint)
         Container.__init__(self, env, capacity, init)
         ContainerVisualUtil.set_capacity(self, capacity)
@@ -175,6 +183,10 @@ class VisualStore(VisualComponent, Store):
         tint: int,
         capacity: Union[float, int] = float("inf"),
     ):
+        if not isinstance(capacity, (int, float)):
+            raise ValueError("Capacity must be a positive integer or float.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer or float.")
         VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
         Store.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
