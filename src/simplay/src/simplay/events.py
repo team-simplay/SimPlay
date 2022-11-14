@@ -14,6 +14,12 @@ class VisualEvent:
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, action: str, **kwargs: dict):
+        if not isinstance(for_id, str):
+            raise ValueError("for_id must be a string")
+        if not isinstance(timestamp, (int, float)):
+            raise ValueError("timestamp must be a number")
+        if not isinstance(action, str):
+            raise ValueError("action must be a string")
         self.for_id = for_id
         self.timestamp = timestamp
         self.action = action
@@ -30,6 +36,8 @@ class SetVisible(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, visible: bool):
+        if not isinstance(visible, bool):
+            raise ValueError("visible must be a boolean")
         super().__init__(for_id, timestamp, "SET_VISIBLE", visible=visible)
 
 
@@ -44,6 +52,10 @@ class SetPosition(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, x: int, y: int):
+        if not isinstance(x, int):
+            raise ValueError("x must be an integer")
+        if not isinstance(y, int):
+            raise ValueError("y must be an integer")
         super().__init__(for_id, timestamp, "SET_POSITION", x=x, y=y)
 
 
@@ -57,6 +69,8 @@ class SetInteracting(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, with_id: str):
+        if not isinstance(with_id, str):
+            raise ValueError("with_id must be a string")
         super().__init__(for_id, timestamp, "SET_INTERACTING", with_id=with_id)
 
 
@@ -70,6 +84,8 @@ class SetNotInteracting(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, with_id: str):
+        if not isinstance(with_id, str):
+            raise ValueError("with_id must be a string")
         super().__init__(for_id, timestamp, "SET_NOT_INTERACTING", with_id=with_id)
 
 
@@ -83,6 +99,8 @@ class MoveNear(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, target_id: str):
+        if not isinstance(target_id, str):
+            raise ValueError("target_id must be a string")
         super().__init__(for_id, timestamp, "MOVE_NEAR", target_id=target_id)
 
 
@@ -97,6 +115,10 @@ class MoveNearCell(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, x: int, y: int):
+        if not isinstance(x, int):
+            raise ValueError("x must be an integer")
+        if not isinstance(y, int):
+            raise ValueError("y must be an integer")
         super().__init__(for_id, timestamp, "MOVE_NEAR_CELL", x=x, y=y)
 
 
@@ -110,6 +132,8 @@ class SetTintColor(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, color: int):
+        if not isinstance(color, int):
+            raise ValueError("color must be an integer")
         super().__init__(for_id, timestamp, "SET_TINT_COLOR", color=color)
 
 
@@ -123,6 +147,8 @@ class SetDecoratingText(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, text: str):
+        if not isinstance(text, str):
+            raise ValueError("text must be a string")
         super().__init__(for_id, timestamp, "SET_DECORATING_TEXT", text=text)
 
 
@@ -136,6 +162,8 @@ class SetSpriteFrame(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, frame: int):
+        if not isinstance(frame, int):
+            raise ValueError("frame must be an integer")
         super().__init__(for_id, timestamp, "SET_SPRITE_FRAME", frame=frame)
 
 
@@ -149,6 +177,8 @@ class ResourceSetCapacity(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, capacity: int):
+        if not isinstance(capacity, int):
+            raise ValueError("capacity must be an integer")
         super().__init__(for_id, timestamp, "RESOURCE.SET_CAPACITY", capacity=capacity)
 
 
@@ -162,6 +192,8 @@ class ResourceSetUtilization(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, utilization: int):
+        if not isinstance(utilization, int):
+            raise ValueError("utilization must be an integer")
         super().__init__(
             for_id, timestamp, "RESOURCE.SET_UTILIZATION", utilization=utilization
         )
@@ -177,6 +209,8 @@ class ContainerSetCapacity(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, capacity: int):
+        if not isinstance(capacity, int):
+            raise ValueError("capacity must be an integer")
         super().__init__(for_id, timestamp, "CONTAINER.SET_CAPACITY", capacity=capacity)
 
 
@@ -190,6 +224,8 @@ class ContainerSetLevel(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, level: ContainerAmount):
+        if not isinstance(level, int) and not isinstance(level, float):
+            raise ValueError("level must be a number")
         super().__init__(for_id, timestamp, "CONTAINER.SET_LEVEL", level=level)
 
 
@@ -203,6 +239,8 @@ class StoreSetCapacity(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, capacity: Union[float, int]):
+        if not isinstance(capacity, (float, int)):
+            raise ValueError("capacity must be a float or integer")
         super().__init__(for_id, timestamp, "STORE.SET_CAPACITY", capacity=capacity)
 
 

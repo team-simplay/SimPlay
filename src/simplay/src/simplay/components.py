@@ -77,6 +77,10 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
+        if not isinstance(capacity, int):
+            raise ValueError("Capacity must be a positive integer.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer.")
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         PreemptiveResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -107,6 +111,10 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
+        if not isinstance(capacity, int):
+            raise ValueError("Capacity must be a positive integer.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer.")
         VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
         PriorityResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
@@ -216,6 +224,10 @@ class VisualFilterStore(VisualComponent, FilterStore):
     def __init__(
         self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
     ):
+        if not isinstance(capacity, (int, float)):
+            raise ValueError("Capacity must be a positive integer or float.")
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer or float.")
         VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
         FilterStore.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
