@@ -30,6 +30,7 @@ jobs:
         run: |
           cd src/simplay
           python -m pip install --upgrade pip
+          pip install pytest
           pip install dist/*.whl
           python -m pytest
   
@@ -53,5 +54,6 @@ jobs:
         run: |
           cd src/simplay
           python -m pip install --upgrade pip
+          pip install pytest
           pip install dist/*.whl
           python -m pytest --cov=src.simplay tests/
