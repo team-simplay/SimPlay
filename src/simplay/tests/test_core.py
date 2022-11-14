@@ -24,22 +24,22 @@ class TestVisualComponent:
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError, match="Invalid component type."):
             _ = simplay.VisualComponent(env, "test", "INVALID", "", 0)
-    
+
     def test_invalid_id(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError, match="Id must be a string."):
             _ = simplay.VisualComponent(env, 0, "RESOURCE", "", 0)
-    
+
     def test_invalid_env(self):
         env = simpy.Environment()
         with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualComponent(env, "test", "RESOURCE", "", 0)
-    
+
     def test_invalid_graphic(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError, match="Graphic must be a string."):
             _ = simplay.VisualComponent(env, "test", "RESOURCE", 0, 0)
-    
+
     def test_invalid_tint(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError, match="Tint must be an integer."):
@@ -64,7 +64,8 @@ class TestVisualizationManager:
     def test_invalid_entity_type(self):
         self.reset()
         with pytest.raises(ValueError, match="Invalid entity type."):
-            compo = simplay.VisualComponent(self.env, "test", "RESOURCE", "", 0)
+            compo = simplay.VisualComponent(
+                self.env, "test", "RESOURCE", "", 0)
             self.manager.add_entity(compo, "INVALID")
 
     def test_add_event(self):

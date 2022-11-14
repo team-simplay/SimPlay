@@ -50,8 +50,7 @@ class TestVisualResource:
         resource = simplay.VisualResource(env, "test", 1, "", 0)
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION"
-            )
+                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
             assert env.visualization_manager.events[2].for_id == "test"
             assert env.visualization_manager.events[2].args["utilization"] == 1
             assert env.visualization_manager.events[2].timestamp == 0
@@ -108,8 +107,7 @@ class TestVisualPreemtiveResource:
         resource = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION"
-            )
+                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
             assert env.visualization_manager.events[2].for_id == "test"
             assert env.visualization_manager.events[2].args["utilization"] == 1
             assert env.visualization_manager.events[2].timestamp == 0
@@ -163,8 +161,7 @@ class TestVisualPriorityResource:
         resource = simplay.VisualPriorityResource(env, "test", 1, "", 0)
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION"
-            )
+                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
             assert env.visualization_manager.events[2].for_id == "test"
             assert env.visualization_manager.events[2].args["utilization"] == 1
             assert env.visualization_manager.events[2].timestamp == 0

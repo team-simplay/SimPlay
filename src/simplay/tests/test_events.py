@@ -3,7 +3,8 @@ import src.simplay.events as simplay
 
 
 def test_visual_event():
-    event = simplay.VisualEvent("id", 0, "action", arg1="value1", arg2="value2")
+    event = simplay.VisualEvent(
+        "id", 0, "action", arg1="value1", arg2="value2")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == "action"

@@ -25,7 +25,12 @@ class VisualProcess(VisualComponent):
     :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
     """
 
-    def __init__(self, env: VisualEnvironment, id: str, graphic: str, tint: int):
+    def __init__(
+            self,
+            env: VisualEnvironment,
+            id: str,
+            graphic: str,
+            tint: int):
         super().__init__(env, id, "PROCESS", graphic, tint)
 
 
@@ -41,8 +46,12 @@ class VisualResource(VisualComponent, Resource):
     """
 
     def __init__(
-        self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
-    ):
+            self,
+            env: VisualEnvironment,
+            id: str,
+            capacity: int,
+            graphic: str,
+            tint: int):
         if not isinstance(capacity, int):
             raise ValueError("Capacity must be a positive integer.")
         if capacity <= 0:
@@ -75,8 +84,12 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     """
 
     def __init__(
-        self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
-    ):
+            self,
+            env: VisualEnvironment,
+            id: str,
+            capacity: int,
+            graphic: str,
+            tint: int):
         if not isinstance(capacity, int):
             raise ValueError("Capacity must be a positive integer.")
         if capacity <= 0:
@@ -86,7 +99,10 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
 
-    def request(self, priority: int = 0, preempt: bool = True) -> PriorityRequest:
+    def request(
+            self,
+            priority: int = 0,
+            preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
         ResourceVisualUtil.set_utilization(self, self.count)
         return req
@@ -109,8 +125,12 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     """
 
     def __init__(
-        self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
-    ):
+            self,
+            env: VisualEnvironment,
+            id: str,
+            capacity: int,
+            graphic: str,
+            tint: int):
         if not isinstance(capacity, int):
             raise ValueError("Capacity must be a positive integer.")
         if capacity <= 0:
@@ -120,7 +140,10 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
 
-    def request(self, priority: int = 0, preempt: bool = True) -> PriorityRequest:
+    def request(
+            self,
+            priority: int = 0,
+            preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
         ResourceVisualUtil.set_utilization(self, self.count)
         return req
@@ -222,8 +245,12 @@ class VisualFilterStore(VisualComponent, FilterStore):
     """
 
     def __init__(
-        self, env: VisualEnvironment, id: str, capacity: int, graphic: str, tint: int
-    ):
+            self,
+            env: VisualEnvironment,
+            id: str,
+            capacity: int,
+            graphic: str,
+            tint: int):
         if not isinstance(capacity, (int, float)):
             raise ValueError("Capacity must be a positive integer or float.")
         if capacity <= 0:
@@ -237,7 +264,8 @@ class VisualFilterStore(VisualComponent, FilterStore):
         StoreVisualUtil.set_content(self, self.items)
         return put
 
-    def get(self, filter: Callable[[Any], bool] = lambda item: True) -> FilterStoreGet:
+    def get(self, filter: Callable[[Any], bool]
+            = lambda item: True) -> FilterStoreGet:
         get = super().get(filter)
         StoreVisualUtil.set_content(self, self.items)
         return get

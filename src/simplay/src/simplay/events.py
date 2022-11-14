@@ -13,7 +13,12 @@ class VisualEvent:
     :param kwargs: The arguments for the action.
     """
 
-    def __init__(self, for_id: str, timestamp: SimTime, action: str, **kwargs: dict):
+    def __init__(
+            self,
+            for_id: str,
+            timestamp: SimTime,
+            action: str,
+            **kwargs: dict):
         if not isinstance(for_id, str):
             raise ValueError("for_id must be a string")
         if not isinstance(timestamp, (int, float)):
@@ -195,8 +200,10 @@ class ResourceSetUtilization(VisualEvent):
         if not isinstance(utilization, int):
             raise ValueError("utilization must be an integer")
         super().__init__(
-            for_id, timestamp, "RESOURCE.SET_UTILIZATION", utilization=utilization
-        )
+            for_id,
+            timestamp,
+            "RESOURCE.SET_UTILIZATION",
+            utilization=utilization)
 
 
 class ContainerSetCapacity(VisualEvent):
@@ -223,7 +230,11 @@ class ContainerSetLevel(VisualEvent):
     :param level: The level to set the container to.
     """
 
-    def __init__(self, for_id: str, timestamp: SimTime, level: ContainerAmount):
+    def __init__(
+            self,
+            for_id: str,
+            timestamp: SimTime,
+            level: ContainerAmount):
         if not isinstance(level, int) and not isinstance(level, float):
             raise ValueError("level must be a number")
         super().__init__(for_id, timestamp, "CONTAINER.SET_LEVEL", level=level)
@@ -238,7 +249,8 @@ class StoreSetCapacity(VisualEvent):
     :param capacity: The capacity to set the store to.
     """
 
-    def __init__(self, for_id: str, timestamp: SimTime, capacity: Union[float, int]):
+    def __init__(self, for_id: str, timestamp: SimTime,
+                 capacity: Union[float, int]):
         if not isinstance(capacity, (float, int)):
             raise ValueError("capacity must be a float or integer")
         super().__init__(for_id, timestamp, "STORE.SET_CAPACITY", capacity=capacity)

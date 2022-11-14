@@ -115,7 +115,9 @@ class BasicVisualUtil:
         )
 
     @staticmethod
-    def set_not_interacting(component: VisualComponent, target: VisualComponent):
+    def set_not_interacting(
+            component: VisualComponent,
+            target: VisualComponent):
         """
         Adds an SetNotInteracting event for the given component to the EventQueue.
 
@@ -216,8 +218,8 @@ class ResourceVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            ResourceSetUtilization(component.id, component.env.now, utilization)
-        )
+            ResourceSetUtilization(
+                component.id, component.env.now, utilization))
 
 
 class ContainerVisualUtil:

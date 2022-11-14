@@ -25,8 +25,12 @@ class VisualComponent:
     """
 
     def __init__(
-        self, env: VisualEnvironment, id: str, type: str, graphic: str, tint: int
-    ):
+            self,
+            env: VisualEnvironment,
+            id: str,
+            type: str,
+            graphic: str,
+            tint: int):
         if type not in ["RESOURCE", "CONTAINER", "STORE", "PROCESS", "CUSTOM"]:
             raise ValueError("Invalid component type.")
         if not isinstance(id, str):

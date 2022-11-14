@@ -40,7 +40,8 @@ class TestVisualBasicUtil:
     def test_set_interacting(self):
         env = simplaycore.VisualEnvironment()
         component = simplay.VisualComponent(env, "id", "CUSTOM", "", 0)
-        other_component = simplay.VisualComponent(env, "other_id", "CUSTOM", "", 0)
+        other_component = simplay.VisualComponent(
+            env, "other_id", "CUSTOM", "", 0)
         with pytest.raises(TypeError, match="component must be a VisualComponent"):
             simplay.BasicVisualUtil.set_interacting(0, other_component)
         with pytest.raises(
@@ -51,12 +52,14 @@ class TestVisualBasicUtil:
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert env.visualization_manager.events[0].action == "SET_INTERACTING"
-        assert env.visualization_manager.events[0].args == {"with_id": "other_id"}
+        assert env.visualization_manager.events[0].args == {
+            "with_id": "other_id"}
 
     def test_set_not_interacting(self):
         env = simplaycore.VisualEnvironment()
         component = simplay.VisualComponent(env, "id", "CUSTOM", "", 0)
-        other_component = simplay.VisualComponent(env, "other_id", "CUSTOM", "", 0)
+        other_component = simplay.VisualComponent(
+            env, "other_id", "CUSTOM", "", 0)
         with pytest.raises(TypeError, match="component must be a VisualComponent"):
             simplay.BasicVisualUtil.set_not_interacting(0, other_component)
         with pytest.raises(
@@ -67,12 +70,14 @@ class TestVisualBasicUtil:
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert env.visualization_manager.events[0].action == "SET_NOT_INTERACTING"
-        assert env.visualization_manager.events[0].args == {"with_id": "other_id"}
+        assert env.visualization_manager.events[0].args == {
+            "with_id": "other_id"}
 
     def test_move_near(self):
         env = simplaycore.VisualEnvironment()
         component = simplay.VisualComponent(env, "id", "CUSTOM", "", 0)
-        other_component = simplay.VisualComponent(env, "other_id", "CUSTOM", "", 0)
+        other_component = simplay.VisualComponent(
+            env, "other_id", "CUSTOM", "", 0)
         with pytest.raises(TypeError, match="component must be a VisualComponent"):
             simplay.BasicVisualUtil.move_near(0, other_component)
         with pytest.raises(
@@ -83,7 +88,8 @@ class TestVisualBasicUtil:
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert env.visualization_manager.events[0].action == "MOVE_NEAR"
-        assert env.visualization_manager.events[0].args == {"target_id": "other_id"}
+        assert env.visualization_manager.events[0].args == {
+            "target_id": "other_id"}
 
     def test_set_tint_color(self):
         env = simplaycore.VisualEnvironment()

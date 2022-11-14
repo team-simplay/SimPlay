@@ -1,6 +1,7 @@
 import pytest
 import src.simplay.visualization as simplay
 
+
 class TestVisualGrid:
     def test_init(self):
         grid = simplay.VisualGrid(100, 100, 10, 10)
@@ -38,7 +39,7 @@ class TestVisualGrid:
             grid.set_area("id", "name", 1, 1, 0, 0.0, 0)
         with pytest.raises(ValueError, match="color must be an integer"):
             grid.set_area("id", "name", 1, 1, 0, 0, 0.0)
-    
+
     def test_set_area_invalid_values(self):
         grid = simplay.VisualGrid(100, 100, 10, 10)
         with pytest.raises(ValueError, match="x must be between 0 and cols"):
@@ -48,7 +49,7 @@ class TestVisualGrid:
         with pytest.raises(ValueError, match="y must be between 0 and rows"):
             grid.set_area("id", "name", 1, 1, 0, -1, 0)
         with pytest.raises(ValueError, match="y must be between 0 and rows"):
-            grid.set_area("id", "name", 1, 1, 0,10, 0)
+            grid.set_area("id", "name", 1, 1, 0, 10, 0)
         with pytest.raises(ValueError, match="x added to width must be less than or equal to cols"):
             grid.set_area("id", "name", 1, 2, 9, 0, 0)
         with pytest.raises(ValueError, match="y added to height must be less than or equal to rows"):
@@ -57,13 +58,13 @@ class TestVisualGrid:
             grid.set_area("id", "name", 0, 1, 0, 0, 0)
         with pytest.raises(ValueError, match="height and width must be greater than 0"):
             grid.set_area("id", "name", 1, 0, 0, 0, 0)
-    
+
     def test_set_area_duplicate_id(self):
         grid = simplay.VisualGrid(100, 100, 10, 10)
         grid.set_area("id", "name", 1, 1, 0, 0, 0)
         with pytest.raises(ValueError, match="id must be unique"):
             grid.set_area("id", "name", 1, 1, 0, 0, 0)
-    
+
     def test_overlapping_area_checked(self):
         grid = simplay.VisualGrid(100, 100, 10, 10)
         grid.set_area("id1", "name", 1, 1, 0, 0, 0)

@@ -16,8 +16,14 @@ class VisualGrid:
         self.areas = []
 
     def set_area(
-        self, id: str, name: str, height: int, width: int, x: int, y: int, color: int
-    ):
+            self,
+            id: str,
+            name: str,
+            height: int,
+            width: int,
+            x: int,
+            y: int,
+            color: int):
         """
         Set an area in the grid.
 
@@ -48,9 +54,11 @@ class VisualGrid:
         if y < 0 or y >= self.rows:
             raise ValueError("y must be between 0 and rows")
         if x + width > self.cols:
-            raise ValueError("x added to width must be less than or equal to cols")
+            raise ValueError(
+                "x added to width must be less than or equal to cols")
         if y + height > self.rows:
-            raise ValueError("y added to height must be less than or equal to rows")
+            raise ValueError(
+                "y added to height must be less than or equal to rows")
         if height == 0 or width == 0:
             raise ValueError("height and width must be greater than 0")
         if self.check_overlap(id, height, width, x, y):
