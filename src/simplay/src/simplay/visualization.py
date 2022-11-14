@@ -70,7 +70,12 @@ class VisualGrid:
                 "id": id,
                 "name": name,
                 "color": color,
-                "gridDefinition": {"height": height, "width": width, "x": x, "y": y},
+                "gridDefinition": {
+                    "height": height,
+                    "width": width,
+                    "x": x,
+                    "y": y
+                },
             }
         )
 

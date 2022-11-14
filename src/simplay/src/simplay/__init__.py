@@ -12,7 +12,7 @@ The following tables list all of the available components in this module.
 from pkgutil import extend_path
 from typing import List, Tuple, Type
 
-#from pkg_resources import get_distribution
+# from pkg_resources import get_distribution
 
 from .core import (
     VisualComponent,
@@ -163,4 +163,4 @@ if __doc__:
     assert set(__all__) == {obj.__name__ for _, objs in _toc for obj in objs}
 
 __path__: List[str] = list(extend_path(__path__, __name__))
-#__version__: str = get_distribution(__name__).version
+# __version__: str = get_distribution(__name__).version

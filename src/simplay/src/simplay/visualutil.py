@@ -29,7 +29,8 @@ class BasicVisualUtil:
     @staticmethod
     def set_visible(component: VisualComponent):
         """
-        Adds an SetVisible event for the given component to the EventQueue, making it visible.
+        Adds an SetVisible event for the given component to the EventQueue,
+        making it visible.
 
         :param component: The component to create the event for.
         """
@@ -42,7 +43,8 @@ class BasicVisualUtil:
     @staticmethod
     def set_invisible(component: VisualComponent):
         """
-        Adds an SetVisible event for the given component to the EventQueue, making it invisible.
+        Adds an SetVisible event for the given component to the EventQueue,
+        making it invisible.
 
         :param component: The component to create the event for.
         """
@@ -119,10 +121,12 @@ class BasicVisualUtil:
             component: VisualComponent,
             target: VisualComponent):
         """
-        Adds an SetNotInteracting event for the given component to the EventQueue.
+        Adds an SetNotInteracting event for the given component to the
+        EventQueue.
 
         :param component: The component to create the event for.
-        :param target: The component the first component is not interacting with anymore.
+        :param target: The component the first component is not interacting
+         with anymore.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError("component must be a VisualComponent")
@@ -149,7 +153,8 @@ class BasicVisualUtil:
     @staticmethod
     def reset_tint_color(component: VisualComponent):
         """
-        Adds an SetTintColor event for the given component to the EventQueue, resetting the tint color to its initial value.
+        Adds an SetTintColor event for the given component to the EventQueue,
+        resetting the tint color to its initial value.
 
         :param component: The component to create the event for.
         """
@@ -162,7 +167,8 @@ class BasicVisualUtil:
     @staticmethod
     def set_decorating_text(component: VisualComponent, text: str):
         """
-        Adds an SetDecoratingText event for the given component to the EventQueue.
+        Adds an SetDecoratingText event for the given component to the
+        EventQueue.
 
         :param component: The component to create the event for.
         :param text: The text to display.
@@ -196,7 +202,8 @@ class ResourceVisualUtil:
     @staticmethod
     def set_capacity(component: VisualComponent, capacity: int):
         """
-        Adds an ResourceSetCapacity event for the given resource to the EventQueue.
+        Adds an ResourceSetCapacity event for the given resource to the
+        EventQueue.
 
         :param component: The component to create the event for.
         :param capacity: The capacity of the resource.
@@ -210,7 +217,8 @@ class ResourceVisualUtil:
     @staticmethod
     def set_utilization(component: VisualComponent, utilization: int):
         """
-        Adds an ResourceSetUtilization event for the given resource to the EventQueue.
+        Adds an ResourceSetUtilization event for the given resource to the
+        EventQueue.
 
         :param component: The component to create the event for.
         :param utilization: The utilization of the resource.
@@ -230,7 +238,8 @@ class ContainerVisualUtil:
     @staticmethod
     def set_capacity(component: VisualComponent, capacity: ContainerAmount):
         """
-        Adds an ContainerSetCapacity event for the given container to the EventQueue.
+        Adds an ContainerSetCapacity event for the given container to the
+        EventQueue.
 
         :param component: The component to create the event for.
         :param capacity: The capacity of the container.
@@ -244,7 +253,8 @@ class ContainerVisualUtil:
     @staticmethod
     def set_level(component: VisualComponent, level: ContainerAmount):
         """
-        Adds an ContainerSetLevel event for the given container to the EventQueue.
+        Adds an ContainerSetLevel event for the given container to the
+        EventQueue.
 
         :param component: The component to create the event for.
         :param level: The level of the container.

@@ -22,7 +22,8 @@ class TestVisualResource:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualResource(env, "test", 1, "", 0)
 
     def test_invalid_graphic(self):
@@ -37,28 +38,32 @@ class TestVisualResource:
 
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
         env = simplay.VisualEnvironment()
         resource = simplay.VisualResource(env, "test", 1, "", 0)
+        manager = env.visualization_manager
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
-            assert env.visualization_manager.events[2].for_id == "test"
-            assert env.visualization_manager.events[2].args["utilization"] == 1
-            assert env.visualization_manager.events[2].timestamp == 0
+                manager.events[2].action
+                == "RESOURCE.SET_UTILIZATION")
+            assert manager.events[2].for_id == "test"
+            assert manager.events[2].args["utilization"] == 1
+            assert manager.events[2].timestamp == 0
 
-        assert env.visualization_manager.events[3].action == "RESOURCE.SET_UTILIZATION"
-        assert env.visualization_manager.events[3].for_id == "test"
-        assert env.visualization_manager.events[3].args["utilization"] == 0
-        assert env.visualization_manager.events[3].timestamp == 0
+        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert manager.events[3].for_id == "test"
+        assert manager.events[3].args["utilization"] == 0
+        assert manager.events[3].timestamp == 0
 
 
 class TestVisualPreemtiveResource:
@@ -79,7 +84,8 @@ class TestVisualPreemtiveResource:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
 
     def test_invalid_graphic(self):
@@ -94,25 +100,28 @@ class TestVisualPreemtiveResource:
 
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualPreemptiveResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualPreemptiveResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
         env = simplay.VisualEnvironment()
         resource = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
+        manager = env.visualization_manager
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
-            assert env.visualization_manager.events[2].for_id == "test"
-            assert env.visualization_manager.events[2].args["utilization"] == 1
-            assert env.visualization_manager.events[2].timestamp == 0
+                manager.events[2].action == "RESOURCE.SET_UTILIZATION")
+            assert manager.events[2].for_id == "test"
+            assert manager.events[2].args["utilization"] == 1
+            assert manager.events[2].timestamp == 0
 
-        assert env.visualization_manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
 
 
 class TestVisualPriorityResource:
@@ -133,7 +142,8 @@ class TestVisualPriorityResource:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualPriorityResource(env, "test", 1, "", 0)
 
     def test_invalid_graphic(self):
@@ -148,25 +158,28 @@ class TestVisualPriorityResource:
 
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualPriorityResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Capacity must be a positive integer."):
+        with pytest.raises(ValueError,
+                           match="Capacity must be a positive integer."):
             _ = simplay.VisualPriorityResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
         env = simplay.VisualEnvironment()
         resource = simplay.VisualPriorityResource(env, "test", 1, "", 0)
+        manager = env.visualization_manager
         with resource.request():
             assert (
-                env.visualization_manager.events[2].action == "RESOURCE.SET_UTILIZATION")
-            assert env.visualization_manager.events[2].for_id == "test"
-            assert env.visualization_manager.events[2].args["utilization"] == 1
-            assert env.visualization_manager.events[2].timestamp == 0
+                manager.events[2].action == "RESOURCE.SET_UTILIZATION")
+            assert manager.events[2].for_id == "test"
+            assert manager.events[2].args["utilization"] == 1
+            assert manager.events[2].timestamp == 0
 
-        assert env.visualization_manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
 
 
 class TestVisualProcess:
@@ -187,7 +200,8 @@ class TestVisualProcess:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualProcess(env, "test", "", 0)
 
     def test_invalid_graphic(self):
@@ -219,7 +233,8 @@ class TestVisualContainer:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualContainer(env, "test", "", 1, 1, 0)
 
     def test_invalid_graphic(self):
@@ -265,7 +280,8 @@ class TestVisualStore:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualStore(env, "test", "", 1, 1)
 
     def test_invalid_graphic(self):
@@ -311,7 +327,8 @@ class TestVisualFilterStore:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(ValueError,
+                           match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualFilterStore(env, "test", 1, "", 1)
 
     def test_invalid_graphic(self):

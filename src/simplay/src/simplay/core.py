@@ -6,7 +6,9 @@ from .visualization import VisualGrid
 
 
 class VisualEnvironment(Environment):
-    """Extends the :class:`~simpy.core.Environment` class with visualization."""
+    """
+    Extends the :class:`~simpy.core.Environment` class with visualization.
+    """
 
     def __init__(self, initial_time: SimTime = 0):
         super().__init__(initial_time)
@@ -19,9 +21,13 @@ class VisualComponent:
 
     :param env: The environment instance.
     :param id: The id of the component.
-    :param type: The type of the component, one of ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'PROCESS'`` or ``'CUSTOM'``.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param type: The type of the component, one of ``'RESOURCE'``,
+     ``'CONTAINER'``, ``'STORE'``, ``'PROCESS'`` or ``'CUSTOM'``.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -51,7 +57,8 @@ class VisualComponent:
 
 class VisualizationManager:
     """
-    This class acts as a central point for all entities, visuals, sprites and events.
+    This class acts as a central point for all entities, visuals, sprites and
+    events.
     """
 
     def __init__(self):
@@ -81,7 +88,8 @@ class VisualizationManager:
         Add an entity to the visualization.
 
         :param entity: The entity to add.
-        :param type: The type of the entity, one of ``'PROCESS'``, ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'CUSTOM'``.
+        :param type: The type of the entity, one of ``'PROCESS'``,
+         ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'CUSTOM'``.
         """
         if type not in ["PROCESS", "RESOURCE", "CONTAINER", "STORE", "CUSTOM"]:
             raise ValueError("Invalid entity type.")
@@ -110,7 +118,8 @@ class VisualizationManager:
         """
         Register a visual with the manager.
 
-        :param id: The id of the visual, it must be unique and can be used to reference the graphic in components.
+        :param id: The id of the visual, it must be unique and can be used to
+         reference the graphic in components.
         :param path: The path to the visual.
         """
         for v in self.visuals:
@@ -128,7 +137,8 @@ class VisualizationManager:
         """
         Register a sprite with the manager.
 
-        :param id: The id of the sprite, it must be unique and can be used to reference the graphic in components.
+        :param id: The id of the sprite, it must be unique and can be used to
+         reference the graphic in components.
         :param frames: A list of paths to the frames of the sprite.
         """
         for s in self.sprites:

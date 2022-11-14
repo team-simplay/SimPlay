@@ -50,13 +50,19 @@ class TestVisualGrid:
             grid.set_area("id", "name", 1, 1, 0, -1, 0)
         with pytest.raises(ValueError, match="y must be between 0 and rows"):
             grid.set_area("id", "name", 1, 1, 0, 10, 0)
-        with pytest.raises(ValueError, match="x added to width must be less than or equal to cols"):
+        with pytest.raises(
+                ValueError,
+                match="x added to width must be less than or equal to cols"):
             grid.set_area("id", "name", 1, 2, 9, 0, 0)
-        with pytest.raises(ValueError, match="y added to height must be less than or equal to rows"):
+        with pytest.raises(
+                ValueError,
+                match="y added to height must be less than or equal to rows"):
             grid.set_area("id", "name", 2, 1, 0, 9, 0)
-        with pytest.raises(ValueError, match="height and width must be greater than 0"):
+        with pytest.raises(ValueError,
+                           match="height and width must be greater than 0"):
             grid.set_area("id", "name", 0, 1, 0, 0, 0)
-        with pytest.raises(ValueError, match="height and width must be greater than 0"):
+        with pytest.raises(ValueError,
+                           match="height and width must be greater than 0"):
             grid.set_area("id", "name", 1, 0, 0, 0, 0)
 
     def test_set_area_duplicate_id(self):
@@ -68,5 +74,7 @@ class TestVisualGrid:
     def test_overlapping_area_checked(self):
         grid = simplay.VisualGrid(100, 100, 10, 10)
         grid.set_area("id1", "name", 1, 1, 0, 0, 0)
-        with pytest.raises(ValueError, match="area overlaps with another area"):
+        with pytest.raises(
+                ValueError,
+                match="area overlaps with another area"):
             grid.set_area("id2", "name", 1, 1, 0, 0, 0)

@@ -202,7 +202,8 @@ def test_store_set_capacity():
 
 
 def test_store_set_capacity_invalid_args():
-    with pytest.raises(ValueError, match="capacity must be a float or integer"):
+    with pytest.raises(ValueError,
+                       match="capacity must be a float or integer"):
         simplay.StoreSetCapacity("id", 0, "twenty")
 
 

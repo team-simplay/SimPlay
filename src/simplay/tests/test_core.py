@@ -32,7 +32,9 @@ class TestVisualComponent:
 
     def test_invalid_env(self):
         env = simpy.Environment()
-        with pytest.raises(ValueError, match="Env must be of type VisualEnvironment."):
+        with pytest.raises(
+                ValueError,
+                match="Env must be of type VisualEnvironment."):
             _ = simplay.VisualComponent(env, "test", "RESOURCE", "", 0)
 
     def test_invalid_graphic(self):
@@ -97,13 +99,17 @@ class TestVisualizationManager:
 
     def test_no_empty_visuals(self):
         self.reset()
-        with pytest.raises(ValueError, match="Visual path must not be None / empty."):
+        with pytest.raises(
+                ValueError,
+                match="Visual path must not be None / empty."):
             self.manager.register_visual("id", "")
         assert len(self.manager.visuals) == 0
 
     def test_no_none_visuals(self):
         self.reset()
-        with pytest.raises(ValueError, match="Visual path must not be None / empty."):
+        with pytest.raises(
+                ValueError,
+                match="Visual path must not be None / empty."):
             self.manager.register_visual("id", None)
         assert len(self.manager.visuals) == 0
 
@@ -131,13 +137,17 @@ class TestVisualizationManager:
 
     def test_no_empty_sprites(self):
         self.reset()
-        with pytest.raises(ValueError, match="Sprite frames must not be None / empty."):
+        with pytest.raises(
+                ValueError,
+                match="Sprite frames must not be None / empty."):
             self.manager.register_sprite("id", [])
         assert len(self.manager.sprites) == 0
 
     def test_no_none_sprites(self):
         self.reset()
-        with pytest.raises(ValueError, match="Sprite frames must not be None / empty."):
+        with pytest.raises(
+                ValueError,
+                match="Sprite frames must not be None / empty."):
             self.manager.register_sprite("id", None)
         assert len(self.manager.sprites) == 0
 
@@ -148,7 +158,9 @@ class TestVisualizationManager:
 
     def test_no_nonstring_sprite_frames(self):
         self.reset()
-        with pytest.raises(ValueError, match="Sprite frames must be a list of strings."):
+        with pytest.raises(
+                ValueError,
+                match="Sprite frames must be a list of strings."):
             self.manager.register_sprite("id", [0])
 
     def test_set_grid(self):
@@ -164,7 +176,9 @@ class TestVisualizationManager:
 
     def test_set_grid_invalid(self):
         self.reset()
-        with pytest.raises(ValueError, match="Grid must be of type VisualGrid."):
+        with pytest.raises(
+                ValueError,
+                match="Grid must be of type VisualGrid."):
             self.manager.set_grid("INVALID")
 
     def test_serialization(self):
@@ -180,5 +194,13 @@ class TestVisualizationManager:
         serialized = self.manager.serialize()
         assert (
             serialized
-            == '{"events": [{"action": "test", "args": {"test": "test"}, "forId": "test", "timestamp": 0}], "entities": [{"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0}, {"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0}], "visuals": [{"id": "test", "path": "p_test"}], "sprites": [{"id": "test", "frames": ["p_test"]}], "grid": {"areas": [], "cols": 10, "height": 10, "rows": 10, "width": 10}}'
+            == '''{"events":
+            [{"action": "test", "args": {"test": "test"},
+            "forId": "test", "timestamp": 0}], "entities":
+            [{"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0},
+            {"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0}],
+            "visuals": [{"id": "test", "path": "p_test"}],
+            "sprites": [{"id": "test", "frames": ["p_test"]}],
+            "grid": {"areas": [], "cols": 10, "height": 10,
+            "rows": 10, "width": 10}}'''.replace("\n", "")
         )

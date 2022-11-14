@@ -1,18 +1,15 @@
 from typing import Any, Callable, Union
-from simpy import (
-    Resource,
-    PreemptiveResource,
-    PriorityResource,
-    Container,
-    Store,
-    FilterStore,
-)
 
-from simpy.resources.resource import Request, Release, PriorityRequest
-from simpy.resources.container import ContainerAmount, ContainerPut, ContainerGet
-from simpy.resources.store import StoreGet, StorePut, FilterStoreGet
-from .core import VisualEnvironment, VisualComponent
-from .visualutil import ResourceVisualUtil, ContainerVisualUtil, StoreVisualUtil
+from simpy import (Container, FilterStore, PreemptiveResource,
+                   PriorityResource, Resource, Store)
+from simpy.resources.container import (ContainerAmount, ContainerGet,
+                                       ContainerPut)
+from simpy.resources.resource import PriorityRequest, Release, Request
+from simpy.resources.store import FilterStoreGet, StoreGet, StorePut
+
+from .core import VisualComponent, VisualEnvironment
+from .visualutil import (ContainerVisualUtil, ResourceVisualUtil,
+                         StoreVisualUtil)
 
 
 class VisualProcess(VisualComponent):
@@ -21,8 +18,12 @@ class VisualProcess(VisualComponent):
 
     :param env: The environment instance.
     :param id: The id of the component.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -36,13 +37,18 @@ class VisualProcess(VisualComponent):
 
 class VisualResource(VisualComponent, Resource):
     """
-    Extends the :class:`~simpy.resources.resource.Resource` class with visualization.
+    Extends the :class:`~simpy.resources.resource.Resource` class with
+     visualization.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -74,13 +80,18 @@ class VisualResource(VisualComponent, Resource):
 
 class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     """
-    Extends the :class:`~simpy.resources.resource.PreemptiveResource` class with visualization.
+    Extends the :class:`~simpy.resources.resource.PreemptiveResource` class
+     with visualization.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -115,13 +126,18 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
 
 class VisualPriorityResource(VisualComponent, PriorityResource):
     """
-    Extends the :class:`~simpy.resources.resource.PriorityResource` class with visualization.
+    Extends the :class:`~simpy.resources.resource.PriorityResource` class with
+     visualization.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -156,14 +172,19 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
 
 class VisualContainer(VisualComponent, Container):
     """
-    Extends the :class:`~simpy.resources.container.Container` class with visualization.
+    Extends the :class:`~simpy.resources.container.Container` class with
+     visualization.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the container.
     :param init: The initial amount of the container.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -202,8 +223,12 @@ class VisualStore(VisualComponent, Store):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the store.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(
@@ -235,13 +260,18 @@ class VisualStore(VisualComponent, Store):
 
 class VisualFilterStore(VisualComponent, FilterStore):
     """
-    Extends the :class:`~simpy.resources.store.FilterStore` class with visualization.
+    Extends the :class:`~simpy.resources.store.FilterStore` class with
+     visualization.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the store.
-    :param graphic: The graphic of the component, either a 'simple' visual or a collection of sprites. Must be registered in the ``VisualizationManager``.
-    :param tint: The tint of the component. This only works with visuals and sprites that have transparent pixels. The tint is applied to the pixels that are not transparent.
+    :param graphic: The graphic of the component, either a 'simple' visual or
+     a collection of sprites. Must be registered in the
+     `VisualizationManager`.
+    :param tint: The tint of the component. This only works with visuals and
+     sprites that have transparent pixels. The tint is applied to the pixels
+     that are not transparent.
     """
 
     def __init__(

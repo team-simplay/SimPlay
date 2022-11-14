@@ -70,7 +70,8 @@ class SetInteracting(VisualEvent):
 
     :param for_id: The id of the component this event is for.
     :param timestamp: The timestamp of the event.
-    :param with_id: The id of the component the first component is interacting with.
+    :param with_id: The id of the component the first component is interacting
+     with.
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, with_id: str):
@@ -85,13 +86,15 @@ class SetNotInteracting(VisualEvent):
 
     :param for_id: The id of the component this event is for.
     :param timestamp: The timestamp of the event.
-    :param with_id: The id of the component the first component is interacting with.
+    :param with_id: The id of the component the first component is interacting
+     with.
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, with_id: str):
         if not isinstance(with_id, str):
             raise ValueError("with_id must be a string")
-        super().__init__(for_id, timestamp, "SET_NOT_INTERACTING", with_id=with_id)
+        super().__init__(for_id, timestamp, "SET_NOT_INTERACTING",
+                         with_id=with_id)
 
 
 class MoveNear(VisualEvent):
@@ -100,7 +103,8 @@ class MoveNear(VisualEvent):
 
     :param for_id: The id of the component this event is for.
     :param timestamp: The timestamp of the event.
-    :param target_id: The id of the component the first component should move near.
+    :param target_id: The id of the component the first component should move
+     near.
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, target_id: str):
@@ -184,7 +188,8 @@ class ResourceSetCapacity(VisualEvent):
     def __init__(self, for_id: str, timestamp: SimTime, capacity: int):
         if not isinstance(capacity, int):
             raise ValueError("capacity must be an integer")
-        super().__init__(for_id, timestamp, "RESOURCE.SET_CAPACITY", capacity=capacity)
+        super().__init__(for_id, timestamp, "RESOURCE.SET_CAPACITY",
+                         capacity=capacity)
 
 
 class ResourceSetUtilization(VisualEvent):
@@ -218,7 +223,8 @@ class ContainerSetCapacity(VisualEvent):
     def __init__(self, for_id: str, timestamp: SimTime, capacity: int):
         if not isinstance(capacity, int):
             raise ValueError("capacity must be an integer")
-        super().__init__(for_id, timestamp, "CONTAINER.SET_CAPACITY", capacity=capacity)
+        super().__init__(for_id, timestamp, "CONTAINER.SET_CAPACITY",
+                         capacity=capacity)
 
 
 class ContainerSetLevel(VisualEvent):
@@ -253,7 +259,8 @@ class StoreSetCapacity(VisualEvent):
                  capacity: Union[float, int]):
         if not isinstance(capacity, (float, int)):
             raise ValueError("capacity must be a float or integer")
-        super().__init__(for_id, timestamp, "STORE.SET_CAPACITY", capacity=capacity)
+        super().__init__(for_id, timestamp, "STORE.SET_CAPACITY",
+                         capacity=capacity)
 
 
 class StoreSetContent(VisualEvent):
@@ -266,4 +273,5 @@ class StoreSetContent(VisualEvent):
     """
 
     def __init__(self, for_id: str, timestamp: SimTime, content):
-        super().__init__(for_id, timestamp, "STORE.SET_CONTENT", content=content)
+        super().__init__(for_id, timestamp, "STORE.SET_CONTENT",
+                         content=content)
