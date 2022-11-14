@@ -180,27 +180,3 @@ class TestVisualizationManager:
                 ValueError,
                 match="Grid must be of type VisualGrid."):
             self.manager.set_grid("INVALID")
-
-    def test_serialization(self):
-        self.reset()
-        grid = simplay.VisualGrid(10, 10, 10, 10)
-        self.manager.set_grid(grid)
-        self.manager.register_visual("test", "p_test")
-        self.manager.register_sprite("test", ["p_test"])
-        compo = simplay.VisualComponent(self.env, "test", "RESOURCE", "", 0)
-        self.manager.add_entity(compo, "RESOURCE")
-        event = simplay.VisualEvent("test", 0, "test", test="test")
-        self.manager.add_event(event)
-        serialized = self.manager.serialize()
-        assert (
-            serialized
-            == '''{"events":
-            [{"action": "test", "args": {"test": "test"},
-            "forId": "test", "timestamp": 0}], "entities":
-            [{"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0},
-            {"id": "test", "type": "RESOURCE", "graphic": "", "tint": 0}],
-            "visuals": [{"id": "test", "path": "p_test"}],
-            "sprites": [{"id": "test", "frames": ["p_test"]}],
-            "grid": {"areas": [], "cols": 10, "height": 10,
-            "rows": 10, "width": 10}}'''.replace("\n", "")
-        )
