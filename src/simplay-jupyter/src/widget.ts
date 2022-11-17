@@ -12,7 +12,7 @@ import { MODULE_NAME, MODULE_VERSION } from './version';
 // Import the CSS
 import '../css/widget.css';
 
-import * as simplayweb from 'simplay-web';
+import { SimulationSpooler } from 'simplay-web';
 
 export class SimPlayHostModel extends DOMWidgetModel {
   defaults() {
@@ -44,7 +44,7 @@ export class SimPlayHostModel extends DOMWidgetModel {
 }
 
 export class SimPlayHostView extends DOMWidgetView {
-  simspooler: simplayweb.SimulationSpooler;
+  simspooler: SimulationSpooler;
   render() {
     this.el.classList.add('custom-widget');
     this.model.on('change:simulationdata', this.simulationdata_changed, this);
@@ -61,7 +61,7 @@ export class SimPlayHostView extends DOMWidgetView {
     this.el.appendChild(container);
     // this would be the implementation to use simplay-web, but it does not work right now
     // leaving it here for future reference
-    // this.simspooler = new simplayweb.SimulationSpooler(
+    // this.simspooler = new SimulationSpooler(
     //   this.model.get('simulationdata'),
     //   container
     // );
