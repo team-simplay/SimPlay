@@ -2,6 +2,7 @@ import pytest
 import simpy
 import src.simplay.core as simplay
 import src.simplay.components as simplay
+from src.simplay.internals import ComponentType, ErrorText, EventAction
 
 
 class TestVisualResource:
@@ -10,42 +11,21 @@ class TestVisualResource:
         _ = simplay.VisualResource(env, "test", 1, "", 0)
         assert {
             "id": "test",
-            "type": "RESOURCE",
+            "type": ComponentType.RESOURCE.value,
             "graphic": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualResource(env, 0, 1, "", 0)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualResource(env, "test", 1, "", 0)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualResource(env, "test", 1, 0, 0)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualResource(env, "test", 1, "", "")
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+        with pytest.raises(TypeError,
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
@@ -55,12 +35,13 @@ class TestVisualResource:
         with resource.request():
             assert (
                 manager.events[2].action
-                == "RESOURCE.SET_UTILIZATION")
+                == EventAction.RESOURCE_SET_UTILIZATION.value)
             assert manager.events[2].for_id == "test"
             assert manager.events[2].args["utilization"] == 1
             assert manager.events[2].timestamp == 0
 
-        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert (manager.events[3].action ==
+                EventAction.RESOURCE_SET_UTILIZATION.value)
         assert manager.events[3].for_id == "test"
         assert manager.events[3].args["utilization"] == 0
         assert manager.events[3].timestamp == 0
@@ -72,42 +53,21 @@ class TestVisualPreemtiveResource:
         _ = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
         assert {
             "id": "test",
-            "type": "RESOURCE",
+            "type": ComponentType.RESOURCE.value,
             "graphic": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualPreemptiveResource(env, 0, 1, "", 0)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualPreemptiveResource(env, "test", 1, 0, 0)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualPreemptiveResource(env, "test", 1, "", "")
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualPreemptiveResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+        with pytest.raises(TypeError,
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualPreemptiveResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
@@ -115,13 +75,14 @@ class TestVisualPreemtiveResource:
         resource = simplay.VisualPreemptiveResource(env, "test", 1, "", 0)
         manager = env.visualization_manager
         with resource.request():
-            assert (
-                manager.events[2].action == "RESOURCE.SET_UTILIZATION")
+            assert (manager.events[2].action ==
+                    EventAction.RESOURCE_SET_UTILIZATION.value)
             assert manager.events[2].for_id == "test"
             assert manager.events[2].args["utilization"] == 1
             assert manager.events[2].timestamp == 0
 
-        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert (manager.events[3].action ==
+                EventAction.RESOURCE_SET_UTILIZATION.value)
 
 
 class TestVisualPriorityResource:
@@ -130,42 +91,21 @@ class TestVisualPriorityResource:
         _ = simplay.VisualPriorityResource(env, "test", 1, "", 0)
         assert {
             "id": "test",
-            "type": "RESOURCE",
+            "type": ComponentType.RESOURCE.value,
             "graphic": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualPriorityResource(env, 0, 1, "", 0)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualPriorityResource(env, "test", 1, "", 0)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualPriorityResource(env, "test", 1, 0, 0)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualPriorityResource(env, "test", 1, "", "")
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualPriorityResource(env, "test", 0, "", 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError,
-                           match="Capacity must be a positive integer."):
+        with pytest.raises(TypeError,
+                           match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT):
             _ = simplay.VisualPriorityResource(env, "test", "", "", 0)
 
     def test_utilization_event(self):
@@ -173,13 +113,14 @@ class TestVisualPriorityResource:
         resource = simplay.VisualPriorityResource(env, "test", 1, "", 0)
         manager = env.visualization_manager
         with resource.request():
-            assert (
-                manager.events[2].action == "RESOURCE.SET_UTILIZATION")
+            assert (manager.events[2].action ==
+                    EventAction.RESOURCE_SET_UTILIZATION.value)
             assert manager.events[2].for_id == "test"
             assert manager.events[2].args["utilization"] == 1
             assert manager.events[2].timestamp == 0
 
-        assert manager.events[3].action == "RESOURCE.SET_UTILIZATION"
+        assert (manager.events[3].action ==
+                EventAction.RESOURCE_SET_UTILIZATION.value)
 
 
 class TestVisualProcess:
@@ -188,31 +129,10 @@ class TestVisualProcess:
         _ = simplay.VisualProcess(env, "test", "", 0)
         assert {
             "id": "test",
-            "type": "PROCESS",
+            "type": ComponentType.PROCESS.value,
             "graphic": "",
             "tint": 0,
         } in env.visualization_manager.entities
-
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualProcess(env, 0, "", 0)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualProcess(env, "test", "", 0)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualProcess(env, "test", 0, 0)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualProcess(env, "test", "", "")
 
 
 class TestVisualContainer:
@@ -221,43 +141,22 @@ class TestVisualContainer:
         _ = simplay.VisualContainer(env, "test", "", 1, 1, 0)
         assert {
             "id": "test",
-            "type": "CONTAINER",
+            "type": ComponentType.CONTAINER.value,
             "graphic": "",
             "tint": 1,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualContainer(env, 0, "", 1, 1, 0)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualContainer(env, "test", "", 1, 1, 0)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualContainer(env, "test", 0, 1, 1, 0)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualContainer(env, "test", "", "", 1, 0)
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            ValueError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             _ = simplay.VisualContainer(env, "test", "", 1, -1, 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            TypeError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             __ = simplay.VisualContainer(env, "test", "", 1, "", 0)
 
@@ -268,43 +167,22 @@ class TestVisualStore:
         _ = simplay.VisualStore(env, "test", "", 1, 1)
         assert {
             "id": "test",
-            "type": "STORE",
+            "type": ComponentType.STORE.value,
             "graphic": "",
             "tint": 1,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualStore(env, 0, "", 1, 1)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualStore(env, "test", "", 1, 1)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualStore(env, "test", 0, 1, 1)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualStore(env, "test", "", "", 1)
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            ValueError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             _ = simplay.VisualStore(env, "test", "", 0, 0)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            TypeError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             _ = simplay.VisualStore(env, "test", "", 0, "")
 
@@ -315,42 +193,21 @@ class TestVisualFilterStore:
         _ = simplay.VisualFilterStore(env, "test", 1, "", 1)
         assert {
             "id": "test",
-            "type": "STORE",
+            "type": ComponentType.STORE.value,
             "graphic": "",
             "tint": 1,
         } in env.visualization_manager.entities
 
-    def test_invalid_id(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Id must be a string."):
-            _ = simplay.VisualFilterStore(env, 0, 1, "", 1)
-
-    def test_invalid_env(self):
-        env = simpy.Environment()
-        with pytest.raises(ValueError,
-                           match="Env must be of type VisualEnvironment."):
-            _ = simplay.VisualFilterStore(env, "test", 1, "", 1)
-
-    def test_invalid_graphic(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Graphic must be a string."):
-            _ = simplay.VisualFilterStore(env, "test", 1, 1, 1)
-
-    def test_invalid_tint(self):
-        env = simplay.VisualEnvironment()
-        with pytest.raises(ValueError, match="Tint must be an integer."):
-            _ = simplay.VisualFilterStore(env, "test", 1, "", "")
-
     def test_invalid_capacity(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            ValueError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             _ = simplay.VisualFilterStore(env, "test", 0, "", 1)
 
     def test_invalid_capacity_type(self):
         env = simplay.VisualEnvironment()
         with pytest.raises(
-            ValueError, match="Capacity must be a positive integer or float."
+            TypeError, match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT
         ):
             _ = simplay.VisualFilterStore(env, "test", "", "", 1)

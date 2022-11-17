@@ -19,7 +19,7 @@ import sphinx.builders.text
 import sphinx.ext.autodoc
 
 
-sys.path.insert(0, os.path.abspath(os.path.join("../..", "src/simplay/src")))
+sys.path.insert(0, os.path.abspath(os.path.join("../../", "src/simplay/src")))
 
 import simplay
 # -- General configuration

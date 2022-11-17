@@ -15,16 +15,18 @@ from .internals import ComponentType, ErrorText
 
 class VisualProcess(VisualComponent):
     """
-    Shorthand for creating an entity of type ``'PROCESS'``.
+    Shorthand for creating an entity of type ``ComponentType.PROCESS``.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     """
 
     def __init__(
@@ -45,11 +47,13 @@ class VisualResource(VisualComponent, Resource):
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises ValueError: If the capacity is not a positive integer.
     :raises TypeError: If the capacity is not a integer.
     """
@@ -91,11 +95,13 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises TypeError: If the capacity is not a integer.
     :raises ValueError: If the capacity is not a positive integer.
     """
@@ -140,11 +146,13 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises TypeError: If the capacity is not a integer.
     :raises ValueError: If the capacity is not a positive integer.
     """
@@ -190,11 +198,13 @@ class VisualContainer(VisualComponent, Container):
     :param capacity: The capacity of the container.
     :param init: The initial amount of the container.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """
@@ -237,11 +247,13 @@ class VisualStore(VisualComponent, Store):
     :param id: The id of the component.
     :param capacity: The capacity of the store.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """
@@ -285,11 +297,13 @@ class VisualFilterStore(VisualComponent, FilterStore):
     :param id: The id of the component.
     :param capacity: The capacity of the store.
     :param graphic: The graphic of the component, either a 'simple' visual or
-     a collection of sprites. Must be registered in the
-     `VisualizationManager`.
+        a collection of sprites. Must be registered in the
+        ``VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
-     sprites that have transparent pixels. The tint is applied to the pixels
-     that are not transparent.
+        sprites that have transparent pixels. The tint is applied to the
+        pixelsthat are not transparent. To use HEX values, write them as
+        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
+        0x0000FF is blue.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """

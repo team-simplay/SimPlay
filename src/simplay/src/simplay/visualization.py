@@ -58,10 +58,14 @@ class VisualGrid:
             raise TypeError(ErrorText.ID_MUST_BE_STRING)
         if not isinstance(name, str):
             raise TypeError(ErrorText.NAME_MUST_BE_STRING)
-        if not isinstance(height, int) or height < 1:
+        if not isinstance(height, int):
             raise TypeError(ErrorText.HEIGHT_MUST_BE_POSITIVE_INT)
-        if not isinstance(width, int) or width < 1:
+        if height <= 0:
+            raise ValueError(ErrorText.HEIGHT_MUST_BE_POSITIVE_INT)
+        if not isinstance(width, int):
             raise TypeError(ErrorText.WIDTH_MUST_BE_POSITIVE_INT)
+        if width <= 0:
+            raise ValueError(ErrorText.WIDTH_MUST_BE_POSITIVE_INT)
         if not isinstance(x, int):
             raise TypeError(ErrorText.X_MUST_BE_INT)
         if not isinstance(y, int):

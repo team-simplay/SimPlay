@@ -39,7 +39,7 @@ from .visualutil import (
 
 from .visualization import VisualGrid
 
-from .events import (
+from .core import (
     VisualEvent,
     SetVisible,
     SetPosition,
@@ -109,7 +109,29 @@ def _compile_toc(
 
 
 _toc = (
-    ("Core", (VisualEnvironment, VisualComponent, VisualizationManager)),
+    ("Core",
+     (
+         VisualEnvironment,
+         VisualComponent,
+         VisualizationManager,
+         VisualEvent,
+         SetVisible,
+         SetPosition,
+         SetInteracting,
+         SetNotInteracting,
+         MoveNear,
+         MoveNearCell,
+         SetTintColor,
+         SetSpriteFrame,
+         SetDecoratingText,
+         ResourceSetCapacity,
+         ResourceSetUtilization,
+         ContainerSetCapacity,
+         ContainerSetLevel,
+         StoreSetCapacity,
+         StoreSetContent,
+     )
+     ),
     (
         "Components",
         (
@@ -134,27 +156,6 @@ _toc = (
     (
         "Visualization",
         (VisualGrid,),
-    ),
-    (
-        "Events",
-        (
-            VisualEvent,
-            SetVisible,
-            SetPosition,
-            SetInteracting,
-            SetNotInteracting,
-            MoveNear,
-            MoveNearCell,
-            SetTintColor,
-            SetSpriteFrame,
-            SetDecoratingText,
-            ResourceSetCapacity,
-            ResourceSetUtilization,
-            ContainerSetCapacity,
-            ContainerSetLevel,
-            StoreSetCapacity,
-            StoreSetContent,
-        ),
     ),
 )
 
