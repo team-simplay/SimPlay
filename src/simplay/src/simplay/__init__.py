@@ -39,7 +39,7 @@ from .visualutil import (
 
 from .visualization import VisualGrid
 
-from .core import (
+from .events import (
     VisualEvent,
     SetVisible,
     SetPosition,
@@ -114,22 +114,6 @@ _toc = (
          VisualEnvironment,
          VisualComponent,
          VisualizationManager,
-         VisualEvent,
-         SetVisible,
-         SetPosition,
-         SetInteracting,
-         SetNotInteracting,
-         MoveNear,
-         MoveNearCell,
-         SetTintColor,
-         SetSpriteFrame,
-         SetDecoratingText,
-         ResourceSetCapacity,
-         ResourceSetUtilization,
-         ContainerSetCapacity,
-         ContainerSetLevel,
-         StoreSetCapacity,
-         StoreSetContent,
      )
      ),
     (
@@ -157,6 +141,27 @@ _toc = (
         "Visualization",
         (VisualGrid,),
     ),
+    (
+        "Events",
+        (
+            VisualEvent,
+            SetVisible,
+            SetPosition,
+            SetInteracting,
+            SetNotInteracting,
+            MoveNear,
+            MoveNearCell,
+            SetTintColor,
+            SetSpriteFrame,
+            SetDecoratingText,
+            ResourceSetCapacity,
+            ResourceSetUtilization,
+            ContainerSetCapacity,
+            ContainerSetLevel,
+            StoreSetCapacity,
+            StoreSetContent,
+        )
+    )
 )
 
 if __doc__:

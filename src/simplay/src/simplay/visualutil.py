@@ -1,6 +1,6 @@
 from typing import Union
 from .components import VisualComponent
-from .core import (
+from .events import (
     ContainerSetCapacity,
     ContainerSetLevel,
     MoveNear,
@@ -39,7 +39,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetVisible(component, component.env.now, True)
+            SetVisible(component.id, component.env.now, True)
         )
 
     @staticmethod
@@ -54,7 +54,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetVisible(component, component.env.now, False)
+            SetVisible(component.id, component.env.now, False)
         )
 
     @staticmethod
@@ -71,7 +71,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetPosition(component, component.env.now, x, y)
+            SetPosition(component.id, component.env.now, x, y)
         )
 
     @staticmethod
@@ -89,7 +89,7 @@ class BasicVisualUtil:
         if not isinstance(target, VisualComponent):
             raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            MoveNear(component, component.env.now, target.id)
+            MoveNear(component.id, component.env.now, target.id)
         )
 
     @staticmethod
@@ -106,7 +106,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            MoveNearCell(component, component.env.now, x, y)
+            MoveNearCell(component.id, component.env.now, x, y)
         )
 
     @staticmethod
@@ -125,7 +125,7 @@ class BasicVisualUtil:
         if not isinstance(target, VisualComponent):
             raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetInteracting(component, component.env.now, target.id)
+            SetInteracting(component.id, component.env.now, target.id)
         )
 
     @staticmethod
@@ -147,7 +147,7 @@ class BasicVisualUtil:
         if not isinstance(target, VisualComponent):
             raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetNotInteracting(component, component.env.now, target.id)
+            SetNotInteracting(component.id, component.env.now, target.id)
         )
 
     @staticmethod
@@ -165,7 +165,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetTintColor(component, component.env.now, color)
+            SetTintColor(component.id, component.env.now, color)
         )
 
     @staticmethod
@@ -180,7 +180,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetTintColor(component, component.env.now, component.tint)
+            SetTintColor(component.id, component.env.now, component.tint)
         )
 
     @staticmethod
@@ -196,7 +196,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetDecoratingText(component, component.env.now, text)
+            SetDecoratingText(component.id, component.env.now, text)
         )
 
     @staticmethod
@@ -212,7 +212,7 @@ class BasicVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            SetSpriteFrame(component, component.env.now, frame)
+            SetSpriteFrame(component.id, component.env.now, frame)
         )
 
 
@@ -234,7 +234,7 @@ class ResourceVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            ResourceSetCapacity(component, component.env.now, capacity)
+            ResourceSetCapacity(component.id, component.env.now, capacity)
         )
 
     @staticmethod
@@ -251,7 +251,7 @@ class ResourceVisualUtil:
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
             ResourceSetUtilization(
-                component, component.env.now, utilization))
+                component.id, component.env.now, utilization))
 
 
 class ContainerVisualUtil:
@@ -272,7 +272,7 @@ class ContainerVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            ContainerSetCapacity(component, component.env.now, capacity)
+            ContainerSetCapacity(component.id, component.env.now, capacity)
         )
 
     @staticmethod
@@ -288,7 +288,7 @@ class ContainerVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            ContainerSetLevel(component, component.env.now, level)
+            ContainerSetLevel(component.id, component.env.now, level)
         )
 
 
@@ -310,7 +310,7 @@ class StoreVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            StoreSetCapacity(component, component.env.now, capacity)
+            StoreSetCapacity(component.id, component.env.now, capacity)
         )
 
     @staticmethod
@@ -326,5 +326,5 @@ class StoreVisualUtil:
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            StoreSetContent(component, component.env.now, content)
+            StoreSetContent(component.id, component.env.now, content)
         )

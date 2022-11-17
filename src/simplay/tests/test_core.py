@@ -81,7 +81,7 @@ class TestVisualizationManager:
         comp = simplay.VisualComponent(
             self.env, "test", ComponentType.RESOURCE, "", 0)
         event = simplay.VisualEvent(
-            comp, 0, EventAction.CONTAINER_SET_CAPACITY, test="test")
+            comp.id, 0, EventAction.CONTAINER_SET_CAPACITY, test="test")
         self.manager.add_event(event)
         assert event in self.manager.events
 
@@ -90,9 +90,9 @@ class TestVisualizationManager:
         comp = simplay.VisualComponent(
             self.env, "test", ComponentType.RESOURCE, "", 0)
         event1 = simplay.VisualEvent(
-            comp, 1, EventAction.MOVE_NEAR_CELL, test="test")
+            comp.id, 1, EventAction.MOVE_NEAR_CELL, test="test")
         event2 = simplay.VisualEvent(
-            comp, 0, EventAction.MOVE_NEAR_CELL, test="test")
+            comp.id, 0, EventAction.MOVE_NEAR_CELL, test="test")
         self.manager.add_event(event1)
         self.manager.add_event(event2)
         assert self.manager.events[0] == event2

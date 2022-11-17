@@ -1,14 +1,15 @@
 import pytest
 from src.simplay.internals import ComponentType, ErrorText, EventAction
-import src.simplay.core as simplay
+import src.simplay.events as simplay
+import src.simplay.core as core
 
-env = simplay.VisualEnvironment()
-comp = simplay.VisualComponent(env, "id", ComponentType.CONTAINER, "", 0)
+env = core.VisualEnvironment()
+comp = core.VisualComponent(env, "id", ComponentType.CONTAINER, "", 0)
 
 
 def test_visual_event():
     event = simplay.VisualEvent(
-        comp, 0, EventAction.MOVE_NEAR, arg1="value1", arg2="value2")
+        comp.id, 0, EventAction.MOVE_NEAR, arg1="value1", arg2="value2")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.MOVE_NEAR.value
@@ -17,18 +18,18 @@ def test_visual_event():
 
 def test_visual_event_invalid_args():
     with pytest.raises(TypeError,
-                       match=ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT):
+                       match=ErrorText.ID_MUST_BE_STRING):
         simplay.VisualEvent(12, 0, EventAction.MOVE_NEAR)
     with pytest.raises(TypeError,
                        match=ErrorText.TIMESTAMP_MUST_BE_INT_OR_FLOAT):
-        simplay.VisualEvent(comp, "0", EventAction.MOVE_NEAR)
+        simplay.VisualEvent(comp.id, "0", EventAction.MOVE_NEAR)
     with pytest.raises(TypeError,
                        match=ErrorText.ACTION_MUST_BE_EVENTACTION):
-        simplay.VisualEvent(comp, 0, 0)
+        simplay.VisualEvent(comp.id, 0, 0)
 
 
 def test_set_visible():
-    event = simplay.SetVisible(comp, 0, True)
+    event = simplay.SetVisible(comp.id, 0, True)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_VISIBLE.value
@@ -37,11 +38,11 @@ def test_set_visible():
 
 def test_set_visible_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.VISIBLE_MUST_BE_BOOL):
-        simplay.SetVisible(comp, 0, 0)
+        simplay.SetVisible(comp.id, 0, 0)
 
 
 def test_set_position():
-    event = simplay.SetPosition(comp, 0, 1, 2)
+    event = simplay.SetPosition(comp.id, 0, 1, 2)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_POSITION.value
@@ -50,13 +51,13 @@ def test_set_position():
 
 def test_set_position_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.X_MUST_BE_INT):
-        simplay.SetPosition(comp, 0, 1.0, 2)
+        simplay.SetPosition(comp.id, 0, 1.0, 2)
     with pytest.raises(TypeError, match=ErrorText.Y_MUST_BE_INT):
-        simplay.SetPosition(comp, 0, 1, 2.0)
+        simplay.SetPosition(comp.id, 0, 1, 2.0)
 
 
 def test_set_interacting():
-    event = simplay.SetInteracting(comp, 0, "other_id")
+    event = simplay.SetInteracting(comp.id, 0, "other_id")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_INTERACTING.value
@@ -65,11 +66,11 @@ def test_set_interacting():
 
 def test_set_interacting_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.WITHID_MUST_BE_STRING):
-        simplay.SetInteracting(comp, 0, 0)
+        simplay.SetInteracting(comp.id, 0, 0)
 
 
 def test_set_not_interacting():
-    event = simplay.SetNotInteracting(comp, 0, "other_id")
+    event = simplay.SetNotInteracting(comp.id, 0, "other_id")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_NOT_INTERACTING.value
@@ -78,11 +79,11 @@ def test_set_not_interacting():
 
 def test_set_not_interacting_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.WITHID_MUST_BE_STRING):
-        simplay.SetNotInteracting(comp, 0, 0)
+        simplay.SetNotInteracting(comp.id, 0, 0)
 
 
 def test_move_near():
-    event = simplay.MoveNear(comp, 0, "other_id")
+    event = simplay.MoveNear(comp.id, 0, "other_id")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.MOVE_NEAR.value
@@ -91,11 +92,11 @@ def test_move_near():
 
 def test_move_near_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.TARGETID_MUST_BE_STRING):
-        simplay.MoveNear(comp, 0, 0)
+        simplay.MoveNear(comp.id, 0, 0)
 
 
 def test_move_near_cell():
-    event = simplay.MoveNearCell(comp, 0, 1, 2)
+    event = simplay.MoveNearCell(comp.id, 0, 1, 2)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.MOVE_NEAR_CELL.value
@@ -110,7 +111,7 @@ def test_move_near_cell_invalid_args():
 
 
 def test_set_tint_color():
-    event = simplay.SetTintColor(comp, 0, 1)
+    event = simplay.SetTintColor(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_TINT_COLOR.value
@@ -119,11 +120,11 @@ def test_set_tint_color():
 
 def test_set_tint_color_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.COLOR_MUST_BE_INT):
-        simplay.SetTintColor(comp, 0, "blue")
+        simplay.SetTintColor(comp.id, 0, "blue")
 
 
 def test_set_decorating_text():
-    event = simplay.SetDecoratingText(comp, 0, "text")
+    event = simplay.SetDecoratingText(comp.id, 0, "text")
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_DECORATING_TEXT.value
@@ -132,11 +133,11 @@ def test_set_decorating_text():
 
 def test_set_decorating_text_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.TEXT_MUST_BE_STRING):
-        simplay.SetDecoratingText(comp, 0, 0)
+        simplay.SetDecoratingText(comp.id, 0, 0)
 
 
 def test_set_sprite_frame():
-    event = simplay.SetSpriteFrame(comp, 0, 1)
+    event = simplay.SetSpriteFrame(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.SET_SPRITE_FRAME.value
@@ -145,11 +146,11 @@ def test_set_sprite_frame():
 
 def test_set_sprite_frame_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.FRAME_MUST_BE_INT):
-        simplay.SetSpriteFrame(comp, 0, "the third one")
+        simplay.SetSpriteFrame(comp.id, 0, "the third one")
 
 
 def test_resource_set_capacity():
-    event = simplay.ResourceSetCapacity(comp, 0, 1)
+    event = simplay.ResourceSetCapacity(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.RESOURCE_SET_CAPACITY.value
@@ -163,7 +164,7 @@ def test_resource_set_capacity_invalid_args():
 
 
 def test_resource_set_utilization():
-    event = simplay.ResourceSetUtilization(comp, 0, 1)
+    event = simplay.ResourceSetUtilization(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.RESOURCE_SET_UTILIZATION.value
@@ -172,11 +173,11 @@ def test_resource_set_utilization():
 
 def test_resource_set_utilization_invalid_args():
     with pytest.raises(TypeError, match=ErrorText.UTILIZATION_MUST_BE_INT):
-        simplay.ResourceSetUtilization(comp, 0, 1.0)
+        simplay.ResourceSetUtilization(comp.id, 0, 1.0)
 
 
 def test_container_set_capacity():
-    event = simplay.ContainerSetCapacity(comp, 0, 1)
+    event = simplay.ContainerSetCapacity(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.CONTAINER_SET_CAPACITY.value
@@ -186,11 +187,11 @@ def test_container_set_capacity():
 def test_container_set_capacity_invalid_args():
     with pytest.raises(TypeError,
                        match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT):
-        simplay.ContainerSetCapacity(comp, 0, "zehn")
+        simplay.ContainerSetCapacity(comp.id, 0, "zehn")
 
 
 def test_container_set_level():
-    event = simplay.ContainerSetLevel(comp, 0, 1)
+    event = simplay.ContainerSetLevel(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.CONTAINER_SET_LEVEL.value
@@ -200,11 +201,11 @@ def test_container_set_level():
 def test_container_set_level_invalid_args():
     with pytest.raises(TypeError,
                        match=ErrorText.LEVEL_MUST_BE_POSITIVE_INT_OR_FLOAT):
-        simplay.ContainerSetLevel(comp, 0, "three")
+        simplay.ContainerSetLevel(comp.id, 0, "three")
 
 
 def test_store_set_capacity():
-    event = simplay.StoreSetCapacity(comp, 0, 1)
+    event = simplay.StoreSetCapacity(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.STORE_SET_CAPACITY.value
@@ -214,11 +215,11 @@ def test_store_set_capacity():
 def test_store_set_capacity_invalid_args():
     with pytest.raises(TypeError,
                        match=ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT):
-        simplay.StoreSetCapacity(comp, 0, "twenty")
+        simplay.StoreSetCapacity(comp.id, 0, "twenty")
 
 
 def test_store_set_content():
-    event = simplay.StoreSetContent(comp, 0, 1)
+    event = simplay.StoreSetContent(comp.id, 0, 1)
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.STORE_SET_CONTENT.value
