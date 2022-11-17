@@ -18,3 +18,4 @@ components.
    simplay.visualutil
    simplay.components
    simplay.events
+   simplay.primitives

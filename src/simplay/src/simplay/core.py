@@ -3,7 +3,7 @@ import jsons
 from simpy.core import SimTime, Environment
 from simpy.resources.container import ContainerAmount
 
-from .internals import EventAction, ComponentType, ErrorText
+from .primitives import EventAction, ComponentType, ErrorText
 from .visualization import VisualGrid
 from .events import VisualEvent
 
@@ -24,10 +24,11 @@ class VisualComponent:
 
     :param env: The environment instance.
     :param id: The id of the component.
-    :param type: The type of the component, one of ``ComponentType``.
+    :param type: The type of the component, one of
+        :class:`~simplay.primitives.ComponentType`..
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -35,7 +36,8 @@ class VisualComponent:
         0x0000FF is blue.
     :raises TypeError: If the type is invalid.
     :raises TypeError: If the id is not a string.
-    :raises TypeError: If the environment is not a `VisualEnvironment`.
+    :raises TypeError: If the environment is not a
+        :class:`~simplay.core.VisualEnvironment`.
     :raises TypeError: If the graphic is not a string.
     :raises TypeError: If the tint is not an integer.
     """
@@ -98,9 +100,11 @@ class VisualizationManager:
         Add an entity to the visualization.
 
         :param entity: The entity to add.
-        :param type: The type of the entity, one of ``ComponentType``.
+        :param type: The type of the entity, one of
+            :class:`~simplay.primitives.ComponentType`.
         :raises TypeError: If the type is invalid.
-        :raises TypeError: If the entity is not a ``VisualComponent``.
+        :raises TypeError: If the entity is not a
+            :class:`~simplay.core.VisualComponent`.
 
         """
         if not isinstance(type, ComponentType):
@@ -178,7 +182,8 @@ class VisualizationManager:
         Set the grid for the visualization.
 
         :param grid: The grid to use.
-        :raises TypeError: If the grid is not a `VisualGrid`.
+        :raises TypeError: If the grid is not a
+            :class:`~simplay.visualization.VisualGrid`.
         :raises ValueError: If the grid is None.
         """
         if grid is None:

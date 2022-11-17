@@ -17,7 +17,7 @@ from .events import (
     StoreSetCapacity,
     StoreSetContent,
 )
-from .internals import ErrorText
+from .primitives import ErrorText
 
 from simpy.resources.container import ContainerAmount
 
@@ -34,7 +34,8 @@ class BasicVisualUtil:
         making it visible.
 
         :param component: The component to create the event for.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -49,7 +50,8 @@ class BasicVisualUtil:
         making it invisible.
 
         :param component: The component to create the event for.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.        
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -66,7 +68,8 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param x: The x coordinate of the component.
         :param y: The y coordinate of the component.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.        
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -81,8 +84,10 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param target: The target component.
-        :raises TypeError: If the target is not a ``VisualComponent``.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -101,7 +106,8 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param x: The x coordinate of the target cell.
         :param y: The y coordinate of the target cell.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -117,8 +123,10 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param target: The component the first component is interacting with.
-        :raises TypeError: If the target is not a ``VisualComponent``.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -139,8 +147,10 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param target: The component the first component is not interacting
             with anymore.
-        :raises TypeError: If the target is not a ``VisualComponent``.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -160,7 +170,8 @@ class BasicVisualUtil:
         :param color: The color to tint the component with, as an integer.
             To use HEX values, write them as 0xRRGGBB.
             For example: 0xFF0000 is red, 0x00FF00 is green, 0x0000FF is blue.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -175,7 +186,8 @@ class BasicVisualUtil:
         EventQueue, resetting the tint color to its initial value.
 
         :param component: The component to create the event for.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -191,7 +203,8 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param text: The text to display.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -207,7 +220,8 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param frame: The index of the frame to display.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -229,7 +243,8 @@ class ResourceVisualUtil:
 
         :param component: The component to create the event for.
         :param capacity: The capacity of the resource.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -245,7 +260,8 @@ class ResourceVisualUtil:
 
         :param component: The component to create the event for.
         :param utilization: The utilization of the resource.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -267,7 +283,8 @@ class ContainerVisualUtil:
 
         :param component: The component to create the event for.
         :param capacity: The capacity of the container.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -283,7 +300,8 @@ class ContainerVisualUtil:
 
         :param component: The component to create the event for.
         :param level: The level of the container.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -305,7 +323,8 @@ class StoreVisualUtil:
 
         :param component: The component to create the event for.
         :param capacity: The capacity of the store.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -321,7 +340,8 @@ class StoreVisualUtil:
 
         :param component: The component to create the event for.
         :param content: The content of the store.
-        :raises TypeError: If the component is not a VisualComponent.
+        :raises TypeError: If the component is not a
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)

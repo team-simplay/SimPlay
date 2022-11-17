@@ -1,5 +1,5 @@
 
-from .internals import ErrorText
+from .primitives import ErrorText
 
 
 class VisualGrid:

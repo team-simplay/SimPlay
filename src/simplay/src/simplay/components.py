@@ -10,18 +10,19 @@ from simpy.resources.store import FilterStoreGet, StoreGet, StorePut
 from .core import VisualComponent, VisualEnvironment
 from .visualutil import (ContainerVisualUtil, ResourceVisualUtil,
                          StoreVisualUtil)
-from .internals import ComponentType, ErrorText
+from .primitives import ComponentType, ErrorText
 
 
 class VisualProcess(VisualComponent):
     """
-    Shorthand for creating an entity of type ``ComponentType.PROCESS``.
+    Shorthand for creating an entity of type
+    :class:`~simplay.primitives.ComponentType.PROCESS`.
 
     :param env: The environment instance.
     :param id: The id of the component.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -48,7 +49,7 @@ class VisualResource(VisualComponent, Resource):
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -96,7 +97,7 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager``.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -147,7 +148,7 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     :param capacity: The capacity of the resource.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -199,7 +200,7 @@ class VisualContainer(VisualComponent, Container):
     :param init: The initial amount of the container.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -248,7 +249,7 @@ class VisualStore(VisualComponent, Store):
     :param capacity: The capacity of the store.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -298,7 +299,7 @@ class VisualFilterStore(VisualComponent, FilterStore):
     :param capacity: The capacity of the store.
     :param graphic: The graphic of the component, either a 'simple' visual or
         a collection of sprites. Must be registered in the
-        ``VisualizationManager``.
+        :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as

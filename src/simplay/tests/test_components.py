@@ -2,7 +2,7 @@ import pytest
 import simpy
 import src.simplay.core as simplay
 import src.simplay.components as simplay
-from src.simplay.internals import ComponentType, ErrorText, EventAction
+from simplay.primitives import ComponentType, ErrorText, EventAction
 
 
 class TestVisualResource:

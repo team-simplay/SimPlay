@@ -37,6 +37,11 @@ from .visualutil import (
     StoreVisualUtil,
 )
 
+from .primitives import (
+    ComponentType,
+    EventAction
+)
+
 from .visualization import VisualGrid
 
 from .events import (
@@ -90,6 +95,8 @@ __all__ = [
     "ContainerSetLevel",
     "StoreSetCapacity",
     "StoreSetContent",
+    "ComponentType",
+    "EventAction",
 ]
 
 
@@ -161,7 +168,14 @@ _toc = (
             StoreSetCapacity,
             StoreSetContent,
         )
-    )
+    ),
+    (
+        "Primitives",
+        (
+            ComponentType,
+            EventAction,
+        )
+    ),
 )
 
 if __doc__:

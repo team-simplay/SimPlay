@@ -1,4 +1,4 @@
-from .internals import ErrorText, EventAction
+from .primitives import ErrorText, EventAction
 from simpy.core import SimTime
 from typing import Union
 from simpy.resources.container import ContainerAmount

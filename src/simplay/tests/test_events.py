@@ -1,5 +1,5 @@
 import pytest
-from src.simplay.internals import ComponentType, ErrorText, EventAction
+from simplay.primitives import ComponentType, ErrorText, EventAction
 import src.simplay.events as simplay
 import src.simplay.core as core
 

@@ -1,6 +1,6 @@
 import src.simplay.visualutil as simplay
 import src.simplay.core as simplaycore
-from src.simplay.internals import ComponentType, ErrorText, EventAction
+from simplay.primitives import ComponentType, ErrorText, EventAction
 import pytest
 
 

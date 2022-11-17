@@ -1,6 +1,6 @@
 import pytest
 import src.simplay.visualization as simplay
-from src.simplay.internals import ErrorText
+from simplay.primitives import ErrorText
 
 
 class TestVisualGrid:
