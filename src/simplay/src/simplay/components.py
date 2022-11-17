@@ -10,6 +10,7 @@ from simpy.resources.store import FilterStoreGet, StoreGet, StorePut
 from .core import VisualComponent, VisualEnvironment
 from .visualutil import (ContainerVisualUtil, ResourceVisualUtil,
                          StoreVisualUtil)
+from .internals import ComponentType, ErrorText
 
 
 class VisualProcess(VisualComponent):
@@ -32,7 +33,7 @@ class VisualProcess(VisualComponent):
             id: str,
             graphic: str,
             tint: int):
-        super().__init__(env, id, "PROCESS", graphic, tint)
+        super().__init__(env, id, ComponentType.PROCESS, graphic, tint)
 
 
 class VisualResource(VisualComponent, Resource):
@@ -49,6 +50,8 @@ class VisualResource(VisualComponent, Resource):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises ValueError: If the capacity is not a positive integer.
+    :raises TypeError: If the capacity is not a integer.
     """
 
     def __init__(
@@ -59,10 +62,11 @@ class VisualResource(VisualComponent, Resource):
             graphic: str,
             tint: int):
         if not isinstance(capacity, int):
-            raise ValueError("Capacity must be a positive integer.")
+            raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer.")
-        VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
+            raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.RESOURCE, graphic, tint)
         Resource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -92,6 +96,8 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the capacity is not a integer.
+    :raises ValueError: If the capacity is not a positive integer.
     """
 
     def __init__(
@@ -102,10 +108,11 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
             graphic: str,
             tint: int):
         if not isinstance(capacity, int):
-            raise ValueError("Capacity must be a positive integer.")
+            raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer.")
-        VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
+            raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.RESOURCE, graphic, tint)
         PreemptiveResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -138,6 +145,8 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the capacity is not a integer.
+    :raises ValueError: If the capacity is not a positive integer.
     """
 
     def __init__(
@@ -148,10 +157,11 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
             graphic: str,
             tint: int):
         if not isinstance(capacity, int):
-            raise ValueError("Capacity must be a positive integer.")
+            raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer.")
-        VisualComponent.__init__(self, env, id, "RESOURCE", graphic, tint)
+            raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
+        VisualComponent.__init__(self, env, id, ComponentType.RESOURCE,
+                                 graphic, tint)
         PriorityResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -185,6 +195,8 @@ class VisualContainer(VisualComponent, Container):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the capacity is not a integer or float.
+    :raises ValueError: If the capacity is not a positive integer or float.
     """
 
     def __init__(
@@ -197,10 +209,11 @@ class VisualContainer(VisualComponent, Container):
         init: ContainerAmount = 0,
     ):
         if not isinstance(capacity, (int, float)):
-            raise ValueError("Capacity must be a positive integer or float.")
+            raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer or float.")
-        VisualComponent.__init__(self, env, id, "CONTAINER", graphic, tint)
+            raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.CONTAINER, graphic, tint)
         Container.__init__(self, env, capacity, init)
         ContainerVisualUtil.set_capacity(self, capacity)
         ContainerVisualUtil.set_level(self, self.level)
@@ -229,6 +242,8 @@ class VisualStore(VisualComponent, Store):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the capacity is not a integer or float.
+    :raises ValueError: If the capacity is not a positive integer or float.
     """
 
     def __init__(
@@ -240,10 +255,13 @@ class VisualStore(VisualComponent, Store):
         capacity: Union[float, int] = float("inf"),
     ):
         if not isinstance(capacity, (int, float)):
-            raise ValueError("Capacity must be a positive integer or float.")
+            raise TypeError(
+                ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer or float.")
-        VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
+            raise ValueError(
+                ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.STORE, graphic, tint)
         Store.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
 
@@ -272,6 +290,8 @@ class VisualFilterStore(VisualComponent, FilterStore):
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the capacity is not a integer or float.
+    :raises ValueError: If the capacity is not a positive integer or float.
     """
 
     def __init__(
@@ -282,10 +302,11 @@ class VisualFilterStore(VisualComponent, FilterStore):
             graphic: str,
             tint: int):
         if not isinstance(capacity, (int, float)):
-            raise ValueError("Capacity must be a positive integer or float.")
+            raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
-            raise ValueError("Capacity must be a positive integer or float.")
-        VisualComponent.__init__(self, env, id, "STORE", graphic, tint)
+            raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.STORE, graphic, tint)
         FilterStore.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
 

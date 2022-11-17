@@ -1,3 +1,7 @@
+
+from .internals import ErrorText
+
+
 class VisualGrid:
     """
     This class represents a grid for the visualization.
@@ -34,37 +38,48 @@ class VisualGrid:
         :param x: The x coordinate (column) of the top left corner of the area.
         :param y: The y coordinate (row) of the top left corner of the area.
         :param color: The color of the area.
+        :raises TypeError: If the id is not a string.
+        :raises TypeError: If the name is not a string.
+        :raises TypeError: If the height is not a positive integer.
+        :raises TypeError: If the width is not a positive integer.
+        :raises TypeError: If the x is not an integer.
+        :raises TypeError: If the y is not an integer.
+        :raises TypeError: If the color is not an integer.
+        :raises ValueError: If the id is not unique.
+        :raises ValueError: If the area overlaps with another area.
+        :raises ValueError: If x is negative or greater than the number of
+            columns.
+        :raises ValueError: If y is negative or greater than the number of
+            rows.
+        :raises ValueError: If x + width is greater than the number of columns.
+        :raises ValueError: If y + height is greater than the number of rows.
         """
         if not isinstance(id, str):
-            raise ValueError("id must be a string")
+            raise TypeError(ErrorText.ID_MUST_BE_STRING)
         if not isinstance(name, str):
-            raise ValueError("name must be a string")
-        if not isinstance(height, int):
-            raise ValueError("height must be an integer")
-        if not isinstance(width, int):
-            raise ValueError("width must be an integer")
+            raise TypeError(ErrorText.NAME_MUST_BE_STRING)
+        if not isinstance(height, int) or height < 1:
+            raise TypeError(ErrorText.HEIGHT_MUST_BE_POSITIVE_INT)
+        if not isinstance(width, int) or width < 1:
+            raise TypeError(ErrorText.WIDTH_MUST_BE_POSITIVE_INT)
         if not isinstance(x, int):
-            raise ValueError("x must be an integer")
+            raise TypeError(ErrorText.X_MUST_BE_INT)
         if not isinstance(y, int):
-            raise ValueError("y must be an integer")
+            raise TypeError(ErrorText.Y_MUST_BE_INT)
         if not isinstance(color, int):
-            raise ValueError("color must be an integer")
+            raise TypeError(ErrorText.COLOR_MUST_BE_INT)
         if x < 0 or x >= self.cols:
-            raise ValueError("x must be between 0 and cols")
+            raise ValueError(ErrorText.X_OUT_OF_BOUNDS)
         if y < 0 or y >= self.rows:
-            raise ValueError("y must be between 0 and rows")
+            raise ValueError(ErrorText.Y_OUT_OF_BOUNDS)
         if x + width > self.cols:
-            raise ValueError(
-                "x added to width must be less than or equal to cols")
+            raise ValueError(ErrorText.X_OFFSET_OUT_OF_BOUNDS)
         if y + height > self.rows:
-            raise ValueError(
-                "y added to height must be less than or equal to rows")
-        if height == 0 or width == 0:
-            raise ValueError("height and width must be greater than 0")
-        if self.check_overlap(id, height, width, x, y):
-            raise ValueError("area overlaps with another area")
-        if not self.check_areaid_unique(id):
-            raise ValueError("id must be unique")
+            raise ValueError(ErrorText.Y_OFFSET_OUT_OF_BOUNDS)
+        if self._check_overlap(id, height, width, x, y):
+            raise ValueError(ErrorText.AREA_OVERLAP)
+        if not self._check_areaid_unique(id):
+            raise ValueError(ErrorText.ID_NOT_UNIQUE)
         self.areas.append(
             {
                 "id": id,
@@ -79,29 +94,13 @@ class VisualGrid:
             }
         )
 
-    def check_areaid_unique(self, id: str):
-        """
-        Check if an area id is unique.
-
-        :param id: The id of the area.
-        :return: True if the id is unique, False otherwise.
-        """
+    def _check_areaid_unique(self, id: str):
         for area in self.areas:
             if area["id"] == id:
                 return False
         return True
 
-    def check_overlap(self, id: str, height: int, width: int, x: int, y: int):
-        """
-        Check if an area overlaps with another area.
-
-        :param id: The id of the area.
-        :param height: The height of the area in rows.
-        :param width: The width of the area in columns.
-        :param x: The x coordinate (column) of the top left corner of the area.
-        :param y: The y coordinate (row) of the top left corner of the area.
-        :return: True if the area overlaps with another area, False otherwise.
-        """
+    def _check_overlap(self, id: str, height: int, width: int, x: int, y: int):
         for area in self.areas:
             if area["id"] == id:
                 continue

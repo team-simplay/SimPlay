@@ -1,6 +1,8 @@
 from typing import List
 import jsons
 from simpy.core import SimTime, Environment
+
+from .internals import ComponentType, ErrorText
 from .events import VisualEvent
 from .visualization import VisualGrid
 
@@ -28,25 +30,30 @@ class VisualComponent:
     :param tint: The tint of the component. This only works with visuals and
      sprites that have transparent pixels. The tint is applied to the pixels
      that are not transparent.
+    :raises TypeError: If the type is invalid.
+    :raises TypeError: If the id is not a string.
+    :raises TypeError: If the environment is not a `VisualEnvironment`.
+    :raises TypeError: If the graphic is not a string.
+    :raises TypeError: If the tint is not an integer.
     """
 
     def __init__(
             self,
             env: VisualEnvironment,
             id: str,
-            type: str,
+            type: ComponentType,
             graphic: str,
             tint: int):
-        if type not in ["RESOURCE", "CONTAINER", "STORE", "PROCESS", "CUSTOM"]:
-            raise ValueError("Invalid component type.")
+        if type not in ComponentType:
+            raise ValueError(ErrorText.INVALID_COMPONENT_TYPE)
         if not isinstance(id, str):
-            raise ValueError("Id must be a string.")
+            raise TypeError(ErrorText.ID_MUST_BE_STRING)
         if not isinstance(env, VisualEnvironment):
-            raise ValueError("Env must be of type VisualEnvironment.")
+            raise TypeError(ErrorText.ENV_MUST_BE_VISUAL_ENVIRONMENT)
         if not isinstance(graphic, str):
-            raise ValueError("Graphic must be a string.")
+            raise TypeError(ErrorText.GRAPHIC_MUST_BE_STRING)
         if not isinstance(tint, int):
-            raise ValueError("Tint must be an integer.")
+            raise TypeError(ErrorText.TINT_MUST_BE_INTEGER)
         self.env = env
         self.id = id
         self.type = type
@@ -83,18 +90,22 @@ class VisualizationManager:
         The grid that is used for the visualization.
         """
 
-    def add_entity(self, entity: VisualComponent, type: str):
+    def add_entity(self, entity: VisualComponent, type: ComponentType):
         """
         Add an entity to the visualization.
 
         :param entity: The entity to add.
-        :param type: The type of the entity, one of ``'PROCESS'``,
-         ``'RESOURCE'``, ``'CONTAINER'``, ``'STORE'``, ``'CUSTOM'``.
+        :param type: The type of the entity, one of ``ComponentType.PROCESS``,
+         ``ComponentType.RESOURCE``, ``ComponentType.CONTAINER``,
+         ``ComponentType.STORE``, ``ComponentType.CUSTOM``.
+        :raises TypeError: If the type is invalid.
+        :raises TypeError: If the entity is not a `VisualComponent`.
+
         """
-        if type not in ["PROCESS", "RESOURCE", "CONTAINER", "STORE", "CUSTOM"]:
-            raise ValueError("Invalid entity type.")
+        if type not in ComponentType:
+            raise TypeError(ErrorText.INVALID_COMPONENT_TYPE)
         if not isinstance(entity, VisualComponent):
-            raise ValueError("Entity must be of type VisualComponent.")
+            raise TypeError(ErrorText.ENTITY_MUST_BE_VISUAL_COMPONENT)
 
         self.entities.append(
             {
@@ -121,16 +132,20 @@ class VisualizationManager:
         :param id: The id of the visual, it must be unique and can be used to
          reference the graphic in components.
         :param path: The path to the visual.
+        :raises TypeError: If the id is not a string.
+        :raises TypeError: If the path is not a string.
+        :raises ValueError: If the id is not unique.
+        :raises ValueError: If the path is empty.
         """
         for v in self.visuals:
             if v["id"] == id:
-                raise ValueError("Visual id must be unique.")
+                raise ValueError(ErrorText.ID_NOT_UNIQUE)
         if path is None or path == "":
-            raise ValueError("Visual path must not be None / empty.")
+            raise ValueError(ErrorText.PATH_EMPTY)
         if not isinstance(path, str):
-            raise ValueError("Visual path must be a string.")
+            raise TypeError(ErrorText.PATH_MUST_BE_STRING)
         if not isinstance(id, str):
-            raise ValueError("Visual id must be a string.")
+            raise TypeError(ErrorText.ID_MUST_BE_STRING)
         self.visuals.append({"id": id, "path": path})
 
     def register_sprite(self, id: str, frames: List[str]):
@@ -140,16 +155,20 @@ class VisualizationManager:
         :param id: The id of the sprite, it must be unique and can be used to
          reference the graphic in components.
         :param frames: A list of paths to the frames of the sprite.
+        :raises TypeError: If the id is not a string.
+        :raises TypeError: If the frames are not a list.
+        :raises ValueError: If the id is not unique.
+        :raises ValueError: If the frames are empty.
         """
         for s in self.sprites:
             if s["id"] == id:
-                raise ValueError("Sprite id must be unique.")
+                raise ValueError(ErrorText.ID_NOT_UNIQUE)
         if frames is None or len(frames) == 0:
-            raise ValueError("Sprite frames must not be None / empty.")
+            raise ValueError(ErrorText.FRAMES_MUST_NOT_BE_EMPTY)
         if not all(isinstance(f, str) for f in frames):
-            raise ValueError("Sprite frames must be a list of strings.")
+            raise TypeError(ErrorText.FRAMES_MUST_BE_LIST_OF_STRINGS)
         if not isinstance(id, str):
-            raise ValueError("Sprite id must be a string.")
+            raise TypeError(ErrorText.ID_MUST_BE_STRING)
 
         self.sprites.append({"id": id, "frames": frames})
 
@@ -158,12 +177,13 @@ class VisualizationManager:
         Set the grid for the visualization.
 
         :param grid: The grid to use.
+        :raises TypeError: If the grid is not a `VisualGrid`.
+        :raises ValueError: If the grid is None.
         """
         if grid is None:
-            raise ValueError("Grid must not be None.")
-
+            raise ValueError(ErrorText.GRID_MUST_NOT_BE_NONE)
         if not isinstance(grid, VisualGrid):
-            raise ValueError("Grid must be of type VisualGrid.")
+            raise TypeError(ErrorText.GRID_MUST_BE_VISUAL_GRID)
         self.grid = grid
 
     def serialize(self) -> str:

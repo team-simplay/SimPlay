@@ -17,6 +17,7 @@ from .events import (
     StoreSetCapacity,
     StoreSetContent,
 )
+from .internals import ErrorText
 
 from simpy.resources.container import ContainerAmount
 
@@ -34,10 +35,8 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetVisible(component.id, component.env.now, True)
+            SetVisible(component, component.env.now, True)
         )
 
     @staticmethod
@@ -48,10 +47,8 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetVisible(component.id, component.env.now, False)
+            SetVisible(component, component.env.now, False)
         )
 
     @staticmethod
@@ -63,10 +60,8 @@ class BasicVisualUtil:
         :param x: The x coordinate of the component.
         :param y: The y coordinate of the component.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetPosition(component.id, component.env.now, x, y)
+            SetPosition(component, component.env.now, x, y)
         )
 
     @staticmethod
@@ -76,13 +71,12 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param target: The target component.
+        :raises TypeError: If the target is not a `VisualComponent`.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         if not isinstance(target, VisualComponent):
-            raise TypeError("target must be a VisualComponent")
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
         component.env.visualization_manager.add_event(
-            MoveNear(component.id, component.env.now, target.id)
+            MoveNear(component, component.env.now, target.id)
         )
 
     @staticmethod
@@ -94,10 +88,8 @@ class BasicVisualUtil:
         :param x: The x coordinate of the target cell.
         :param y: The y coordinate of the target cell.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            MoveNearCell(component.id, component.env.now, x, y)
+            MoveNearCell(component, component.env.now, x, y)
         )
 
     @staticmethod
@@ -107,13 +99,12 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param target: The component the first component is interacting with.
+        :raises TypeError: If the target is not a `VisualComponent`.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         if not isinstance(target, VisualComponent):
             raise TypeError("target must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetInteracting(component.id, component.env.now, target.id)
+            SetInteracting(component, component.env.now, target.id)
         )
 
     @staticmethod
@@ -126,14 +117,13 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :param target: The component the first component is not interacting
-         with anymore.
+            with anymore.
+        :raises TypeError: If the target is not a `VisualComponent`.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         if not isinstance(target, VisualComponent):
             raise TypeError("target must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetNotInteracting(component.id, component.env.now, target.id)
+            SetNotInteracting(component, component.env.now, target.id)
         )
 
     @staticmethod
@@ -144,10 +134,8 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param color: The color to tint the component with.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetTintColor(component.id, component.env.now, color)
+            SetTintColor(component, component.env.now, color)
         )
 
     @staticmethod
@@ -158,10 +146,8 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetTintColor(component.id, component.env.now, component.tint)
+            SetTintColor(component, component.env.now, component.tint)
         )
 
     @staticmethod
@@ -173,10 +159,8 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param text: The text to display.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetDecoratingText(component.id, component.env.now, text)
+            SetDecoratingText(component, component.env.now, text)
         )
 
     @staticmethod
@@ -187,10 +171,8 @@ class BasicVisualUtil:
         :param component: The component to create the event for.
         :param frame: The index of the frame to display.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            SetSpriteFrame(component.id, component.env.now, frame)
+            SetSpriteFrame(component, component.env.now, frame)
         )
 
 
@@ -208,10 +190,8 @@ class ResourceVisualUtil:
         :param component: The component to create the event for.
         :param capacity: The capacity of the resource.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            ResourceSetCapacity(component.id, component.env.now, capacity)
+            ResourceSetCapacity(component, component.env.now, capacity)
         )
 
     @staticmethod
@@ -223,11 +203,9 @@ class ResourceVisualUtil:
         :param component: The component to create the event for.
         :param utilization: The utilization of the resource.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
             ResourceSetUtilization(
-                component.id, component.env.now, utilization))
+                component, component.env.now, utilization))
 
 
 class ContainerVisualUtil:
@@ -244,10 +222,8 @@ class ContainerVisualUtil:
         :param component: The component to create the event for.
         :param capacity: The capacity of the container.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            ContainerSetCapacity(component.id, component.env.now, capacity)
+            ContainerSetCapacity(component, component.env.now, capacity)
         )
 
     @staticmethod
@@ -259,10 +235,8 @@ class ContainerVisualUtil:
         :param component: The component to create the event for.
         :param level: The level of the container.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            ContainerSetLevel(component.id, component.env.now, level)
+            ContainerSetLevel(component, component.env.now, level)
         )
 
 
@@ -279,10 +253,8 @@ class StoreVisualUtil:
         :param component: The component to create the event for.
         :param capacity: The capacity of the store.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            StoreSetCapacity(component.id, component.env.now, capacity)
+            StoreSetCapacity(component, component.env.now, capacity)
         )
 
     @staticmethod
@@ -293,8 +265,6 @@ class StoreVisualUtil:
         :param component: The component to create the event for.
         :param content: The content of the store.
         """
-        if not isinstance(component, VisualComponent):
-            raise TypeError("component must be a VisualComponent")
         component.env.visualization_manager.add_event(
-            StoreSetContent(component.id, component.env.now, content)
+            StoreSetContent(component, component.env.now, content)
         )
