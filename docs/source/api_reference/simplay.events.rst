@@ -3,52 +3,53 @@
 =========================================
 
 .. automodule:: simplay.events
-   
-    .. autoclass:: VisualEvent
+
+   .. autoclass:: VisualEvent
        :inherited-members:
     
-    .. autoclass:: SetVisible
+   .. autoclass:: SetVisible
        :inherited-members:
 
-    .. autoclass:: SetPosition
+   .. autoclass:: SetPosition
        :inherited-members:
 
-    .. autoclass:: SetInteracting
+   .. autoclass:: SetInteracting
        :inherited-members:
     
-    .. autoclass:: SetNotInteracting
+   .. autoclass:: SetNotInteracting
        :inherited-members:
     
-    .. autoclass:: MoveNear
+   .. autoclass:: MoveNear
        :inherited-members:
     
-    .. autoclass:: MoveNearCell
+   .. autoclass:: MoveNearCell
        :inherited-members:
     
-    .. autoclass:: SetTintColor
+   .. autoclass:: SetTintColor
        :inherited-members:
     
-    .. autoclass:: SetSpriteFrame
+   .. autoclass:: SetSpriteFrame
        :inherited-members:
     
-    .. autoclass:: SetDecoratingText
+   .. autoclass:: SetDecoratingText
        :inherited-members:
     
-    .. autoclass:: ResourceSetCapacity
+   .. autoclass:: ResourceSetCapacity
        :inherited-members:
     
-    .. autoclass:: ResourceSetUtilization
+   .. autoclass:: ResourceSetUtilization
        :inherited-members:
     
-    .. autoclass:: ContainerSetCapacity
+   .. autoclass:: ContainerSetCapacity
        :inherited-members:
     
-    .. autoclass:: ContainerSetLevel
+   .. autoclass:: ContainerSetLevel
        :inherited-members:
     
-    .. autoclass:: StoreSetCapacity
+   .. autoclass:: StoreSetCapacity
        :inherited-members:
     
-    .. autoclass:: StoreSetContent
-       :inherited-members:
+   .. autoclass:: StoreSetContent
+       :inherited-members:  
+    
 

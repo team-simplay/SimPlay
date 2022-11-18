@@ -1,0 +1,95 @@
+name: Lint and Test Simplay Python Package
+
+on:
+  pull_request:
+    paths:
+      - 'src/simplay/**'
+permissions:
+  contents: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: |
+          cd src/simplay
+          python -m build
+      - name: Format package
+        run: |
+          cd src/simplay
+          python -m pip install --upgrade pip
+          pip install autopep8
+          pip install dist/*.whl
+          python -m autopep8 --in-place --aggressive --aggressive --recursive src/simplay
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: ${{ github.actor }}
+          author_email: ${{ github.actor }}@users.noreply.github.com
+          message: "Linting"
+          add: "src/simplay"
+      - name: Lint package
+        run: |
+          cd src/simplay
+          python -m pip install --upgrade pip
+          pip install pycodestyle
+          pip install dist/*.whl
+          python -m pycodestyle src/simplay
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: |
+          cd src/simplay
+          python -m build
+      - name: Test package
+        run: |
+          cd src/simplay
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install dist/*.whl
+          python -m pytest
+  
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: |
+          cd src/simplay
+          python -m build
+      - name: Check coverage
+        run: |
+          cd src/simplay
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install pytest-cov
+          pip install dist/*.whl
+          python -m pytest --cov=src.simplay tests/
