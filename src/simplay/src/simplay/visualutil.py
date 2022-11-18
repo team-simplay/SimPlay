@@ -51,7 +51,7 @@ class BasicVisualUtil:
 
         :param component: The component to create the event for.
         :raises TypeError: If the component is not a
-            :class:`~simplay.core.VisualComponent`.        
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
@@ -69,7 +69,7 @@ class BasicVisualUtil:
         :param x: The x coordinate of the component.
         :param y: The y coordinate of the component.
         :raises TypeError: If the component is not a
-            :class:`~simplay.core.VisualComponent`.        
+            :class:`~simplay.core.VisualComponent`.
         """
         if not isinstance(component, VisualComponent):
             raise TypeError(ErrorText.COMPONENT_MUST_BE_VISUAL_COMPONENT)
