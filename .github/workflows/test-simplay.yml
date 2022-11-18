@@ -38,7 +38,6 @@ jobs:
           author_email: ${{ github.actor }}@users.noreply.github.com
           message: "Linting"
           add: "src/simplay"
-          force: true
       - name: Lint package
         run: |
           cd src/simplay
