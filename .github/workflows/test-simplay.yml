@@ -86,7 +86,7 @@ jobs:
         run: |
           cd src/simplay
           python -m build
-      - name: Test package
+      - name: Check coverage
         run: |
           cd src/simplay
           python -m pip install --upgrade pip
