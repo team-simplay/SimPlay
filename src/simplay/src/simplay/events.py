@@ -3,6 +3,7 @@ from simpy.core import SimTime
 from typing import Union
 from simpy.resources.container import ContainerAmount
 
+
 class VisualEvent:
     """
     Base class for all visual events.
