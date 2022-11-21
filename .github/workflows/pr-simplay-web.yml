@@ -33,7 +33,6 @@ jobs:
         with: 
           run: npm run test:coverage
           working-directory: ./src/simplay-web
-          working-directory:
   build:
     runs-on: ubuntu-latest
     steps:
