@@ -28,11 +28,12 @@ jobs:
         run: |
           cd src/simplay-web
           npm i
-      - uses: GabrielBB/xvfb-action@v1.0
-        name: run tests
+      - name: run tests
+        uses: GabrielBB/xvfb-action@v1
         with: 
           run: npm run test:coverage
           working-directory: ./src/simplay-web
+          working-directory:
   build:
     runs-on: ubuntu-latest
     steps:
