@@ -1,11 +1,11 @@
-import { SimulationData, SimulationSpooler } from "../../src/SimulationSpooler";
+import { SimulationData, SimulationSpooler } from '../../src/SimulationSpooler';
 
 let data: SimulationData;
-const container = document.getElementById("simulationContainer");
+const container = document.getElementById('simulationContainer');
 let animation: SimulationSpooler;
 
 async function readData(): Promise<void> {
-  const response = await fetch("events.json", { cache: "no-store" });
+  const response = await fetch('events.json', { cache: 'no-store' });
   data = await response.json();
 }
 
@@ -18,7 +18,7 @@ async function init() {
 }
 
 function registerClicks() {
-  document.querySelector("#btnStart")?.addEventListener("click", async () => {
+  document.querySelector('#btnStart')?.addEventListener('click', async () => {
     animation.run();
   });
 }

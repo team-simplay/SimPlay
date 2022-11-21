@@ -1,3 +1,7 @@
-test("adds 1 + 2 to equal 3", () => {
-  expect(1 + 2).toBe(3);
+import { expect } from 'chai';
+
+describe('SimulationSpooler tests', function () {
+  it('Should add 1 + 2 to equal 3', () => {
+    expect(1 + 2).to.equal(3);
+  });
 });

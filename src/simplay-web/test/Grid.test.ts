@@ -1,14 +1,14 @@
-import { create } from "../src/Grid";
-import * as PIXI from "pixi.js";
-import { expect } from "chai";
-import { mock, when, instance } from "ts-mockito";
+import { create } from '../src/Grid';
+import * as PIXI from 'pixi.js';
+import { expect } from 'chai';
+import { mock, when, instance } from 'ts-mockito';
 
-describe("Grid tests", function () {
+describe('Grid tests', function () {
   const grid = {
     areas: [
       {
-        id: "gridId",
-        name: "gridName",
+        id: 'gridId',
+        name: 'gridName',
         color: 0x1234af,
         gridDefinition: {
           width: 2,
@@ -22,7 +22,7 @@ describe("Grid tests", function () {
     rows: 5,
   };
 
-  it("Should create a pixijs Application", () => {
+  it('Should create a pixijs Application', () => {
     const containerWidth = 500;
     const containerHeight = 400;
 
@@ -37,11 +37,13 @@ describe("Grid tests", function () {
     expect(app.view.height).to.equal(containerHeight);
   });
 
-  it("Should create tiles", () => {
+  it('Should create tiles', () => {
     const containerMock = mock(HTMLElement);
     const container = instance(containerMock);
 
     const app = create(grid, container);
-    expect(app.stage.getChildByName("")).to.be.an.instanceof(PIXI.Application);
+    expect(app.stage.getChildByName('area-0-0', true)).to.be.an.instanceof(
+      PIXI.Graphics
+    );
   });
 });
