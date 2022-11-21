@@ -1,9 +1,9 @@
+import { create } from './Grid';
+
 export interface SimplayGrid {
   areas: Area[];
   cols: number;
   rows: number;
-  height: number;
-  width: number;
 }
 
 export interface Area {
@@ -20,18 +20,18 @@ export interface Area {
 
 export interface EventUnserialized {
   action:
-    | "log"
-    | "system"
-    | "setDecoratingText"
-    | "setPosition"
-    | "setVisible"
-    | "setRemoveInteracting"
-    | "setCreateInteracting"
-    | "setNotInteracting"
-    | "moveNear"
-    | "moveNearPoint"
-    | "container.setLevel"
-    | "resource.setUtilization"; // TODO what else should be available?
+    | 'log'
+    | 'system'
+    | 'setDecoratingText'
+    | 'setPosition'
+    | 'setVisible'
+    | 'setRemoveInteracting'
+    | 'setCreateInteracting'
+    | 'setNotInteracting'
+    | 'moveNear'
+    | 'moveNearPoint'
+    | 'container.setLevel'
+    | 'resource.setUtilization'; // TODO what else should be available?
   args: Args;
   forId: string;
   timestamp: number;
@@ -117,38 +117,38 @@ export class SimulationSpooler {
   constructor(simulationData: SimulationData, container: HTMLElement) {
     this.simulationData = simulationData;
     this.DOMContainer = container;
-    throw Error("TODO implement");
+    create(simulationData.grid, container);
   }
 
   run(speedFactor = 1) {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   pause() {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   continue() {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   skipTo() {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   reset() {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   setSpeedFactor() {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   increaseSpeed(increaseBy: number) {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 
   decreaseSpeed(decreaseBy: number) {
-    throw Error("TODO implement");
+    throw Error('TODO implement');
   }
 }

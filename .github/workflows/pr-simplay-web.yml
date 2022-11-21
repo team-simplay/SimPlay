@@ -24,11 +24,15 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - name: run tests
+      - name: run install
         run: |
           cd src/simplay-web
           npm i
-          npm run test
+      - name: run tests
+        uses: GabrielBB/xvfb-action@v1
+        with: 
+          run: npm run test:coverage
+          working-directory: ./src/simplay-web
   build:
     runs-on: ubuntu-latest
     steps:

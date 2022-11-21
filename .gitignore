@@ -2,3 +2,7 @@
 **node_modules
 **build
 **__pycache__
+**.vscode
+**generated
+**.nyc_output/
+**coverage

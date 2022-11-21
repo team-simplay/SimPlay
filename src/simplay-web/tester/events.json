@@ -1,0 +1,151 @@
+{
+  "events": [
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 1,
+        "y": 1
+      },
+      "forId": "Car 0",
+      "timestamp": 0
+    },
+    {
+      "action": "setVisible",
+      "args": {
+        "visible": true
+      },
+      "forId": "Car 0",
+      "timestamp": 0
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 1,
+        "y": 1
+      },
+      "forId": "Car 0",
+      "timestamp": 3
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 60,
+        "y": 60
+      },
+      "forId": "Car 0",
+      "timestamp": 5
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 280,
+        "y": 280
+      },
+      "forId": "Car 1",
+      "timestamp": 9
+    },
+    {
+      "action": "setVisible",
+      "args": {
+        "visible": true
+      },
+      "forId": "Car 1",
+      "timestamp": 9
+    },
+    {
+      "action": "log",
+      "args": {
+        "text": "Car 1 arriving at gas station at 9.0"
+      },
+      "forId": "console",
+      "timestamp": 9
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 50,
+        "y": 50
+      },
+      "forId": "Car 0",
+      "timestamp": 12
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 260,
+        "y": 260
+      },
+      "forId": "Car 1",
+      "timestamp": 14
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 70,
+        "y": 70
+      },
+      "forId": "Car 0",
+      "timestamp": 16
+    },
+    {
+      "action": "setPosition",
+      "args": {
+        "x": 240,
+        "y": 240
+      },
+      "forId": "Car 1",
+      "timestamp": 19
+    }
+  ],
+  "entities": [
+    {
+      "id": "Car 0",
+      "type": "process",
+      "visual": "CAR",
+      "tint": 1867825.2667952755
+    },
+    {
+      "id": "Car 1",
+      "type": "process",
+      "visual": "CAR",
+      "tint": 300000.2667952755
+    }
+  ],
+  "visuals": [
+    {
+      "id": "CAR",
+      "visual": "./resources/car.png"
+    },
+    {
+      "id": "TANK_TRUCK",
+      "visual": "./resources/truck.png"
+    },
+    {
+      "id": "GAS_STATION",
+      "visual": "./resources/gaspump.png"
+    },
+    {
+      "id": "FUEL_PUMP",
+      "visual": "./resources/pump.png"
+    }
+  ],
+  "grid": {
+    "areas": [
+      {
+        "id": "gasstation01",
+        "name": "GAS_STATION",
+        "color": 16777215,
+        "gridDefinition": {
+          "height": 3,
+          "width": 5,
+          "x": 0,
+          "y": 0
+        }
+      }
+    ],
+    "height": 500,
+    "width": 500,
+    "cols": 5,
+    "rows": 3
+  }
+}
