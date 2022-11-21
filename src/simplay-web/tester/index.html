@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h1>Hi PIXI.js</h1>
+    <div>
+      <button id="btnStart">Start</button>
+      <button id="btnPause">Pause</button>
+      <button id="btnReset">Reset</button>
+      <button id="btnNextFrame">Next frame</button>
+    </div>
+    <div>
+      <span>Current tick: </span>
+      <span id="currentTick">0</span>
+    </div>
+    <div>
+      <span>MS per tick:</span>
+      <input type="number" id="msPerTick" value="1000" />
+    </div>
+    <div>
+      <span>Skip to tick:</span>
+      <input type="number" id="skipToTick" value="0" />
+      <button id="btnSkip">Skip</button>
+    </div>
+    <div id="simulationContainer" style="width: 500px; height: 500px"></div>
+    <script type="module" src="./dist/index.js"></script>
+  </body>
+</html>

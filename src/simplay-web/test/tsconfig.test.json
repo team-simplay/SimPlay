@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ESNext" /*This is a library and if needed can be transpiled by users.*/,
-    "module": "ESNext",
-    "rootDir": "./src",
+    "target": "ES2015",
+    "module": "CommonJS",
+    "rootDir": ".",
     "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true
-    //"declaration": true
   },
   "exclude": ["node_modules", "test", "dist", "tester", "**/*.test.ts"]
 }

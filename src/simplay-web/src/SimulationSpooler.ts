@@ -1,9 +1,9 @@
+import { create } from "./Grid";
+
 export interface SimplayGrid {
   areas: Area[];
   cols: number;
   rows: number;
-  height: number;
-  width: number;
 }
 
 export interface Area {
@@ -117,7 +117,7 @@ export class SimulationSpooler {
   constructor(simulationData: SimulationData, container: HTMLElement) {
     this.simulationData = simulationData;
     this.DOMContainer = container;
-    throw Error("TODO implement");
+    create(simulationData.grid, container);
   }
 
   run(speedFactor = 1) {
