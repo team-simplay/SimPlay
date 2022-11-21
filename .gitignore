@@ -1,8 +1,5 @@
 **dist
-<<<<<<< HEAD
-**node_modules
-=======
 **node_modules
 **build
 **__pycache__
->>>>>>> main
+**.vscode
