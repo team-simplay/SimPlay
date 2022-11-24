@@ -1,7 +1,6 @@
-import { StoreSetCapacityEventArgs } from "./StoreSetCapacityEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { StoreSetCapacityEventArgs } from './StoreSetCapacityEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class StoreSetCapacityEvent extends Event {
   readonly args: StoreSetCapacityEventArgs;

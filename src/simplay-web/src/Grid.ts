@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
-import { SimplayGrid } from "./SimplayGrid";
+import { SimplayGrid } from './SimplayGrid';
 
 export function create(
   grid: SimplayGrid,

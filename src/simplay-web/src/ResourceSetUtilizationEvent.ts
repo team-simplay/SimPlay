@@ -1,7 +1,6 @@
-import { ResourceSetUtilizationEventArgs } from "./ResourceSetUtilizationEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { ResourceSetUtilizationEventArgs } from './ResourceSetUtilizationEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class ResourceSetUtilizationEvent extends Event {
   readonly args: ResourceSetUtilizationEventArgs;

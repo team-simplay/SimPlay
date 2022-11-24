@@ -1,7 +1,6 @@
-import { SetDecoratingTextEventArgs } from "./SetDecoratingTextEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { SetDecoratingTextEventArgs } from './SetDecoratingTextEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class SetDecoratingTextEvent extends Event {
   readonly args: SetDecoratingTextEventArgs;

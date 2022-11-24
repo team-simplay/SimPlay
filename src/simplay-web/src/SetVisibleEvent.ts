@@ -1,5 +1,5 @@
 import { Event } from './Event';
-import { EventAction } from "./EventAction";
+import { EventAction } from './EventAction';
 import { SetVisibleEventArgs } from './SetVisibleEventArgs';
 
 export class SetVisibleEvent extends Event {

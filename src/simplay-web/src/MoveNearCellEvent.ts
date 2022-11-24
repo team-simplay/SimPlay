@@ -1,7 +1,6 @@
-import { MoveNearCellEventArgs } from "./MoveNearCellEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { MoveNearCellEventArgs } from './MoveNearCellEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class MoveNearCellEvent extends Event {
   readonly args: MoveNearCellEventArgs;

@@ -1,5 +1,4 @@
-import { Area } from "./Area";
-
+import { Area } from './Area';
 
 export interface SimplayGrid {
   readonly areas: Area[];

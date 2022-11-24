@@ -1,6 +1,5 @@
 import { EventAction } from './EventAction';
 
-
 export interface EventSerialized {
   forId: string;
   timestamp: number;

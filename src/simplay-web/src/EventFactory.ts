@@ -4,7 +4,7 @@ import { ContainerSetLevelEvent } from './ContainerSetLevelEvent';
 import { ContainerSetLevelEventArgs } from './ContainerSetLevelEventArgs';
 import { EventAction } from './EventAction';
 import { EventArgs } from './EventArgs';
-import { EventArgsCtor } from "./EventArgsCtor";
+import { EventArgsCtor } from './EventArgsCtor';
 import { EventCtor } from './EventCtor';
 import { EventSerialized } from './EventSerialized';
 import { MoveNearCellEvent } from './MoveNearCellEvent';
@@ -34,7 +34,6 @@ import { StoreSetCapacityEventArgs } from './StoreSetCapacityEventArgs';
 import { StoreSetContentEvent } from './StoreSetContentEvent';
 import { StoreSetContentEventArgs } from './StoreSetContentEventArgs';
 import { Event } from './Event';
-
 
 export class EventFactory {
   public static fromSerialized(serialized: EventSerialized): Event {

@@ -1,7 +1,6 @@
-import { SetPositionEventArgs } from "./SetPositionEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { SetPositionEventArgs } from './SetPositionEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class SetPositionEvent extends Event {
   readonly args: SetPositionEventArgs;

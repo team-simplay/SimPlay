@@ -1,7 +1,6 @@
-import { ContainerSetCapacityEventArgs } from "./ContainerSetCapacityEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { ContainerSetCapacityEventArgs } from './ContainerSetCapacityEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class ContainerSetCapacityEvent extends Event {
   readonly args: ContainerSetCapacityEventArgs;

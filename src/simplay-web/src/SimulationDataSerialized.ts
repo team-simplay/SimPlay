@@ -4,7 +4,6 @@ import { SimplayGrid } from './SimplayGrid';
 import { Sprite } from './Sprite';
 import { Visual } from './Visual';
 
-
 export interface SimulationDataSerialized {
   entities: Entity[];
   grid: SimplayGrid;

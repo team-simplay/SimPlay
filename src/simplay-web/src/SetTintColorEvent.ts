@@ -1,7 +1,6 @@
-import { SetTintColorEventArgs } from "./SetTintColorEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { SetTintColorEventArgs } from './SetTintColorEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class SetTintColorEvent extends Event {
   readonly args: SetTintColorEventArgs;

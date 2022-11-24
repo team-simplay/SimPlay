@@ -1,7 +1,6 @@
-import { MoveNearEventArgs } from "./MoveNearEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { MoveNearEventArgs } from './MoveNearEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class MoveNearEvent extends Event {
   readonly args: MoveNearEventArgs;

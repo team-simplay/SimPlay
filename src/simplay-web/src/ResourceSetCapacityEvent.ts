@@ -1,7 +1,6 @@
-import { ResourceSetCapacityEventArgs } from "./ResourceSetCapacityEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { ResourceSetCapacityEventArgs } from './ResourceSetCapacityEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class ResourceSetCapacityEvent extends Event {
   readonly args: ResourceSetCapacityEventArgs;

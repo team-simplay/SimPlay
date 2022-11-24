@@ -1,7 +1,6 @@
-import { StoreSetContentEventArgs } from "./StoreSetContentEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { StoreSetContentEventArgs } from './StoreSetContentEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class StoreSetContentEvent extends Event {
   readonly args: StoreSetContentEventArgs;

@@ -1,7 +1,6 @@
-import { SetSpriteFrameEventArgs } from "./SetSpriteFrameEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { SetSpriteFrameEventArgs } from './SetSpriteFrameEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class SetSpriteFrameEvent extends Event {
   readonly args: SetSpriteFrameEventArgs;

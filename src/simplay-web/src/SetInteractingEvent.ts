@@ -1,7 +1,6 @@
-import { SetInteractingEventArgs } from "./SetInteractingEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { SetInteractingEventArgs } from './SetInteractingEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class SetInteractingEvent extends Event {
   readonly args: SetInteractingEventArgs;

@@ -1,7 +1,6 @@
-import { ContainerSetLevelEventArgs } from "./ContainerSetLevelEventArgs";
-import { Event } from "./Event";
-import { EventAction } from "./EventAction";
-
+import { ContainerSetLevelEventArgs } from './ContainerSetLevelEventArgs';
+import { Event } from './Event';
+import { EventAction } from './EventAction';
 
 export class ContainerSetLevelEvent extends Event {
   readonly args: ContainerSetLevelEventArgs;
