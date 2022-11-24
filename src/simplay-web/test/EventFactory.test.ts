@@ -171,4 +171,15 @@ describe('EventFactory tests', function () {
     } as EventSerialized);
     expect(event instanceof StoreSetContentEvent).to.be.true;
   });
+
+  it('should throw error on unknown action', () => {
+    expect(() =>
+      EventFactory.fromSerialized({
+        action: 'foo' as EventAction,
+        forId: forId,
+        timestamp: timestamp,
+        args: {},
+      } as EventSerialized)
+    ).to.throw();
+  });
 });

@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class ContainerSetLevelEventArgs extends EventArgs {
-  level: number;
+  readonly level: number;
 
   constructor(args: { level: number }) {
     super(args);
