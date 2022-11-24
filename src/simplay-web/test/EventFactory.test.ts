@@ -172,6 +172,15 @@ describe('EventFactory tests', function () {
     expect(event instanceof StoreSetContentEvent).to.be.true;
   });
 
+  it('should also work from plain JSON', () => {
+    const jsonEvent =
+      '{"action":"SET_VISIBLE","forId":"leet","timestamp":1337,"args":{"visible":true}}';
+    const event = EventFactory.fromSerialized(
+      JSON.parse(jsonEvent) as EventSerialized
+    ) as SetVisibleEvent;
+    expect(event instanceof SetVisibleEvent).to.be.true;
+  });
+
   it('should throw error on unknown action', () => {
     expect(() =>
       EventFactory.fromSerialized({
