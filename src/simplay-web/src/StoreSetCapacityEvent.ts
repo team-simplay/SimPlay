@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class StoreSetCapacityEvent extends Event {
-  args: StoreSetCapacityEventArgs;
+  readonly args: StoreSetCapacityEventArgs;
   constructor(
     forId: string,
     timestamp: number,

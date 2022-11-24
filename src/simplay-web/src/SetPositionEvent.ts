@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class SetPositionEvent extends Event {
-  args: SetPositionEventArgs;
+  readonly args: SetPositionEventArgs;
   constructor(forId: string, timestamp: number, args: SetPositionEventArgs) {
     super(forId, timestamp, EventAction.SET_POSITION, args);
     this.args = args;

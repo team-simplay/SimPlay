@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class ContainerSetLevelEvent extends Event {
-  args: ContainerSetLevelEventArgs;
+  readonly args: ContainerSetLevelEventArgs;
   constructor(
     forId: string,
     timestamp: number,

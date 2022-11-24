@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class SetInteractingEventArgs extends EventArgs {
-  withId: string;
+  readonly withId: string;
 
   constructor(args: { withId: string }) {
     super(args);

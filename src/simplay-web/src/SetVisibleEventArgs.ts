@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class SetVisibleEventArgs extends EventArgs {
-  visible: boolean;
+  readonly visible: boolean;
 
   constructor(args: { visible: boolean }) {
     super(args);

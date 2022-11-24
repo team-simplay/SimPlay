@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class SetDecoratingTextEvent extends Event {
-  args: SetDecoratingTextEventArgs;
+  readonly args: SetDecoratingTextEventArgs;
   constructor(
     forId: string,
     timestamp: number,

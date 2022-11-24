@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class SetSpriteFrameEvent extends Event {
-  args: SetSpriteFrameEventArgs;
+  readonly args: SetSpriteFrameEventArgs;
   constructor(forId: string, timestamp: number, args: SetSpriteFrameEventArgs) {
     super(forId, timestamp, EventAction.SET_SPRITE_FRAME, args);
     this.args = args;

@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class MoveNearEvent extends Event {
-  args: MoveNearEventArgs;
+  readonly args: MoveNearEventArgs;
   constructor(forId: string, timestamp: number, args: MoveNearEventArgs) {
     super(forId, timestamp, EventAction.MOVE_NEAR, args);
     this.args = args;

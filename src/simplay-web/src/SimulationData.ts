@@ -1,25 +1,17 @@
 import { Entity } from './Entity';
 import { Event } from './Event';
 import { EventFactory } from './EventFactory';
-import { EventSerialized } from './EventSerialized';
 import { SimplayGrid } from './SimplayGrid';
+import { SimulationDataSerialized } from './SimulationDataSerialized';
 import { Sprite } from './Sprite';
 import { Visual } from './Visual';
 
-export interface SimulationDataSerialized {
-  entities: Entity[];
-  grid: SimplayGrid;
-  sprites: Sprite[];
-  visuals: Visual[];
-  events: EventSerialized[];
-}
-
 export class SimulationData {
-  events: Event[];
-  grid: SimplayGrid;
-  entities: Entity[];
-  visuals: Visual[];
-  sprites: Sprite[];
+  readonly events: Event[];
+  readonly grid: SimplayGrid;
+  readonly entities: Entity[];
+  readonly visuals: Visual[];
+  readonly sprites: Sprite[];
 
   constructor(
     events: Event[],

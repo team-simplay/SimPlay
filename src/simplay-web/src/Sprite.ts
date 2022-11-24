@@ -1,5 +1,4 @@
-
 export interface Sprite {
-    id: string;
-    frames: string[];
+  id: string;
+  frames: string[];
 }

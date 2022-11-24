@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class SetDecoratingTextEventArgs extends EventArgs {
-  text: string;
+  readonly text: string;
 
   constructor(args: { text: string }) {
     super(args);

@@ -2,7 +2,7 @@ import { EventArgs } from "./EventArgs";
 
 
 export class MoveNearEventArgs extends EventArgs {
-  target: string;
+  readonly target: string;
 
   constructor(args: { target: string; }) {
     super(args);

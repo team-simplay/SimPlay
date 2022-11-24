@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class StoreSetContentEventArgs extends EventArgs {
-  content: {
+  readonly content: {
     resourceId: number;
     amount: number;
   }[];

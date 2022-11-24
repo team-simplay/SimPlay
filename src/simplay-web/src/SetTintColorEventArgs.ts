@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class SetTintColorEventArgs extends EventArgs {
-  color: number;
+  readonly color: number;
 
   constructor(args: { color: number }) {
     super(args);

@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class SetSpriteFrameEventArgs extends EventArgs {
-  frame: number;
+  readonly frame: number;
 
   constructor(args: { frame: number }) {
     super(args);

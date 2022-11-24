@@ -1,7 +1,7 @@
 import { EventArgs } from './EventArgs';
 
 export class ResourceSetCapacityEventArgs extends EventArgs {
-  capacity: number;
+  readonly capacity: number;
 
   constructor(args: { capacity: number }) {
     super(args);

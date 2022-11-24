@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class ContainerSetCapacityEvent extends Event {
-  args: ContainerSetCapacityEventArgs;
+  readonly args: ContainerSetCapacityEventArgs;
   constructor(
     forId: string,
     timestamp: number,

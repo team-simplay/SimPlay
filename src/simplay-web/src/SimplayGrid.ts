@@ -2,7 +2,7 @@ import { Area } from "./Area";
 
 
 export interface SimplayGrid {
-  areas: Area[];
-  cols: number;
-  rows: number;
+  readonly areas: Area[];
+  readonly cols: number;
+  readonly rows: number;
 }

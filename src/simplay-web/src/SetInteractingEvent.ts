@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class SetInteractingEvent extends Event {
-  args: SetInteractingEventArgs;
+  readonly args: SetInteractingEventArgs;
   constructor(forId: string, timestamp: number, args: SetInteractingEventArgs) {
     super(forId, timestamp, EventAction.SET_INTERACTING, args);
     this.args = args;

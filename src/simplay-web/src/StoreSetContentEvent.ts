@@ -4,7 +4,7 @@ import { EventAction } from "./EventAction";
 
 
 export class StoreSetContentEvent extends Event {
-  args: StoreSetContentEventArgs;
+  readonly args: StoreSetContentEventArgs;
   constructor(
     forId: string,
     timestamp: number,
