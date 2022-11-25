@@ -1,16 +1,20 @@
 import { Entity } from './Entity';
-import { Event } from './Event';
+import { Event } from './event/Event';
 import { create } from './Grid';
 import { SimplayGrid } from './SimplayGrid';
-import { SimulationData } from './SimulationData';
+import { SimulationData, simulationDataFactory } from './SimulationData';
+import { SimulationDataSerialized } from './SimulationDataSerialized';
 import { Visual } from './Visual';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
   private simulationData: SimulationData;
 
-  constructor(simulationData: SimulationData, container: HTMLElement) {
-    this.simulationData = simulationData;
+  constructor(
+    simulationData: SimulationDataSerialized,
+    container: HTMLElement
+  ) {
+    this.simulationData = simulationDataFactory(simulationData);
     this.DOMContainer = container;
     create(simulationData.grid, container);
   }

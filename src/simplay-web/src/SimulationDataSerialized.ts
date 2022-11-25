@@ -1,5 +1,5 @@
 import { Entity } from './Entity';
-import { EventSerialized } from './EventSerialized';
+import { EventSerialized } from './event/EventSerialized';
 import { SimplayGrid } from './SimplayGrid';
 import { Sprite } from './Sprite';
 import { Visual } from './Visual';

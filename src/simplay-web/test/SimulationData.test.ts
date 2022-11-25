@@ -1,5 +1,5 @@
 import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
-import { SimulationData } from '../src/SimulationData';
+import { simulationDataFactory, SimulationData } from '../src/SimulationData';
 import { expect } from 'chai';
 
 describe('SimulationData tests', function () {
@@ -43,7 +43,7 @@ describe('SimulationData tests', function () {
         areas: [],
       },
     } as SimulationDataSerialized;
-    const data = SimulationData.fromSerialized(serialized);
+    const data = simulationDataFactory(serialized);
     expect(data.events).to.deep.equal(serialized.events);
     expect(data.visuals).to.deep.equal(serialized.visuals);
     expect(data.sprites).to.deep.equal(serialized.sprites);

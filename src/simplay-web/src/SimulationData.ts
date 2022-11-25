@@ -1,6 +1,6 @@
 import { Entity } from './Entity';
-import { Event } from './Event';
-import { EventFactory } from './EventFactory';
+import { Event } from './event/Event';
+import { eventFactory } from './event/EventFactory';
 import { SimplayGrid } from './SimplayGrid';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import { Sprite } from './Sprite';
@@ -26,19 +26,19 @@ export class SimulationData {
     this.visuals = visuals;
     this.sprites = sprites;
   }
+}
 
-  public static fromSerialized(
-    serialized: SimulationDataSerialized
-  ): SimulationData {
-    const events = serialized.events.map((event) => {
-      return EventFactory.fromSerialized(event);
-    });
-    return new SimulationData(
-      events,
-      serialized.grid,
-      serialized.entities,
-      serialized.visuals,
-      serialized.sprites
-    );
-  }
+export function simulationDataFactory(
+  serialized: SimulationDataSerialized
+): SimulationData {
+  const events = serialized.events.map((event) => {
+    return eventFactory(event);
+  });
+  return new SimulationData(
+    events,
+    serialized.grid,
+    serialized.entities,
+    serialized.visuals,
+    serialized.sprites
+  );
 }
