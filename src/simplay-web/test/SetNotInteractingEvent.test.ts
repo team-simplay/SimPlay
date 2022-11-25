@@ -8,7 +8,7 @@ const timestamp = 1337;
 const withId = 'foo';
 
 describe('SetNotInteractingEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new SetNotInteractingEventArgs({ withId: withId });
     const event = new SetNotInteractingEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);
