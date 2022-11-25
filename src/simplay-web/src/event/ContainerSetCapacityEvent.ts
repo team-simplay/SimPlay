@@ -3,14 +3,12 @@ import { Event } from './Event';
 import { EventAction } from './EventAction';
 
 export class ContainerSetCapacityEvent extends Event {
-  readonly args: ContainerSetCapacityEventArgs;
   constructor(
     forId: string,
     timestamp: number,
-    args: ContainerSetCapacityEventArgs
+    public readonly args: ContainerSetCapacityEventArgs
   ) {
     super(forId, timestamp, EventAction.CONTAINER_SET_CAPACITY, args);
-    this.args = args;
   }
   execute(context: any) {
     throw new Error('Method not implemented.');
