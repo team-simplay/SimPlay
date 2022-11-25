@@ -8,7 +8,7 @@ const timestamp = 1337;
 const utilization = 0.78;
 
 describe('ResourceSetUtilizationEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new ResourceSetUtilizationEventArgs({
       utilization: utilization,
     });

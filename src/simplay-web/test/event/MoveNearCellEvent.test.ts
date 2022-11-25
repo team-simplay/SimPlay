@@ -9,7 +9,7 @@ const x = 1291;
 const y = 187;
 
 describe('MoveNearCellEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new MoveNearCellEventArgs({ x: x, y: y });
     const event = new MoveNearCellEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

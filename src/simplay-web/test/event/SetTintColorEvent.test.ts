@@ -8,7 +8,7 @@ const timestamp = 1337;
 const color = 0x123456;
 
 describe('SetTintColorEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new SetTintColorEventArgs({ color: color });
     const event = new SetTintColorEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

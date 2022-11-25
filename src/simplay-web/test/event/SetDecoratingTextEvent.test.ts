@@ -8,7 +8,7 @@ const timestamp = 1337;
 const text = 'baz';
 
 describe('SetDecoratingTextEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new SetDecoratingTextEventArgs({ text: text });
     const event = new SetDecoratingTextEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

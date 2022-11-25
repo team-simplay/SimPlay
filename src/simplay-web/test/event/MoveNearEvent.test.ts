@@ -8,7 +8,7 @@ const timestamp = 1337;
 const target = 'bar';
 
 describe('MoveNearEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new MoveNearEventArgs({ target: target });
     const event = new MoveNearEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

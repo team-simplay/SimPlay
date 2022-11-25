@@ -7,7 +7,7 @@ const forId = 'leet';
 const timestamp = 1337;
 
 describe('SetPositionEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new SetPositionEventArgs({ x: 0, y: 0 });
     const event = new SetPositionEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

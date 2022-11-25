@@ -8,7 +8,7 @@ const timestamp = 1337;
 const capacity = 1848;
 
 describe('ContainerSetCapacityEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new ContainerSetCapacityEventArgs({ capacity: capacity });
     const event = new ContainerSetCapacityEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

@@ -1,9 +1,9 @@
 import { EventArgs } from './EventArgs';
 
-export type StoreContentItem = {
+interface StoreContentItem {
   resourceId: number;
   amount: number;
-};
+}
 
 export class StoreSetContentEventArgs extends EventArgs {
   readonly content: StoreContentItem[];

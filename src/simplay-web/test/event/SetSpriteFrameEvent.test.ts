@@ -8,7 +8,7 @@ const timestamp = 1337;
 const frame = 9;
 
 describe('SetSpriteFrameEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new SetSpriteFrameEventArgs({ frame: frame });
     const event = new SetSpriteFrameEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);

@@ -8,7 +8,7 @@ const timestamp = 1337;
 const content = [{ resourceId: 98, amount: 76 }];
 
 describe('StoreSetContentEvent tests', function () {
-  it('should have initialized correctly', () => {
+  it('should initialize correctly', () => {
     const args = new StoreSetContentEventArgs({ content: content });
     const event = new StoreSetContentEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);
