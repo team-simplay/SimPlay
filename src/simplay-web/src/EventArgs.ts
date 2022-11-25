@@ -10,7 +10,7 @@ export abstract class EventArgs {
   validate(args: Record<string, unknown>): boolean {
     const props = this.getPropertyNames();
     for (const prop of props) {
-      if (args[prop] === undefined) {
+      if (args[prop] === undefined || args[prop] === null) {
         return false;
       }
     }

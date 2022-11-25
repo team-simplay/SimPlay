@@ -1,10 +1,12 @@
 import { EventArgs } from './EventArgs';
 
+export type StoreContentItem = {
+  resourceId: number;
+  amount: number;
+};
+
 export class StoreSetContentEventArgs extends EventArgs {
-  readonly content: {
-    resourceId: number;
-    amount: number;
-  }[];
+  readonly content: StoreContentItem[];
 
   constructor(args: { content: { resourceId: number; amount: number }[] }) {
     super(args);

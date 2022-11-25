@@ -29,7 +29,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { visible: true },
     } as EventSerialized) as SetVisibleEvent;
-    expect(event instanceof SetVisibleEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetVisibleEvent);
   });
 
   it('should initialize SetPositionEvent', () => {
@@ -39,7 +39,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { x: 0, y: 0 },
     } as EventSerialized);
-    expect(event instanceof SetPositionEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetPositionEvent);
   });
 
   it('should initialize SetInteractingEvent', () => {
@@ -49,7 +49,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { withId: 'foo' },
     } as EventSerialized);
-    expect(event instanceof SetInteractingEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetInteractingEvent);
   });
 
   it('should initialize SetNotInteractingEvent', () => {
@@ -59,7 +59,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { withId: 'foo' },
     } as EventSerialized);
-    expect(event instanceof SetNotInteractingEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetNotInteractingEvent);
   });
 
   it('should initialize MoveNearEvent', () => {
@@ -69,7 +69,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { target: 'bar' },
     } as EventSerialized);
-    expect(event instanceof MoveNearEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(MoveNearEvent);
   });
 
   it('should initialize MoveNearCellEvent', () => {
@@ -79,7 +79,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { x: 0, y: 0 },
     } as EventSerialized);
-    expect(event instanceof MoveNearCellEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(MoveNearCellEvent);
   });
 
   it('should initialize SetTintColorEvent', () => {
@@ -89,7 +89,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { color: 0x123456 },
     } as EventSerialized);
-    expect(event instanceof SetTintColorEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetTintColorEvent);
   });
 
   it('should initialize SetDecoratingTextEvent', () => {
@@ -99,7 +99,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { text: 'baz' },
     } as EventSerialized);
-    expect(event instanceof SetDecoratingTextEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetDecoratingTextEvent);
   });
 
   it('should initialize SetSpriteFrameEvent', () => {
@@ -109,7 +109,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { frame: 12 },
     } as EventSerialized);
-    expect(event instanceof SetSpriteFrameEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetSpriteFrameEvent);
   });
 
   it('should initialize ResourceSetCapacityEvent', () => {
@@ -119,7 +119,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { capacity: 12 },
     } as EventSerialized);
-    expect(event instanceof ResourceSetCapacityEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(ResourceSetCapacityEvent);
   });
 
   it('should initialize ResourceSetUtilizationEvent', () => {
@@ -129,7 +129,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { utilization: 0.01 },
     } as EventSerialized);
-    expect(event instanceof ResourceSetUtilizationEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(ResourceSetUtilizationEvent);
   });
 
   it('should initialize ContainerSetCapacityEvent', () => {
@@ -139,7 +139,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { capacity: 12 },
     } as EventSerialized);
-    expect(event instanceof ContainerSetCapacityEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(ContainerSetCapacityEvent);
   });
 
   it('should initialize ContainerSetLevelEvent', () => {
@@ -149,7 +149,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { level: 12 },
     } as EventSerialized);
-    expect(event instanceof ContainerSetLevelEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(ContainerSetLevelEvent);
   });
 
   it('should initialize StoreSetCapacityEvent', () => {
@@ -159,7 +159,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { capacity: 12 },
     } as EventSerialized);
-    expect(event instanceof StoreSetCapacityEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(StoreSetCapacityEvent);
   });
 
   it('should initialize StoreSetContentEvent', () => {
@@ -169,7 +169,7 @@ describe('EventFactory tests', function () {
       timestamp: timestamp,
       args: { content: [{ resourceId: 45, amount: 3 }] },
     } as EventSerialized);
-    expect(event instanceof StoreSetContentEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(StoreSetContentEvent);
   });
 
   it('should also work from plain JSON', () => {
@@ -178,7 +178,7 @@ describe('EventFactory tests', function () {
     const event = EventFactory.fromSerialized(
       JSON.parse(jsonEvent) as EventSerialized
     ) as SetVisibleEvent;
-    expect(event instanceof SetVisibleEvent).to.be.true;
+    expect(event).to.be.an.instanceOf(SetVisibleEvent);
   });
 
   it('should throw error on unknown action', () => {
