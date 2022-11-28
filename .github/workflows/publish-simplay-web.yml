@@ -23,7 +23,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
   update-version: 
     runs-on: ubuntu-latest
-    needs: publish
+    needs: publish-simplay-web
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
