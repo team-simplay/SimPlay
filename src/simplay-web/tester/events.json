@@ -122,12 +122,12 @@
     "areas": [{
       "id": "gasstation01",
       "name": "GAS_STATION",
-      "color": 16777215,
+      "color": 16333215,
       "gridDefinition": {
-        "height": 5,
-        "width": 5,
-        "x": 0,
-        "y": 0
+        "height": 2,
+        "width": 2,
+        "x": 1,
+        "y": 1
       }
     }],
     "height": 500,

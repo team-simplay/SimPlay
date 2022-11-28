@@ -58,6 +58,7 @@
     "chai": "4.3.7",
     "cross-env": "7.0.3",
     "electron": "13.6.9",
+    "esbuild": "^0.15.16",
     "eslint": "8.26.0",
     "eslint-config-prettier": "8.5.0",
     "floss": "5.0.1",

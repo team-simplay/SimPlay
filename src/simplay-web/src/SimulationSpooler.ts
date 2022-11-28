@@ -1,5 +1,7 @@
 import { createEntities } from './Entity';
 import { create } from './Grid';
+import { SimplayContext } from './SimplayContext';
+import { SimplayGrid } from './SimplayGrid';
 import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import { preloadImages } from './Visual';
@@ -8,6 +10,7 @@ import * as PIXI from 'pixi.js';
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
   private simulationData: SimulationData;
+  public readonly context: SimplayContext;
 
   constructor(
     simulationData: SimulationDataSerialized,
@@ -16,22 +19,7 @@ export class SimulationSpooler {
     this.simulationData = simulationDataFactory(simulationData);
     preloadImages(this.simulationData.visuals);
     this.DOMContainer = container;
-    const app = create(simulationData.grid, container);
-    const context = {
-      tileHeight: app.renderer.height / simulationData.grid.rows,
-      tileWidth: app.renderer.width / simulationData.grid.cols,
-      app,
-      simulationData: this.simulationData,
-      areaContainer: app.stage,
-      entityContainer: new PIXI.Container(),
-      interactionContainer: new PIXI.Container(),
-    };
-    app.stage.addChild(context.entityContainer);
-    app.stage.addChild(context.interactionContainer);
-    createEntities(context, simulationData.entities);
-
-    context.entityContainer.getChildAt(0).x = 100;
-    context.entityContainer.getChildAt(0).y = 100;
+    this.context = create(simulationData.grid, container);
   }
 
   run(speedFactor = 1) {
