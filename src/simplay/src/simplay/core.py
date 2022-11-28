@@ -68,7 +68,7 @@ class VisualComponent:
 
 class VisualizationManager:
     """
-    This class acts as a central point for all entities, visuals, sprites and
+    This class acts as a central point for all entities, visuals and
     events.
     """
 
@@ -128,6 +128,8 @@ class VisualizationManager:
     def register_visual(self, id: str, path: str):
         """
         Register a visual with the manager.
+        The visual is a sprite with a list of frames
+        whose length is equal to one.
 
         :param id: The id of the visual, it must be unique and can be used to
             reference the visual in components.
