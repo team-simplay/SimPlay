@@ -1,56 +1,6 @@
 import * as PIXI from 'pixi.js';
-import * as PIXILAYERS from '@pixi/layers';
-import { SimplayGrid } from './SimplayGrid';
 import { SimplayContext } from './SimplayContext';
 import { SimplayArea } from './SimplayArea';
-
-export function create(
-  grid: SimplayGrid,
-  container: HTMLElement
-): SimplayContext {
-  const app = new PIXI.Application({
-    width: container.clientWidth,
-    height: container.clientHeight,
-    backgroundColor: 0xd3d3d3,
-    antialias: true,
-    powerPreference: 'high-performance',
-  });
-  container.appendChild(app.view as HTMLCanvasElement);
-
-  app.stage = new PIXILAYERS.Stage();
-  const pixiContainer = new PIXI.Container();
-  pixiContainer.name = 'pixiContainer';
-  app.stage.addChild(pixiContainer);
-
-  PIXI.settings.ROUND_PIXELS = true;
-  PIXI.settings.MIPMAP_TEXTURES = PIXI.MIPMAP_MODES.ON;
-
-  const context = createContext(app, grid);
-  setupAreas(grid, context);
-
-  return context;
-}
-
-function createContext(
-  app: PIXI.Application,
-  grid: SimplayGrid
-): SimplayContext {
-  const context: SimplayContext = {
-    tileHeight: app.screen.height / grid.rows,
-    tileWidth: app.screen.width / grid.cols,
-    app: app,
-    areaContainer: new PIXI.Container(),
-    entityContainer: new PIXI.Container(),
-    interactionContainer: new PIXI.Container(),
-  };
-  context.areaContainer.name = 'areaContainer';
-  context.entityContainer.name = 'entityContainer';
-  context.interactionContainer.name = 'interactionContainer';
-  app.stage.addChild(context.areaContainer);
-  app.stage.addChild(context.entityContainer);
-  app.stage.addChild(context.interactionContainer);
-  return context;
-}
 
 function validateArea(cols: number, rows: number, area: SimplayArea) {
   if (area.gridDefinition.x + area.gridDefinition.width > cols) {
@@ -61,9 +11,13 @@ function validateArea(cols: number, rows: number, area: SimplayArea) {
   }
 }
 
-function setupAreas(grid: SimplayGrid, context: SimplayContext) {
-  for (const area of grid.areas) {
-    validateArea(grid.cols, grid.rows, area);
+export function createGrid(context: SimplayContext) {
+  for (const area of context.simulationData.grid.areas) {
+    validateArea(
+      context.simulationData.grid.cols,
+      context.simulationData.grid.rows,
+      area
+    );
     const areaGraphics = new PIXI.Graphics();
     areaGraphics
       .beginFill(area.color)
