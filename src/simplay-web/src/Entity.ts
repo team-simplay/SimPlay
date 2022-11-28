@@ -26,6 +26,8 @@ export function createEntities(context: SimplayContext, entities: Entity[]) {
     const sprite = new PIXI.AnimatedSprite(
       frames.map((frame) => PIXI.Texture.from(frame))
     );
+    sprite.animationSpeed = 0;
+    sprite.loop = false;
     const { width, height } = sprite.getBounds();
     const scale = Math.min(
       context.tileWidth / width,

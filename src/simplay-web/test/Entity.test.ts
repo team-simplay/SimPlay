@@ -1,9 +1,11 @@
 import { createEntities } from '../src/Entity';
 import * as PIXI from 'pixi.js';
+import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
-import { mock, when, instance } from 'ts-mockito';
+import { mock, instance } from 'ts-mockito';
 import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
-import { create } from '../src/Grid';
+import { createContext } from '../src/SimplayContext';
+import { SimulationData } from '../src/SimulationData';
 
 describe('Entity tests', function () {
   const entities = [
@@ -42,12 +44,15 @@ describe('Entity tests', function () {
       ],
     },
     events: [],
-  } as SimulationDataSerialized;
-  const containerMock = mock(HTMLElement);
-  const container = instance(containerMock);
+  } as SimulationData;
 
   it('should initialize correctly', () => {
-    const context = create(simulationData.grid, container);
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
 
     createEntities(context, simulationData.entities);
     expect(context.entityContainer.children.length).to.equal(1);
@@ -63,7 +68,12 @@ describe('Entity tests', function () {
   });
 
   it('should be named correctly and be inside the container', () => {
-    const context = create(simulationData.grid, container);
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
 
     createEntities(context, simulationData.entities);
     const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
