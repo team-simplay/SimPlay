@@ -28,11 +28,13 @@ class VisualComponent:
         :class:`~simplay.primitives.ComponentType`..
     :param visual: The visualization of the component, must be registered in
         the :class:`~simplay.core.VisualizationManager`.
-    :param tint: The tint of the component. This only works with visuals and
-        sprites that have transparent pixels. The tint is applied to the
-        pixelsthat are not transparent. To use HEX values, write them as
+    :param tint: The tint of the component. The tint is multiplied with the
+        pixel value of each pixel. To use HEX values, write them as
         0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
         0x0000FF is blue.
+        If the whole image is white, tinting it will change the color of the
+        image. If the image is black, tinting it will have no effect.
+        If no tint should be applied, set it to 0xFFFFFF.
     :raises TypeError: If the type is invalid.
     :raises TypeError: If the id is not a string.
     :raises TypeError: If the environment is not a

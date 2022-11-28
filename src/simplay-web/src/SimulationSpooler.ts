@@ -1,10 +1,11 @@
-import { Entity } from './Entity';
+import { createEntities, Entity } from './Entity';
 import { Event } from './event/Event';
 import { create } from './Grid';
 import { SimplayGrid } from './SimplayGrid';
 import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import { Visual } from './Visual';
+import * as PIXI from 'pixi.js';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
