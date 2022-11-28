@@ -1,10 +1,8 @@
-import { createEntities, Entity } from './Entity';
-import { Event } from './event/Event';
+import { createEntities } from './Entity';
 import { create } from './Grid';
-import { SimplayGrid } from './SimplayGrid';
 import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
-import { Visual } from './Visual';
+import { preloadImages } from './Visual';
 import * as PIXI from 'pixi.js';
 
 export class SimulationSpooler {
@@ -16,8 +14,24 @@ export class SimulationSpooler {
     container: HTMLElement
   ) {
     this.simulationData = simulationDataFactory(simulationData);
+    preloadImages(this.simulationData.visuals);
     this.DOMContainer = container;
-    create(simulationData.grid, container);
+    const app = create(simulationData.grid, container);
+    const context = {
+      tileHeight: app.renderer.height / simulationData.grid.rows,
+      tileWidth: app.renderer.width / simulationData.grid.cols,
+      app,
+      simulationData: this.simulationData,
+      areaContainer: app.stage,
+      entityContainer: new PIXI.Container(),
+      interactionContainer: new PIXI.Container(),
+    };
+    app.stage.addChild(context.entityContainer);
+    app.stage.addChild(context.interactionContainer);
+    createEntities(context, simulationData.entities);
+
+    context.entityContainer.getChildAt(0).x = 100;
+    context.entityContainer.getChildAt(0).y = 100;
   }
 
   run(speedFactor = 1) {

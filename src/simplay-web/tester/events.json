@@ -124,7 +124,7 @@
       "name": "GAS_STATION",
       "color": 16777215,
       "gridDefinition": {
-        "height": 3,
+        "height": 5,
         "width": 5,
         "x": 0,
         "y": 0
@@ -133,6 +133,6 @@
     "height": 500,
     "width": 500,
     "cols": 5,
-    "rows": 3
+    "rows": 5
   }
 }
