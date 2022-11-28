@@ -31,7 +31,6 @@ export function createEntities(context: SimplayContext, entities: Entity[]) {
       context.tileWidth / width,
       context.tileHeight / height
     );
-    console.log(context.tileHeight, context.tileWidth, height, width, scale);
     sprite.scale.set(scale * 0.5, scale * 0.5);
     sprite.name = entity.id;
     if (entity.tint && entity.tint !== 0xffffff) {
