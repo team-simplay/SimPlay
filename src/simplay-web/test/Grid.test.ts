@@ -1,7 +1,9 @@
-import { create } from '../src/Grid';
+import { createGrid } from '../src/Grid';
 import * as PIXI from 'pixi.js';
+import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
-import { mock, when, instance } from 'ts-mockito';
+import { createContext } from '../src/SimplayContext';
+import { SimulationData } from '../src/SimulationData';
 
 describe('Grid tests', function () {
   const grid = {
@@ -22,81 +24,26 @@ describe('Grid tests', function () {
     rows: 5,
   };
 
-  it('Should create a pixijs Application', () => {
-    const containerWidth = 500;
-    const containerHeight = 500;
-
-    const containerMock = mock(HTMLElement);
-    when(containerMock.clientWidth).thenReturn(containerWidth);
-    when(containerMock.clientHeight).thenReturn(containerHeight);
-    const container = instance(containerMock);
-
-    const context = create(grid, container);
-    expect(context.app).to.be.an.instanceof(PIXI.Application);
-    expect(context.app.view.width).to.equal(containerWidth);
-    expect(context.app.view.height).to.equal(containerHeight);
-  });
-
-  describe('context tests', () => {
-    it('should calculate the correct tile size', () => {
-      const containerWidth = 500;
-      const containerHeight = 500;
-
-      const containerMock = mock(HTMLElement);
-      when(containerMock.clientWidth).thenReturn(containerWidth);
-      when(containerMock.clientHeight).thenReturn(containerHeight);
-      const container = instance(containerMock);
-
-      const context = create(grid, container);
-      expect(context.tileWidth).to.equal(containerWidth / grid.cols);
-      expect(context.tileHeight).to.equal(containerHeight / grid.rows);
-    });
-
-    it('should create an areaContainer', () => {
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
-
-      const context = create(grid, container);
-      expect(context.areaContainer).to.be.an.instanceof(PIXI.Container);
-      expect(context.areaContainer).to.equal(
-        context.app.stage.getChildByName('areaContainer')
-      );
-    });
-
-    it('should create an entityContainer', () => {
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
-
-      const context = create(grid, container);
-      expect(context.entityContainer).to.be.an.instanceof(PIXI.Container);
-      expect(context.entityContainer).to.equal(
-        context.app.stage.getChildByName('entityContainer')
-      );
-    });
-
-    it('should create an interactionContainer', () => {
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
-
-      const context = create(grid, container);
-      expect(context.interactionContainer).to.be.an.instanceof(PIXI.Container);
-      expect(context.interactionContainer).to.equal(
-        context.app.stage.getChildByName('interactionContainer')
-      );
-    });
-  });
+  const simulationData = {
+    grid: grid,
+    entities: [],
+    visuals: [],
+    events: [],
+    sprites: [],
+  } as SimulationData;
 
   describe('area tests', () => {
     it('should create an area', () => {
       const containerWidth = 500;
       const containerHeight = 500;
+      const app = new PIXI.Application({
+        width: containerWidth,
+        height: containerHeight,
+      });
+      app.stage = new PIXILAYERS.Stage();
 
-      const containerMock = mock(HTMLElement);
-      when(containerMock.clientWidth).thenReturn(containerWidth);
-      when(containerMock.clientHeight).thenReturn(containerHeight);
-      const container = instance(containerMock);
-
-      const context = create(grid, container);
+      const context = createContext(app, simulationData);
+      createGrid(context);
       const area51 = context.areaContainer.getChildByName('area-area51');
       expect(area51).to.be.an.instanceof(PIXI.Graphics);
       expect(area51.x).to.equal(100);
@@ -104,10 +51,16 @@ describe('Grid tests', function () {
     });
 
     it('should create an area label', () => {
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
+      const containerWidth = 500;
+      const containerHeight = 500;
+      const app = new PIXI.Application({
+        width: containerWidth,
+        height: containerHeight,
+      });
+      app.stage = new PIXILAYERS.Stage();
 
-      const context = create(grid, container);
+      const context = createContext(app, simulationData);
+      createGrid(context);
       const area51Text = context.areaContainer.getChildByName(
         'area-area51-text'
       ) as PIXI.Text;
@@ -134,10 +87,23 @@ describe('Grid tests', function () {
         rows: 5,
       };
 
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
+      const containerWidth = 500;
+      const containerHeight = 500;
+      const app = new PIXI.Application({
+        width: containerWidth,
+        height: containerHeight,
+      });
+      app.stage = new PIXILAYERS.Stage();
 
-      expect(() => create(grid, container)).to.throw(
+      const data = {
+        grid: grid,
+        entities: [],
+        visuals: [],
+        events: [],
+        sprites: [],
+      } as SimulationData;
+      const context = createContext(app, data);
+      expect(() => createGrid(context)).to.throw(
         'Area area51 is out of bounds: x + width > cols'
       );
     });
@@ -161,10 +127,22 @@ describe('Grid tests', function () {
         rows: 5,
       };
 
-      const containerMock = mock(HTMLElement);
-      const container = instance(containerMock);
-
-      expect(() => create(grid, container)).to.throw(
+      const containerWidth = 500;
+      const containerHeight = 500;
+      const app = new PIXI.Application({
+        width: containerWidth,
+        height: containerHeight,
+      });
+      app.stage = new PIXILAYERS.Stage();
+      const data = {
+        grid: grid,
+        entities: [],
+        visuals: [],
+        events: [],
+        sprites: [],
+      } as SimulationData;
+      const context = createContext(app, data);
+      expect(() => createGrid(context)).to.throw(
         'Area area51 is out of bounds: y + height > rows'
       );
     });

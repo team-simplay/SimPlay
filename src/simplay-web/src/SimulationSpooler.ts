@@ -1,11 +1,9 @@
-import { Entity } from './Entity';
-import { Event } from './event/Event';
-import { create } from './Grid';
-import { SimplayContext } from './SimplayContext';
-import { SimplayGrid } from './SimplayGrid';
+import { createGrid } from './Grid';
+import { createContext, SimplayContext } from './SimplayContext';
 import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
-import { Visual } from './Visual';
+import * as PIXI from 'pixi.js';
+import * as PIXILAYERS from '@pixi/layers';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
@@ -18,7 +16,9 @@ export class SimulationSpooler {
   ) {
     this.simulationData = simulationDataFactory(simulationData);
     this.DOMContainer = container;
-    this.context = create(simulationData.grid, container);
+    const app = createApp(this.DOMContainer);
+    this.context = createContext(app, this.simulationData);
+    createGrid(this.context);
   }
 
   run(speedFactor = 1) {
@@ -52,4 +52,21 @@ export class SimulationSpooler {
   decreaseSpeed(decreaseBy: number) {
     throw Error('TODO implement');
   }
+}
+
+function createApp(container: HTMLElement) {
+  const app = new PIXI.Application({
+    width: container.clientWidth,
+    height: container.clientHeight,
+    backgroundColor: 0xd3d3d3,
+    antialias: true,
+    powerPreference: 'high-performance',
+  });
+  container.appendChild(app.view as HTMLCanvasElement);
+
+  app.stage = new PIXILAYERS.Stage();
+
+  PIXI.settings.ROUND_PIXELS = true;
+  PIXI.settings.MIPMAP_TEXTURES = PIXI.MIPMAP_MODES.ON;
+  return app;
 }
