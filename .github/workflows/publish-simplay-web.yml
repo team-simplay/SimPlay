@@ -1,4 +1,4 @@
-# This workflow will upload a npm package when a release is created
+# This workflow will upload a npm package for simlay-web, when a release is created
 
 name: Publish Package to npmjs
 on:
