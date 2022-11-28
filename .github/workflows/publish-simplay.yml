@@ -16,10 +16,9 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-
+  publish:
+    name: publish simplay
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python

@@ -29,6 +29,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
+    - name: Wait for simplay to be published
+        uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'publish simplay'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -42,4 +49,4 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY_JUPYTER }}
-        packages_dir: src/simplay/dist/
+        packages_dir: src/simplay-jupyter/dist/
