@@ -1,7 +1,6 @@
 {
-  "events": [
-    {
-      "action": "setPosition",
+  "events": [{
+      "action": "SET_POSITION",
       "args": {
         "x": 1,
         "y": 1
@@ -10,7 +9,7 @@
       "timestamp": 0
     },
     {
-      "action": "setVisible",
+      "action": "SET_VISIBLE",
       "args": {
         "visible": true
       },
@@ -18,7 +17,7 @@
       "timestamp": 0
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 1,
         "y": 1
@@ -27,7 +26,7 @@
       "timestamp": 3
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 60,
         "y": 60
@@ -36,7 +35,7 @@
       "timestamp": 5
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 280,
         "y": 280
@@ -45,7 +44,7 @@
       "timestamp": 9
     },
     {
-      "action": "setVisible",
+      "action": "SET_VISIBLE",
       "args": {
         "visible": true
       },
@@ -53,15 +52,7 @@
       "timestamp": 9
     },
     {
-      "action": "log",
-      "args": {
-        "text": "Car 1 arriving at gas station at 9.0"
-      },
-      "forId": "console",
-      "timestamp": 9
-    },
-    {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 50,
         "y": 50
@@ -70,7 +61,7 @@
       "timestamp": 12
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 260,
         "y": 260
@@ -79,7 +70,7 @@
       "timestamp": 14
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 70,
         "y": 70
@@ -88,7 +79,7 @@
       "timestamp": 16
     },
     {
-      "action": "setPosition",
+      "action": "SET_POSITION",
       "args": {
         "x": 240,
         "y": 240
@@ -97,8 +88,7 @@
       "timestamp": 19
     }
   ],
-  "entities": [
-    {
+  "entities": [{
       "id": "Car 0",
       "type": "process",
       "visual": "CAR",
@@ -111,8 +101,7 @@
       "tint": 300000.2667952755
     }
   ],
-  "visuals": [
-    {
+  "visuals": [{
       "id": "CAR",
       "visual": "./resources/car.png"
     },
@@ -130,22 +119,20 @@
     }
   ],
   "grid": {
-    "areas": [
-      {
-        "id": "gasstation01",
-        "name": "GAS_STATION",
-        "color": 16777215,
-        "gridDefinition": {
-          "height": 3,
-          "width": 5,
-          "x": 0,
-          "y": 0
-        }
+    "areas": [{
+      "id": "gasstation01",
+      "name": "GAS_STATION",
+      "color": 16333215,
+      "gridDefinition": {
+        "height": 2,
+        "width": 2,
+        "x": 1,
+        "y": 1
       }
-    ],
+    }],
     "height": 500,
     "width": 500,
     "cols": 5,
-    "rows": 3
+    "rows": 5
   }
 }

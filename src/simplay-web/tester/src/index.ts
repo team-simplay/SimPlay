@@ -1,6 +1,8 @@
-import { SimulationData, SimulationSpooler } from '../../src/SimulationSpooler';
+import { SimulationData } from '../../src/SimulationData';
+import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
+import { SimulationSpooler } from '../../src/SimulationSpooler';
 
-let data: SimulationData;
+let data: SimulationDataSerialized;
 const container = document.getElementById('simulationContainer');
 let animation: SimulationSpooler;
 
