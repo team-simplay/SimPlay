@@ -5,7 +5,7 @@ on:
   release:
     types: [created]
 jobs:
-  publish:
+  publish-simplay-web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

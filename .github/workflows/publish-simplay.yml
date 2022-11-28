@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  publish:
+  publish-simplay:
     name: publish simplay
     runs-on: ubuntu-latest
     steps:

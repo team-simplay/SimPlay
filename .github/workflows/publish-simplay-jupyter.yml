@@ -5,7 +5,7 @@ on:
   release:
     types: [created]
 jobs:
-  publish-npm:
+  publish-simplay-jupyter-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JUPYTER_ACCESS_TOKEN }}
-  publish-pypi:
+  publish-simplay-jupyter-pypi:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
