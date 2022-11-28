@@ -20,9 +20,8 @@ class VisualProcess(VisualComponent):
 
     :param env: The environment instance.
     :param id: The id of the component.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -34,9 +33,9 @@ class VisualProcess(VisualComponent):
             self,
             env: VisualEnvironment,
             id: str,
-            graphic: str,
+            visual: str,
             tint: int):
-        super().__init__(env, id, ComponentType.PROCESS, graphic, tint)
+        super().__init__(env, id, ComponentType.PROCESS, visual, tint)
 
 
 class VisualResource(VisualComponent, Resource):
@@ -47,9 +46,8 @@ class VisualResource(VisualComponent, Resource):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -64,14 +62,14 @@ class VisualResource(VisualComponent, Resource):
             env: VisualEnvironment,
             id: str,
             capacity: int,
-            graphic: str,
+            visual: str,
             tint: int):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         VisualComponent.__init__(
-            self, env, id, ComponentType.RESOURCE, graphic, tint)
+            self, env, id, ComponentType.RESOURCE, visual, tint)
         Resource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -95,9 +93,8 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager``.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -112,14 +109,14 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
             env: VisualEnvironment,
             id: str,
             capacity: int,
-            graphic: str,
+            visual: str,
             tint: int):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         VisualComponent.__init__(
-            self, env, id, ComponentType.RESOURCE, graphic, tint)
+            self, env, id, ComponentType.RESOURCE, visual, tint)
         PreemptiveResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -146,9 +143,8 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the resource.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -163,14 +159,14 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
             env: VisualEnvironment,
             id: str,
             capacity: int,
-            graphic: str,
+            visual: str,
             tint: int):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         VisualComponent.__init__(self, env, id, ComponentType.RESOURCE,
-                                 graphic, tint)
+                                 visual, tint)
         PriorityResource.__init__(self, env, capacity)
         ResourceVisualUtil.set_capacity(self, capacity)
         ResourceVisualUtil.set_utilization(self, 0)
@@ -198,9 +194,8 @@ class VisualContainer(VisualComponent, Container):
     :param id: The id of the component.
     :param capacity: The capacity of the container.
     :param init: The initial amount of the container.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -214,7 +209,7 @@ class VisualContainer(VisualComponent, Container):
         self,
         env: VisualEnvironment,
         id: str,
-        graphic: str,
+        visual: str,
         tint: int,
         capacity: ContainerAmount = float("inf"),
         init: ContainerAmount = 0,
@@ -224,7 +219,7 @@ class VisualContainer(VisualComponent, Container):
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         VisualComponent.__init__(
-            self, env, id, ComponentType.CONTAINER, graphic, tint)
+            self, env, id, ComponentType.CONTAINER, visual, tint)
         Container.__init__(self, env, capacity, init)
         ContainerVisualUtil.set_capacity(self, capacity)
         ContainerVisualUtil.set_level(self, self.level)
@@ -247,9 +242,8 @@ class VisualStore(VisualComponent, Store):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the store.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -263,7 +257,7 @@ class VisualStore(VisualComponent, Store):
         self,
         env: VisualEnvironment,
         id: str,
-        graphic: str,
+        visual: str,
         tint: int,
         capacity: Union[float, int] = float("inf"),
     ):
@@ -274,7 +268,7 @@ class VisualStore(VisualComponent, Store):
             raise ValueError(
                 ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         VisualComponent.__init__(
-            self, env, id, ComponentType.STORE, graphic, tint)
+            self, env, id, ComponentType.STORE, visual, tint)
         Store.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
 
@@ -297,9 +291,8 @@ class VisualFilterStore(VisualComponent, FilterStore):
     :param env: The environment instance.
     :param id: The id of the component.
     :param capacity: The capacity of the store.
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
     :param tint: The tint of the component. This only works with visuals and
         sprites that have transparent pixels. The tint is applied to the
         pixelsthat are not transparent. To use HEX values, write them as
@@ -314,14 +307,14 @@ class VisualFilterStore(VisualComponent, FilterStore):
             env: VisualEnvironment,
             id: str,
             capacity: int,
-            graphic: str,
+            visual: str,
             tint: int):
         if not isinstance(capacity, (int, float)):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         VisualComponent.__init__(
-            self, env, id, ComponentType.STORE, graphic, tint)
+            self, env, id, ComponentType.STORE, visual, tint)
         FilterStore.__init__(self, env, capacity)
         StoreVisualUtil.set_capacity(self, capacity)
 

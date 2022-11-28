@@ -14,7 +14,7 @@ class ErrorText:
     INVALID_COMPONENT_TYPE = "Invalid component type."
     ID_MUST_BE_STRING = "Id must be a string."
     ENV_MUST_BE_VISUAL_ENVIRONMENT = "Env must be of type VisualEnvironment."
-    GRAPHIC_MUST_BE_STRING = "Graphic must be a string."
+    VISUAL_MUST_BE_STRING = "Visual must be a string."
     TINT_MUST_BE_INTEGER = "Tint must be an integer."
     ENTITY_MUST_BE_VISUAL_COMPONENT = "Entity must be of type VisualComponent."
     COMPONENT_MUST_BE_VISUAL_COMPONENT = "Component must be of type VisualComponent."  # noqa
