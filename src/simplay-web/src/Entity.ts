@@ -15,8 +15,8 @@ export interface Entity {
   tint: number;
 }
 
-export function createEntities(context: SimplayContext, entities: Entity[]) {
-  for (const entity of entities) {
+export function createEntities(context: SimplayContext) {
+  for (const entity of context.simulationData.entities) {
     const frames = context.simulationData.visuals.find(
       (visual) => visual.id === entity.visual
     )?.frames;
