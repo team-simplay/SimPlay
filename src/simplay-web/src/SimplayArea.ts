@@ -1,4 +1,4 @@
-export interface Area {
+export interface SimplayArea {
   id: string;
   name: string;
   color: number;

@@ -1,7 +1,7 @@
-import { Area } from './Area';
+import { SimplayArea } from './SimplayArea';
 
 export interface SimplayGrid {
-  readonly areas: Area[];
+  readonly areas: SimplayArea[];
   readonly cols: number;
   readonly rows: number;
 }
