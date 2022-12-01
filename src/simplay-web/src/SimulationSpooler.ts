@@ -26,7 +26,6 @@ export class SimulationSpooler {
   run(speedFactor = 1) {
     const setVisibleEvent = this.simulationData.events[1];
     setVisibleEvent.execute(this.context);
-    console.log('setVisibleEvent', setVisibleEvent);
   }
 
   pause() {
