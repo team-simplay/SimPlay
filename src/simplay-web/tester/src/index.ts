@@ -15,6 +15,7 @@ async function init() {
   await readData();
   if (container) {
     animation = new SimulationSpooler(data, container);
+    await animation.preLoadImages();
   }
 }
 
