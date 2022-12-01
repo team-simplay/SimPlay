@@ -15,6 +15,13 @@ export interface Entity {
   tint: number;
 }
 
+export function getEntityDisplayObjectById(
+  context: SimplayContext,
+  id: string
+): PIXI.DisplayObject {
+  return context.entityContainer.getChildByName(id);
+}
+
 export async function createEntities(context: SimplayContext) {
   for (const entity of context.simulationData.entities) {
     const frames = context.simulationData.visuals.find(
