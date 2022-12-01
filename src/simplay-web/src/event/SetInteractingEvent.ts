@@ -1,6 +1,7 @@
 import { SetInteractingEventArgs } from './SetInteractingEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class SetInteractingEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class SetInteractingEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.SET_INTERACTING, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }

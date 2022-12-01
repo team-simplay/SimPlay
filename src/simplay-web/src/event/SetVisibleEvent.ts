@@ -1,5 +1,6 @@
 import { getEntityDisplayObjectById } from '../Entity';
 import { SimplayContext } from '../SimplayContext';
+import { SimplayContext } from '../SimplayContext';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SetVisibleEventArgs } from './SetVisibleEventArgs';

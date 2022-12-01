@@ -1,6 +1,7 @@
 import { SetTintColorEventArgs } from './SetTintColorEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class SetTintColorEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class SetTintColorEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.SET_TINT_COLOR, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }
