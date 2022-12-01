@@ -4,6 +4,7 @@ import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
+import { createEntities } from './Entity';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
@@ -19,10 +20,13 @@ export class SimulationSpooler {
     const app = createApp(this.DOMContainer);
     this.context = createContext(app, this.simulationData);
     createGrid(this.context);
+    createEntities(this.context, this.simulationData.entities);
   }
 
   run(speedFactor = 1) {
-    throw Error('TODO implement');
+    const setVisibleEvent = this.simulationData.events[1];
+    setVisibleEvent.execute(this.context);
+    console.log('setVisibleEvent', setVisibleEvent);
   }
 
   pause() {
