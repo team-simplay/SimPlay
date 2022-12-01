@@ -3,7 +3,7 @@ requires = [
     "hatchling>=1.3.1",
     "jupyterlab==3.*",
     "simpy~=4.0.1",
-    "simplay==0.0.2",
+    "simplay==0.1.0",   
     "jsons~=1.6.3"
 ]
 build-backend = "hatchling.build"
@@ -38,7 +38,7 @@ classifiers = [
 dependencies = [
     "ipywidgets>=7.0.0",
 ]
-version = "0.1.0.dev0"
+version = "0.1.0.dev1"
 
 [project.optional-dependencies]
 docs = [
