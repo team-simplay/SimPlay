@@ -1,6 +1,7 @@
 import { StoreSetCapacityEventArgs } from './StoreSetCapacityEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class StoreSetCapacityEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class StoreSetCapacityEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.STORE_SET_CAPACITY, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }

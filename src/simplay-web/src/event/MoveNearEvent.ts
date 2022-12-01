@@ -1,6 +1,7 @@
 import { MoveNearEventArgs } from './MoveNearEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class MoveNearEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class MoveNearEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.MOVE_NEAR, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }
