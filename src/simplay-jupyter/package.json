@@ -1,17 +1,11 @@
 {
   "name": "simplay_jupyter",
   "version": "0.1.0",
-  "description": "Animate SimPy simulations in jupyter notebook",
+  "description": "A JupyterLab extension to animate SimPy simulatins enhanced with simplay.",
   "keywords": [
     "jupyter",
     "jupyterlab",
-    "jupyterlab-extension",
-    "widgets"
-  ],
-  "files": [
-    "lib/**/*.js",
-    "dist/*.js",
-    "css/*.css"
+    "jupyterlab-extension"
   ],
   "homepage": "https://github.com/team-simplay/SimPlay",
   "bugs": {
@@ -19,78 +13,93 @@
   },
   "license": "BSD-3-Clause",
   "author": {
-    "name": "team-simplay",
-    "email": "moritz.schiesser@ost.ch"
+    "name": "Moritz Schiesser, David Kühnhanss",
+    "email": "moritz.schiesser@ost.ch, david.kuehnhanss@ost.ch"
   },
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,js,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
   "main": "lib/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "https://github.com/team-simplay/SimPlay"
+    "url": "https://github.com/team-simplay/SimPlay.git"
   },
   "scripts": {
-    "build": "yarn run build:lib && yarn run build:nbextension && yarn run build:labextension:dev",
-    "build:prod": "yarn run build:lib && yarn run build:nbextension && yarn run build:labextension",
+    "build": "jlpm build:lib && jlpm build:labextension:dev",
+    "build:prod": "jlpm clean && jlpm build:lib && jlpm build:labextension",
     "build:labextension": "jupyter labextension build .",
     "build:labextension:dev": "jupyter labextension build --development True .",
     "build:lib": "tsc",
-    "build:nbextension": "webpack",
-    "clean": "yarn run clean:lib && yarn run clean:nbextension && yarn run clean:labextension",
-    "clean:lib": "rimraf lib",
+    "clean": "jlpm clean:lib",
+    "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
+    "clean:lintcache": "rimraf .eslintcache .stylelintcache",
     "clean:labextension": "rimraf simplay_jupyter/labextension",
-    "clean:nbextension": "rimraf simplay_jupyter/nbextension/static/index.js",
-    "lint": "eslint . --ext .ts,.tsx --fix",
-    "lint:check": "eslint . --ext .ts,.tsx",
-    "prepack": "yarn run build:lib",
-    "test": "jest",
-    "watch": "npm-run-all -p watch:*",
-    "watch:lib": "tsc -w",
-    "watch:nbextension": "webpack --watch --mode=development",
+    "clean:all": "jlpm clean:lib && jlpm clean:labextension && jlpm clean:lintcache",
+    "eslint": "jlpm eslint:check --fix",
+    "eslint:check": "eslint . --cache --ext .ts,.tsx",
+    "install:extension": "jlpm build",
+    "lint": "jlpm stylelint && jlpm prettier && jlpm eslint",
+    "lint:check": "jlpm stylelint:check && jlpm prettier:check && jlpm eslint:check",
+    "prettier": "jlpm prettier:base --write --list-different",
+    "prettier:base": "prettier \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
+    "prettier:check": "jlpm prettier:base --check",
+    "stylelint": "jlpm stylelint:check --fix",
+    "stylelint:check": "stylelint --cache \"style/**/*.css\"",
+    "test": "jest --coverage",
+    "watch": "run-p watch:src watch:labextension",
+    "watch:src": "tsc -w",
     "watch:labextension": "jupyter labextension watch ."
   },
   "dependencies": {
-    "@jupyter-widgets/base": "6",
-    "simplay-web": "0.0.5"
+    "@jupyterlab/application": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.5.0",
-    "@babel/preset-env": "7.5.0",
-    "@jupyter-widgets/base-manager": "1.0.2",
-    "@jupyterlab/builder": "3.5.0",
-    "@lumino/application": "1.30.0",
-    "@lumino/widgets": "1.35.0",
-    "@types/jest": "26.0.0",
-    "@types/webpack-env": "1.13.6",
-    "@typescript-eslint/eslint-plugin": "3.6.0",
-    "@typescript-eslint/parser": "3.6.0",
-    "acorn": "7.2.0",
-    "css-loader": "6.7.2",
-    "eslint": "7.4.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-prettier": "3.1.4",
-    "fs-extra": "7.0.0",
-    "identity-obj-proxy": "3.0.0",
-    "jest": "26.0.0",
-    "mkdirp": "0.5.6",
-    "npm-run-all": "4.1.3",
-    "prettier": "2.0.5",
-    "rimraf": "2.6.2",
-    "source-map-loader": "1.1.3",
-    "style-loader": "1.0.0",
-    "ts-jest": "26.0.0",
-    "ts-loader": "8.0.0",
-    "typescript": "4.1.3",
-    "webpack": "5.61.0",
-    "webpack-cli": "4.0.0"
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@jupyterlab/builder": "^3.1.0",
+    "@jupyterlab/testutils": "^3.0.0",
+    "@types/jest": "^26.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "stylelint": "^14.3.0",
+    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-config-recommended": "^6.0.0",
+    "stylelint-config-standard": "~24.0.0",
+    "stylelint-prettier": "^2.0.0",
+    "typescript": "~4.1.3",
+    "ts-jest": "^26.0.0"
   },
-  "jupyterlab": {
-    "extension": "lib/plugin",
-    "outputDir": "simplay_jupyter/labextension/",
-    "sharedPackages": {
-      "@jupyter-widgets/base": {
-        "bundled": false,
-        "singleton": true
-      }
+  "sideEffects": [
+    "style/*.css",
+    "style/index.js"
+  ],
+  "styleModule": "style/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "jupyterlab": { 
+    "extension": true,
+    "outputDir": "simplay_jupyter/labextension"
+  },
+  "jupyter-releaser": {
+    "hooks": {
+      "before-build-npm": [
+        "python -m pip install jupyterlab~=3.1",
+        "jlpm"
+      ],
+      "before-build-python": [
+        "jlpm clean:all"
+      ]
     }
   }
 }
