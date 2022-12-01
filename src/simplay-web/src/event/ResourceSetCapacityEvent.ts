@@ -1,6 +1,7 @@
 import { ResourceSetCapacityEventArgs } from './ResourceSetCapacityEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class ResourceSetCapacityEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class ResourceSetCapacityEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.RESOURCE_SET_CAPACITY, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }

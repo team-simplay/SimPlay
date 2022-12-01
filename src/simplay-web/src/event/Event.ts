@@ -1,3 +1,4 @@
+import { SimplayContext } from '../SimplayContext';
 import { EventAction } from './EventAction';
 import { EventArgs } from './EventArgs';
 
@@ -9,5 +10,5 @@ export abstract class Event {
     public readonly args: EventArgs
   ) {}
 
-  abstract execute(context: any): void;
+  abstract execute(context: SimplayContext): void;
 }
