@@ -4,6 +4,7 @@ import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
 import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
+import { getTestGrid } from './event/getTestGrid';
 
 describe('Entity tests', function () {
   const entities = [
@@ -24,23 +25,7 @@ describe('Entity tests', function () {
   const simulationData = {
     visuals,
     entities,
-    grid: {
-      cols: 5,
-      rows: 5,
-      areas: [
-        {
-          id: 'area1',
-          name: 'Area 1',
-          color: 0x1234af,
-          gridDefinition: {
-            x: 1,
-            y: 1,
-            width: 2,
-            height: 2,
-          },
-        },
-      ],
-    },
+    grid: getTestGrid(),
     events: [],
   } as SimulationData;
 
@@ -52,7 +37,7 @@ describe('Entity tests', function () {
     app.stage = new PIXILAYERS.Stage();
     const context = createContext(app, simulationData);
 
-    createEntities(context, simulationData.entities);
+    createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
     const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
     expect(entity).to.be.an.instanceof(PIXI.AnimatedSprite);
@@ -72,18 +57,20 @@ describe('Entity tests', function () {
       height: 500,
     });
     app.stage = new PIXILAYERS.Stage();
-    const context = createContext(app, simulationData);
-
-    const entitiesWithoutTint = [
-      {
-        id: 'entity1',
-        name: 'Entity 1',
-        type: 'CUSTOM',
-        tint: 0xffffff,
-        visual: 'visual1',
-      },
-    ];
-    createEntities(context, entitiesWithoutTint);
+    const simData = {
+      ...simulationData,
+      entities: [
+        {
+          id: 'entity1',
+          name: 'Entity 1',
+          type: 'CUSTOM',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+      ],
+    };
+    const context = createContext(app, simData);
+    createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
     const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
     expect(entity.tint).to.equal(0xffffff);
@@ -97,7 +84,7 @@ describe('Entity tests', function () {
     app.stage = new PIXILAYERS.Stage();
     const context = createContext(app, simulationData);
 
-    createEntities(context, simulationData.entities);
+    createEntities(context);
     const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
     expect(entity.name).to.equal(entities[0].id);
     expect(entity.parent).to.equal(context.entityContainer);
@@ -112,7 +99,7 @@ describe('Entity tests', function () {
     simulationData.visuals[0].frames = [];
     const context = createContext(app, simulationData);
 
-    expect(() => createEntities(context, simulationData.entities)).to.throw(
+    expect(() => createEntities(context)).to.throw(
       `No frames found for visual ${entities[0].visual}`
     );
   });
@@ -129,7 +116,7 @@ describe('Entity tests', function () {
     };
     const context = createContext(app, simData);
 
-    expect(() => createEntities(context, simulationData.entities)).to.throw(
+    expect(() => createEntities(context)).to.throw(
       `No visual found for entity ${entities[0].id}`
     );
   });

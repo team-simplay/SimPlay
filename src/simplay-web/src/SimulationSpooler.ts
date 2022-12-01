@@ -20,7 +20,7 @@ export class SimulationSpooler {
     const app = createApp(this.DOMContainer);
     this.context = createContext(app, this.simulationData);
     createGrid(this.context);
-    createEntities(this.context, this.simulationData.entities);
+    createEntities(this.context);
   }
 
   run(speedFactor = 1) {
