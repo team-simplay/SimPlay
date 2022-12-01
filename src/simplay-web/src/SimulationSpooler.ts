@@ -2,7 +2,6 @@ import { createGrid } from './Grid';
 import { createContext, SimplayContext } from './SimplayContext';
 import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
-import { preloadImages } from './Visual';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 
@@ -16,7 +15,6 @@ export class SimulationSpooler {
     container: HTMLElement
   ) {
     this.simulationData = simulationDataFactory(simulationData);
-    preloadImages(this.simulationData.visuals);
     this.DOMContainer = container;
     const app = createApp(this.DOMContainer);
     this.context = createContext(app, this.simulationData);
