@@ -20,7 +20,10 @@ export function createEntities(context: SimplayContext, entities: Entity[]) {
     const frames = context.simulationData.visuals.find(
       (visual) => visual.id === entity.visual
     )?.frames;
-    if (!frames || frames.length === 0) {
+    if (!frames) {
+      throw new Error(`No visual found for entity ${entity.id}`);
+    }
+    if (frames.length === 0) {
       throw new Error(`No frames found for visual ${entity.visual}`);
     }
     const sprite = new PIXI.AnimatedSprite(

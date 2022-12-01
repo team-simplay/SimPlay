@@ -2,8 +2,6 @@ import { createEntities } from '../src/Entity';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
-import { mock, instance } from 'ts-mockito';
-import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
 import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
 
@@ -68,6 +66,29 @@ describe('Entity tests', function () {
     expect(entity.visible).to.equal(false);
   });
 
+  it('should not set a tint if tint is white', () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    const entitiesWithoutTint = [
+      {
+        id: 'entity1',
+        name: 'Entity 1',
+        type: 'CUSTOM',
+        tint: 0xffffff,
+        visual: 'visual1',
+      },
+    ];
+    createEntities(context, entitiesWithoutTint);
+    expect(context.entityContainer.children.length).to.equal(1);
+    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    expect(entity.tint).to.equal(0xffffff);
+  });
+
   it('should be named correctly and be inside the container', () => {
     const app = new PIXI.Application({
       width: 500,
@@ -93,6 +114,23 @@ describe('Entity tests', function () {
 
     expect(() => createEntities(context, simulationData.entities)).to.throw(
       `No frames found for visual ${entities[0].visual}`
+    );
+  });
+
+  it('should throw if there is no visual', () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const simData = {
+      ...simulationData,
+      visuals: [],
+    };
+    const context = createContext(app, simData);
+
+    expect(() => createEntities(context, simulationData.entities)).to.throw(
+      `No visual found for entity ${entities[0].id}`
     );
   });
 });
