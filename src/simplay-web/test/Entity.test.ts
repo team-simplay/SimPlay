@@ -1,4 +1,4 @@
-import { createEntities } from '../src/Entity';
+import { createEntities, getEntityById } from '../src/Entity';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
@@ -6,30 +6,30 @@ import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
 import { getTestGrid } from './event/getTestGrid';
 
-describe('Entity tests', function () {
-  const entities = [
-    {
-      id: 'entity1',
-      name: 'Entity 1',
-      tint: 0x4512fa,
-      type: 'CUSTOM',
-      visual: 'visual1',
-    },
-  ];
-  const visuals = [
-    {
-      id: 'visual1',
-      frames: ['frame1.png', 'frame2.png'],
-    },
-  ];
-  const simulationData = {
-    visuals,
-    entities,
-    grid: getTestGrid(),
-    events: [],
-  } as SimulationData;
+const entities = [
+  {
+    id: 'entity1',
+    name: 'Entity 1',
+    tint: 0x4512fa,
+    type: 'CUSTOM',
+    visual: 'visual1',
+  },
+];
+const visuals = [
+  {
+    id: 'visual1',
+    frames: ['frame1.png', 'frame2.png'],
+  },
+];
+const simulationData = {
+  visuals,
+  entities,
+  grid: getTestGrid(),
+  events: [],
+} as SimulationData;
 
-  it('should initialize correctly', () => {
+describe('Entity tests', function () {
+  it('should initialize correctly', async () => {
     const app = new PIXI.Application({
       width: 500,
       height: 500,
@@ -118,6 +118,36 @@ describe('Entity tests', function () {
 
     expect(() => createEntities(context)).to.throw(
       `No visual found for entity ${entities[0].id}`
+    );
+  });
+});
+
+describe('getEntityById tests', function () {
+  it('should return the entity', () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    createEntities(context);
+    const entity = getEntityById(context, 'entity1');
+    expect(entity).to.not.be.undefined;
+    expect(entity?.name).to.equal('entity1');
+  });
+
+  it('should throw if the entity does not exist', () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    createEntities(context);
+    expect(() => getEntityById(context, 'entity2')).to.throw(
+      'Entity with id entity2 not found'
     );
   });
 });

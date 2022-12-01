@@ -15,6 +15,19 @@ export interface Entity {
   tint: number;
 }
 
+export function getEntityById(
+  context: SimplayContext,
+  id: string
+): PIXI.AnimatedSprite {
+  const entity = context.entityContainer.getChildByName(
+    id
+  ) as PIXI.AnimatedSprite;
+  if (entity) {
+    return entity;
+  }
+  throw new Error(`Entity with id ${id} not found.`);
+}
+
 export async function createEntities(context: SimplayContext) {
   for (const entity of context.simulationData.entities) {
     const frames = context.simulationData.visuals.find(
