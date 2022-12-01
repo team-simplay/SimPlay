@@ -65,6 +65,7 @@ describe('Entity tests', function () {
     expect(entity.currentFrame).to.equal(0);
     expect(entity.position.x).to.equal(0);
     expect(entity.position.y).to.equal(0);
+    expect(entity.visible).to.equal(false);
   });
 
   it('should be named correctly and be inside the container', () => {
@@ -79,5 +80,19 @@ describe('Entity tests', function () {
     const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
     expect(entity.name).to.equal(entities[0].id);
     expect(entity.parent).to.equal(context.entityContainer);
+  });
+
+  it('should throw if there are no frames for the visual', () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    simulationData.visuals[0].frames = [];
+    const context = createContext(app, simulationData);
+
+    expect(() => createEntities(context, simulationData.entities)).to.throw(
+      `No frames found for visual ${entities[0].visual}`
+    );
   });
 });
