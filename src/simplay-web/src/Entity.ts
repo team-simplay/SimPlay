@@ -19,7 +19,11 @@ export function getEntityDisplayObjectById(
   context: SimplayContext,
   id: string
 ): PIXI.DisplayObject {
-  return context.entityContainer.getChildByName(id);
+  const entity = context.entityContainer.getChildByName(id);
+  if (!entity) {
+    throw new Error(`Entity with id ${id} not found`);
+  }
+  return entity;
 }
 
 export async function createEntities(context: SimplayContext) {

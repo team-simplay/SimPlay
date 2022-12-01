@@ -1,4 +1,4 @@
-import { createEntities } from '../src/Entity';
+import { createEntities, getEntityDisplayObjectById } from '../src/Entity';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
@@ -127,6 +127,57 @@ describe('Entity tests', async function () {
 
     await expect(createEntities(context)).to.eventually.be.rejectedWith(
       'No visual found for entity entity1'
+    );
+  });
+});
+
+describe('getEntityDisplayObjectById tests', async function () {
+  const entities = [
+    {
+      id: 'entity1',
+      name: 'Entity 1',
+      tint: 0x4512fa,
+      type: 'CUSTOM',
+      visual: 'visual1',
+    },
+  ];
+  const visuals = [
+    {
+      id: 'visual1',
+      frames: ['frame1.png', 'frame2.png'],
+    },
+  ];
+  const simulationData = {
+    visuals,
+    entities,
+    grid: getTestGrid(),
+    events: [],
+  } as SimulationData;
+
+  it('should return the correct entity', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    await createEntities(context);
+    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    expect(getEntityDisplayObjectById(context, 'entity1')).to.equal(entity);
+  });
+
+  it('should throw if the entity does not exist', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    await createEntities(context);
+    expect(() => getEntityDisplayObjectById(context, 'entity2')).to.throw(
+      'Entity with id entity2 not found'
     );
   });
 });
