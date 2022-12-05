@@ -94,7 +94,6 @@ jobs:
           name: extension-artifacts
       - name: Install the extension
         run: |
-          cd src/simplay-jupyter
           set -eux
           python -m pip install "jupyterlab~=3.1" simplay_jupyter*.whl
       - name: Install dependencies
