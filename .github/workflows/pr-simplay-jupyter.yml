@@ -65,7 +65,6 @@ jobs:
           name: extension-artifacts
       - name: Install and Test
         run: |
-          cd src/simplay-jupyter
           set -eux
           # Remove NodeJS, twice to take care of system and locally installed node versions.
           sudo rm -rf $(which node)
@@ -75,6 +74,7 @@ jobs:
 
           jupyter labextension list
           jupyter labextension list 2>&1 | grep -ie "simplay_jupyter.*OK"
+          cd src/simplay-jupyter
           python -m jupyterlab.browser_check --no-chrome-test
 
   integration-tests:
