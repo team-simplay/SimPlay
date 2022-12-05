@@ -19,7 +19,7 @@ test('should emit an activation console message', async ({
   });
 
   await page.goto();
-  await page.filebrowser.openByPath('examples/events.simplay');
+  await page.filebrowser.open('examples/events.simplay');
 
   console.log('**** logs: ' + JSON.stringify(logs));
 
