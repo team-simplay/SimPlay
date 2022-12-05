@@ -1,4 +1,4 @@
-import { expect, test, galata } from '@jupyterlab/galata';
+import { expect, test } from '@jupyterlab/galata';
 import { Page } from '@playwright/test';
 
 /**
