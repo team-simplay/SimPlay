@@ -1,0 +1,136 @@
+{
+  "events": [{
+      "action": "SET_POSITION",
+      "args": {
+        "x": 1,
+        "y": 1
+      },
+      "forId": "Car 0",
+      "timestamp": 0
+    },
+    {
+      "action": "SET_VISIBLE",
+      "args": {
+        "visible": true
+      },
+      "forId": "Car 0",
+      "timestamp": 0
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 1,
+        "y": 1
+      },
+      "forId": "Car 0",
+      "timestamp": 3
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 60,
+        "y": 60
+      },
+      "forId": "Car 0",
+      "timestamp": 5
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 280,
+        "y": 280
+      },
+      "forId": "Car 1",
+      "timestamp": 9
+    },
+    {
+      "action": "SET_VISIBLE",
+      "args": {
+        "visible": true
+      },
+      "forId": "Car 1",
+      "timestamp": 9
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 50,
+        "y": 50
+      },
+      "forId": "Car 0",
+      "timestamp": 12
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 260,
+        "y": 260
+      },
+      "forId": "Car 1",
+      "timestamp": 14
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 70,
+        "y": 70
+      },
+      "forId": "Car 0",
+      "timestamp": 16
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 240,
+        "y": 240
+      },
+      "forId": "Car 1",
+      "timestamp": 19
+    }
+  ],
+  "entities": [{
+      "id": "Car 0",
+      "type": "process",
+      "visual": "CAR",
+      "tint": 1867825.2667952755
+    },
+    {
+      "id": "Car 1",
+      "type": "process",
+      "visual": "CAR",
+      "tint": 300000.2667952755
+    }
+  ],
+  "visuals": [{
+      "id": "CAR",
+      "frames": ["./resources/car.png"]
+    },
+    {
+      "id": "TANK_TRUCK",
+      "frames": ["./resources/truck.png"]
+    },
+    {
+      "id": "GAS_STATION",
+      "frames": ["./resources/gaspump.png"]
+    },
+    {
+      "id": "FUEL_PUMP",
+      "frames": ["./resources/pump.png"]
+    }
+  ],
+  "grid": {
+    "areas": [{
+      "id": "gasstation01",
+      "name": "GAS_STATION",
+      "color": 16333215,
+      "gridDefinition": {
+        "height": 2,
+        "width": 2,
+        "x": 1,
+        "y": 1
+      }
+    }],
+    "cols": 5,
+    "rows": 5
+  }
+}

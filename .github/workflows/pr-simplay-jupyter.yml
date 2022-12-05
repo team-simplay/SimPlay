@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: extension-artifacts
-          path: src/simplay-jupyter/dist/simplay_test_frontend_extension*
+          path: src/simplay-jupyter/dist/simplay_jupyter*
           if-no-files-found: error
 
   test_isolated:
