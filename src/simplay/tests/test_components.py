@@ -12,7 +12,7 @@ class TestVisualResource:
         assert {
             "id": "test",
             "type": ComponentType.RESOURCE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
@@ -54,7 +54,7 @@ class TestVisualPreemtiveResource:
         assert {
             "id": "test",
             "type": ComponentType.RESOURCE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
@@ -92,7 +92,7 @@ class TestVisualPriorityResource:
         assert {
             "id": "test",
             "type": ComponentType.RESOURCE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
@@ -130,7 +130,7 @@ class TestVisualProcess:
         assert {
             "id": "test",
             "type": ComponentType.PROCESS.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
@@ -142,7 +142,7 @@ class TestVisualContainer:
         assert {
             "id": "test",
             "type": ComponentType.CONTAINER.value,
-            "graphic": "",
+            "visual": "",
             "tint": 1,
         } in env.visualization_manager.entities
 
@@ -168,7 +168,7 @@ class TestVisualStore:
         assert {
             "id": "test",
             "type": ComponentType.STORE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 1,
         } in env.visualization_manager.entities
 
@@ -194,7 +194,7 @@ class TestVisualFilterStore:
         assert {
             "id": "test",
             "type": ComponentType.STORE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 1,
         } in env.visualization_manager.entities
 

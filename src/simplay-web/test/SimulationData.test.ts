@@ -18,19 +18,13 @@ describe('SimulationData tests', function () {
       visuals: [
         {
           id: 'leet',
-          visual: 'some.png',
-        },
-      ],
-      sprites: [
-        {
-          id: 'leetsprite',
-          frames: ['some.png', 'other.png'],
+          frames: ['some.png'],
         },
       ],
       entities: [
         {
           id: 'leetentity',
-          graphic: 'leetsprite',
+          visual: 'leetsprite',
           type: 'CUSTOM',
           tint: 0x000000,
         },
@@ -46,7 +40,6 @@ describe('SimulationData tests', function () {
     const data = simulationDataFactory(serialized);
     expect(data.events).to.deep.equal(serialized.events);
     expect(data.visuals).to.deep.equal(serialized.visuals);
-    expect(data.sprites).to.deep.equal(serialized.sprites);
     expect(data.entities).to.deep.equal(serialized.entities);
     expect(data.grid).to.deep.equal(serialized.grid);
   });

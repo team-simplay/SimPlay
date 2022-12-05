@@ -3,7 +3,6 @@ import { Event } from './event/Event';
 import { eventFactory } from './event/EventFactory';
 import { SimplayGrid } from './SimplayGrid';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
-import { Sprite } from './Sprite';
 import { Visual } from './Visual';
 
 export class SimulationData {
@@ -11,20 +10,17 @@ export class SimulationData {
   readonly grid: SimplayGrid;
   readonly entities: Entity[];
   readonly visuals: Visual[];
-  readonly sprites: Sprite[];
 
   constructor(
     events: Event[],
     grid: SimplayGrid,
     entities: Entity[],
-    visuals: Visual[],
-    sprites: Sprite[]
+    visuals: Visual[]
   ) {
     this.events = events;
     this.grid = grid;
     this.entities = entities;
     this.visuals = visuals;
-    this.sprites = sprites;
   }
 }
 
@@ -38,7 +34,6 @@ export function simulationDataFactory(
     events,
     serialized.grid,
     serialized.entities,
-    serialized.visuals,
-    serialized.sprites
+    serialized.visuals
   );
 }

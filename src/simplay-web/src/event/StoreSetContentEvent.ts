@@ -1,6 +1,7 @@
 import { StoreSetContentEventArgs } from './StoreSetContentEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class StoreSetContentEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class StoreSetContentEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.STORE_SET_CONTENT, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }

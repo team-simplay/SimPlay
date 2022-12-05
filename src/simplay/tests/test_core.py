@@ -17,7 +17,7 @@ class TestVisualComponent:
         assert {
             "id": "test",
             "type": ComponentType.RESOURCE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in env.visualization_manager.entities
 
@@ -39,9 +39,9 @@ class TestVisualComponent:
             _ = simplay.VisualComponent(
                 env, "test", ComponentType.RESOURCE, "", 0)
 
-    def test_invalid_graphic(self):
+    def test_invalid_visual(self):
         env = simplay.VisualEnvironment()
-        with pytest.raises(TypeError, match=ErrorText.GRAPHIC_MUST_BE_STRING):
+        with pytest.raises(TypeError, match=ErrorText.VISUAL_MUST_BE_STRING):
             _ = simplay.VisualComponent(
                 env, "test", ComponentType.RESOURCE, 0, 0)
 
@@ -64,7 +64,7 @@ class TestVisualizationManager:
         assert {
             "id": "test",
             "type": ComponentType.RESOURCE.value,
-            "graphic": "",
+            "visual": "",
             "tint": 0,
         } in self.manager.entities
 
@@ -101,7 +101,7 @@ class TestVisualizationManager:
     def test_register_visual(self):
         self.reset()
         self.manager.register_visual("test", "p_test")
-        assert {"id": "test", "path": "p_test"} in self.manager.visuals
+        assert {"id": "test", "frames": ["p_test"]} in self.manager.visuals
 
     def test_no_duplicate_visuals(self):
         self.reset()
@@ -114,15 +114,15 @@ class TestVisualizationManager:
         self.reset()
         with pytest.raises(
                 ValueError,
-                match=ErrorText.PATH_EMPTY):
+                match=ErrorText.FRAMES_MUST_NOT_BE_EMPTY):
             self.manager.register_visual("id", "")
         assert len(self.manager.visuals) == 0
 
     def test_no_none_visuals(self):
         self.reset()
         with pytest.raises(
-                ValueError,
-                match=ErrorText.PATH_EMPTY):
+                TypeError,
+                match=ErrorText.FRAMES_MUST_BE_LIST_OF_STRINGS):
             self.manager.register_visual("id", None)
         assert len(self.manager.visuals) == 0
 
@@ -133,48 +133,49 @@ class TestVisualizationManager:
 
     def test_no_nonstring_visual_paths(self):
         self.reset()
-        with pytest.raises(TypeError, match=ErrorText.PATH_MUST_BE_STRING):
+        with pytest.raises(TypeError,
+                           match=ErrorText.FRAMES_MUST_BE_LIST_OF_STRINGS):
             self.manager.register_visual("id", 0)
 
     def test_register_sprite(self):
         self.reset()
-        self.manager.register_sprite("test", ["p_test"])
-        assert {"id": "test", "frames": ["p_test"]} in self.manager.sprites
+        self.manager.register_sprites("test", ["p_test"])
+        assert {"id": "test", "frames": ["p_test"]} in self.manager.visuals
 
     def test_no_duplicate_sprites(self):
         self.reset()
-        self.manager.register_sprite("duplicate", ["p_test"])
+        self.manager.register_sprites("duplicate", ["p_test"])
         with pytest.raises(ValueError, match=ErrorText.ID_NOT_UNIQUE):
-            self.manager.register_sprite("duplicate", ["p_test2"])
-        assert len(self.manager.sprites) == 1
+            self.manager.register_sprites("duplicate", ["p_test2"])
+        assert len(self.manager.visuals) == 1
 
     def test_no_empty_sprites(self):
         self.reset()
         with pytest.raises(
                 ValueError,
                 match=ErrorText.FRAMES_MUST_NOT_BE_EMPTY):
-            self.manager.register_sprite("id", [])
-        assert len(self.manager.sprites) == 0
+            self.manager.register_sprites("id", [])
+        assert len(self.manager.visuals) == 0
 
     def test_no_none_sprites(self):
         self.reset()
         with pytest.raises(
                 ValueError,
                 match=ErrorText.FRAMES_MUST_NOT_BE_EMPTY):
-            self.manager.register_sprite("id", None)
-        assert len(self.manager.sprites) == 0
+            self.manager.register_sprites("id", None)
+        assert len(self.manager.visuals) == 0
 
     def test_no_nonstring_sprite_ids(self):
         self.reset()
         with pytest.raises(TypeError, match=ErrorText.ID_MUST_BE_STRING):
-            self.manager.register_sprite(0, ["p_test"])
+            self.manager.register_sprites(0, ["p_test"])
 
     def test_no_nonstring_sprite_frames(self):
         self.reset()
         with pytest.raises(
                 TypeError,
                 match=ErrorText.FRAMES_MUST_BE_LIST_OF_STRINGS):
-            self.manager.register_sprite("id", [0])
+            self.manager.register_sprites("id", [0])
 
     def test_set_grid(self):
         self.reset()
