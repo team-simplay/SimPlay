@@ -108,23 +108,19 @@ jobs:
             ${{ github.workspace }}/pw-browsers
           key: ${{ runner.os }}-${{ hashFiles('ui-tests/yarn.lock') }}
       - name: Install browser
-        run: |
-          cd src/simplay-jupyter
-          jlpm playwright install chromium
-        working-directory: ui-tests
+        run: jlpm playwright install chromium
+        working-directory: src/simplay-jupyter/ui-tests
       - name: Execute integration tests
-        working-directory: ui-tests
-        run: |
-          cd src/simplay-jupyter
-          jlpm playwright test
+        working-directory: src/simplay-jupyter/ui-tests
+        run: jlpm playwright test
       - name: Upload Playwright Test report
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: simplay_jupyter-playwright-tests
           path: |
-            ui-tests/test-results
-            ui-tests/playwright-report
+            src/simplay-jupyter/ui-tests/test-results
+            src/simplay-jupyter/ui-tests/playwright-report
 
   check_links:
     name: Check Links
