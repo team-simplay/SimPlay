@@ -1,4 +1,4 @@
-import { expect, test } from '@jupyterlab/galata';
+import { expect, test, galata } from '@jupyterlab/galata';
 import { Page } from '@playwright/test';
 
 /**
@@ -19,6 +19,7 @@ test('should emit an activation console message', async ({
   });
 
   await page.goto();
+  await page.filebrowser.openByPath('examples/events.simplay');
 
   console.log('**** logs: ' + JSON.stringify(logs));
 
