@@ -20,6 +20,8 @@ test('should emit an activation console message', async ({
 
   await page.goto();
 
+  console.log('**** logs: ' + JSON.stringify(logs));
+
   expect(
     logs.filter(s => s === 'JupyterLab extension simplay_jupyter is activated!')
   ).toHaveLength(1);
