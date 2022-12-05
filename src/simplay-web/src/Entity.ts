@@ -50,6 +50,7 @@ export async function createEntities(context: SimplayContext) {
       context.tileWidth / width,
       context.tileHeight / height
     );
+    // multiplying by 0.5 is a design choice to make the entities look a bit smaller
     sprite.scale.set(scale * 0.5, scale * 0.5);
     sprite.name = entity.id;
     if (entity.tint && entity.tint !== 0xffffff) {
