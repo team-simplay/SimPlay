@@ -7,7 +7,11 @@ import { Page } from '@playwright/test';
  */
 test.use({ autoGoto: false });
 
-test('should emit an activation console message', async ({ page } : {page: Page}) => {
+test('should emit an activation console message', async ({
+  page
+}: {
+  page: Page;
+}) => {
   const logs: string[] = [];
 
   page.on('console', message => {
