@@ -20,7 +20,7 @@ export const SIMPLAY_MIME_TYPE = 'application/simplay+json';
 export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
   constructor(options: IRenderMime.IRendererOptions) {
     super();
-    console.info('simplay_test_frontend_extension loaded');
+    console.info('JupyterLab extension simplay_jupyter is activated!');
     this._mimeType = options.mimeType;
     this.addClass(SIMPLAY_CSS_COMMON_CLASS);
   }
