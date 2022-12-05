@@ -1,4 +1,5 @@
 import { expect, test } from '@jupyterlab/galata';
+import { Page } from '@playwright/test';
 
 /**
  * Don't load JupyterLab webpage before running the tests.
@@ -6,7 +7,7 @@ import { expect, test } from '@jupyterlab/galata';
  */
 test.use({ autoGoto: false });
 
-test('should emit an activation console message', async ({ page }) => {
+test('should emit an activation console message', async ({ page } : {page: Page}) => {
   const logs: string[] = [];
 
   page.on('console', message => {
