@@ -33,6 +33,21 @@ jobs:
           jupyter labextension list
           jupyter labextension list 2>&1 | grep -ie "simplay_jupyter.*OK"
           python -m jupyterlab.browser_check
+      - name: Package the extension
+        run: |
+          cd src/simplay-jupyter
+          set -eux
+
+          pip install build
+          python -m build
+          pip uninstall -y "simplay_test_frontend_extension" jupyterlab
+
+      - name: Upload extension packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: extension-artifacts
+          path: src/simplay-jupyter/dist/simplay_test_frontend_extension*
+          if-no-files-found: error
 
   test_isolated:
     needs: build-simplay-jupyter
