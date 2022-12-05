@@ -1,14 +1,11 @@
 name: Build
-
 on:
   pull_request:
     paths:
-      - 'src/simplay-jupyter/**'
-
+      - "src/simplay-jupyter/**"
 jobs:
   build-simplay-jupyter:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,8 +57,8 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
-          architecture: 'x64'
+          python-version: "3.9"
+          architecture: "x64"
       - uses: actions/download-artifact@v2
         with:
           name: extension-artifacts
