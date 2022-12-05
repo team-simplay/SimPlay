@@ -58,7 +58,7 @@ describe('SetSpriteFrameEvent tests', function () {
     const entityObject = getEntityDisplayObjectById(
       spooler.context,
       forId
-    ) as AnimatedSprite;
+    ).animatedSprite;
     expect(entityObject.currentFrame).to.equal(1);
   });
 
