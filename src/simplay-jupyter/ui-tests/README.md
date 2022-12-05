@@ -36,7 +36,7 @@ jlpm playwright install
 cd ..
 ```
 
-3. Execute the [Playwright](https://playwright.dev/docs/intro) tests:
+3. Execute the [Playwright](https://playwright.dev) tests:
 
 ```sh
 cd ./ui-tests
@@ -73,7 +73,7 @@ jlpm playwright install
 cd ..
 ```
 
-3. Execute the [Playwright](https://playwright.dev/docs/intro) command:
+3. Execute the [Playwright](https://playwright.dev) command:
 
 ```sh
 cd ./ui-tests
