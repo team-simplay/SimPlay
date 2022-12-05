@@ -3,7 +3,7 @@ name: Build
 on:
   pull_request:
     paths:
-      - 'src/simplay-web/**'
+      - 'src/simplay-jupyter/**'
 
 jobs:
   build-simplay-jupyter:
