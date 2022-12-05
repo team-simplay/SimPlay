@@ -97,12 +97,10 @@ jobs:
           set -eux
           python -m pip install "jupyterlab~=3.1" simplay_jupyter*.whl
       - name: Install dependencies
-        working-directory: ui-tests
+        working-directory: src/simplay-jupyter/ui-tests
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-        run: |
-          cd src/simplay-jupyter
-          jlpm install
+        run: jlpm install
       - name: Set up browser cache
         uses: actions/cache@v2
         with:
