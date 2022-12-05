@@ -1,5 +1,6 @@
 import { SimplayContext } from './SimplayContext';
 import * as PIXI from 'pixi.js';
+import { InteractionLine } from './event/InteractionLine';
 
 export type EntityType =
   | 'CUSTOM'
@@ -19,6 +20,8 @@ export interface DisplayEntity {
   animatedSprite: PIXI.AnimatedSprite;
   decoratingText: PIXI.Text;
   container: PIXI.Container;
+  outgoingInteractions: Map<string, InteractionLine>;
+  incomingInteractions: Map<string, InteractionLine>;
 }
 
 export function getEntityDisplayObjectById(
@@ -59,6 +62,8 @@ export async function createEntities(context: SimplayContext) {
       animatedSprite: sprite,
       decoratingText: text,
       container: container,
+      outgoingInteractions: new Map(),
+      incomingInteractions: new Map(),
     };
   }
 }
