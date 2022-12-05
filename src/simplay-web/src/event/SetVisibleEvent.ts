@@ -1,3 +1,4 @@
+import { getEntityDisplayObjectById } from '../Entity';
 import { SimplayContext } from '../SimplayContext';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
@@ -12,6 +13,7 @@ export class SetVisibleEvent extends Event {
     super(forId, timestamp, EventAction.SET_VISIBLE, args);
   }
   execute(context: SimplayContext) {
-    throw new Error('Method not implemented.');
+    const entityGraphic = getEntityDisplayObjectById(context, this.forId);
+    entityGraphic.visible = this.args.visible;
   }
 }
