@@ -45,8 +45,8 @@ export async function createEntities(context: SimplayContext) {
     }
     const sprite = await createAnimatedSprite(context, entity, frames);
     const text = createDecoratingText(entity);
-    text.x = sprite.x + sprite.width + 5;
-    text.y = sprite.y + sprite.height + 5;
+    text.y = sprite.y + sprite.height + 1;
+    text.x = sprite.x + sprite.width / 2;
 
     const container = new PIXI.Container();
     container.name = entity.id;
