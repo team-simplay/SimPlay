@@ -2,6 +2,11 @@ import { ResourceSetCapacityEventArgs } from './ResourceSetCapacityEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
+import {
+  ExtendedDisplayEntity,
+  getEntityDisplayObjectById,
+  ResourceEntity,
+} from '../Entity';
 
 export class ResourceSetCapacityEvent extends Event {
   constructor(
@@ -12,6 +17,14 @@ export class ResourceSetCapacityEvent extends Event {
     super(forId, timestamp, EventAction.RESOURCE_SET_CAPACITY, args);
   }
   execute(context: SimplayContext) {
-    throw new Error('Method not implemented.');
+    const entityDisplayObject = getEntityDisplayObjectById(
+      context,
+      this.forId
+    ) as ExtendedDisplayEntity;
+    const entity = context.simulationData.entities.find(
+      (entity) => entity.id === this.forId
+    ) as ResourceEntity;
+    entity.capacity = this.args.capacity;
+    entityDisplayObject.informationText.text = `${entity.utilization} / ${entity.capacity}`;
   }
 }
