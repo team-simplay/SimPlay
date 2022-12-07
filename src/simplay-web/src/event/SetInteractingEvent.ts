@@ -3,7 +3,6 @@ import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
 import { getEntityDisplayObjectById } from '../Entity';
-import * as PIXI from 'pixi.js';
 import { InteractionLine } from './InteractionLine';
 
 export class SetInteractingEvent extends Event {

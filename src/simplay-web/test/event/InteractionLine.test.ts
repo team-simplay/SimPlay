@@ -1,13 +1,8 @@
-import { MoveNearCellEvent } from '../../src/event/MoveNearCellEvent';
 import { expect } from 'chai';
-import { MoveNearCellEventArgs } from '../../src/event/MoveNearCellEventArgs';
-import { EventAction } from '../../src/event/EventAction';
-import { instance, mock, spy, when } from 'ts-mockito';
+import { spy, when } from 'ts-mockito';
 import * as PIXI from 'pixi.js';
 import { getTestGrid } from './getTestGrid';
-import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
-import { SimulationSpooler } from '../../src/SimulationSpooler';
-import { DisplayEntity, getEntityDisplayObjectById } from '../../src/Entity';
+import { DisplayEntity } from '../../src/Entity';
 import * as PIXILAYERS from '@pixi/layers';
 import { InteractionLine } from '../../src/event/InteractionLine';
 import { SimplayContext } from '../../src/SimplayContext';

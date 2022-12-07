@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
 import { getTestGrid } from './event/getTestGrid';
-import { mock, spy, when } from 'ts-mockito';
+import { spy, when } from 'ts-mockito';
 import chaiAsPromised from 'chai-as-promised';
 import { ExtendedDisplayEntity } from '../src/Entity';
 import * as chai from 'chai';
