@@ -1,5 +1,5 @@
 import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
-import { simulationDataFactory, SimulationData } from '../src/SimulationData';
+import { simulationDataFactory } from '../src/SimulationData';
 import { expect } from 'chai';
 
 describe('SimulationData tests', function () {

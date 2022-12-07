@@ -1,3 +1,8 @@
+import {
+  ContainerEntity,
+  ExtendedDisplayEntity,
+  getEntityDisplayObjectById,
+} from '../Entity';
 import { SimplayContext } from '../SimplayContext';
 import { ContainerSetLevelEventArgs } from './ContainerSetLevelEventArgs';
 import { Event } from './Event';
@@ -12,6 +17,14 @@ export class ContainerSetLevelEvent extends Event {
     super(forId, timestamp, EventAction.CONTAINER_SET_LEVEL, args);
   }
   execute(context: SimplayContext) {
-    throw new Error('Method not implemented.');
+    const entityDisplayObject = getEntityDisplayObjectById(
+      context,
+      this.forId
+    ) as ExtendedDisplayEntity;
+    const entity = context.simulationData.entities.find(
+      (entity) => entity.id === this.forId
+    ) as ContainerEntity;
+    entity.level = this.args.level;
+    entityDisplayObject.informationText.text = `${entity.level} / ${entity.capacity}`;
   }
 }

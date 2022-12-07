@@ -3,7 +3,6 @@ import { SimulationData } from '../src/SimulationData';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
-import { mock, when, instance } from 'ts-mockito';
 
 describe('context tests', () => {
   const simulationData = {

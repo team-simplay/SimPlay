@@ -2,6 +2,7 @@ import { SetDecoratingTextEventArgs } from './SetDecoratingTextEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
+import { getEntityDisplayObjectById } from '../Entity';
 
 export class SetDecoratingTextEvent extends Event {
   constructor(
@@ -12,6 +13,7 @@ export class SetDecoratingTextEvent extends Event {
     super(forId, timestamp, EventAction.SET_DECORATING_TEXT, args);
   }
   execute(context: SimplayContext) {
-    throw new Error('Method not implemented.');
+    const displayEntity = getEntityDisplayObjectById(context, this.forId);
+    displayEntity.decoratingText.text = this.args.text;
   }
 }

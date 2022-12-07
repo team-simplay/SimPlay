@@ -14,6 +14,6 @@ export class SetVisibleEvent extends Event {
   }
   execute(context: SimplayContext) {
     const entityGraphic = getEntityDisplayObjectById(context, this.forId);
-    entityGraphic.visible = this.args.visible;
+    entityGraphic.container.visible = this.args.visible;
   }
 }

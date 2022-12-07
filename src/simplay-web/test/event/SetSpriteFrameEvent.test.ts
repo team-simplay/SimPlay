@@ -8,7 +8,6 @@ import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getTestGrid } from './getTestGrid';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import { getEntityDisplayObjectById } from '../../src/Entity';
-import { AnimatedSprite } from 'pixi.js';
 
 const forId = 'leet';
 const timestamp = 1337;
@@ -58,7 +57,7 @@ describe('SetSpriteFrameEvent tests', function () {
     const entityObject = getEntityDisplayObjectById(
       spooler.context,
       forId
-    ) as AnimatedSprite;
+    ).animatedSprite;
     expect(entityObject.currentFrame).to.equal(1);
   });
 

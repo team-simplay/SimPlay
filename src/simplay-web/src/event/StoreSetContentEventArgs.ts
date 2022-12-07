@@ -1,6 +1,6 @@
 import { EventArgs } from './EventArgs';
 
-interface StoreContentItem {
+export interface StoreContentItem {
   resourceId: number;
   amount: number;
 }
