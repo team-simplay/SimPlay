@@ -2,12 +2,22 @@ import { SetNotInteractingEvent } from '../../src/event/SetNotInteractingEvent';
 import { expect } from 'chai';
 import { SetNotInteractingEventArgs } from '../../src/event/SetNotInteractingEventArgs';
 import { EventAction } from '../../src/event/EventAction';
+import { mock, instance, when, spy } from 'ts-mockito';
+import * as PIXI from 'pixi.js';
+import { SimulationSpooler } from '../../src/SimulationSpooler';
+import { getTestGrid } from './getTestGrid';
+import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
+import { getEntityDisplayObjectById } from '../../src/Entity';
 
 const forId = 'leet';
 const timestamp = 1337;
 const withId = 'foo';
 
-describe('SetNotInteractingEvent tests', function () {
+const fromUrlSpy = spy(PIXI.Texture);
+when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
+when(fromUrlSpy.fromURL('foo.png')).thenResolve(PIXI.Texture.WHITE);
+
+describe('SetNotInteractingEvent tests', async function () {
   it('should initialize correctly', () => {
     const args = new SetNotInteractingEventArgs({ withId: withId });
     const event = new SetNotInteractingEvent(forId, timestamp, args);
@@ -15,5 +25,58 @@ describe('SetNotInteractingEvent tests', function () {
     expect(event.timestamp).to.equal(timestamp);
     expect(event.action).to.equal(EventAction.SET_NOT_INTERACTING);
     expect(event.args.withId).to.equal(withId);
+  });
+
+  const simulationDataSerialized = {
+    entities: [
+      {
+        id: 'leet',
+        type: 'CUSTOM',
+        visual: 'LEET',
+        tint: 0x000000,
+      },
+      {
+        id: 'foo',
+        type: 'CUSTOM',
+        visual: 'FOO',
+        tint: 0x000000,
+      },
+    ],
+    events: [],
+    visuals: [
+      {
+        id: 'LEET',
+        frames: ['leet.png'],
+      },
+      {
+        id: 'FOO',
+        frames: ['foo.png'],
+      },
+    ],
+    grid: getTestGrid(),
+  } as SimulationDataSerialized;
+
+  it('should remove an interaction', async () => {
+    const args = new SetNotInteractingEventArgs({ withId: withId });
+    const event = new SetNotInteractingEvent(forId, timestamp, args);
+    const containerMock = mock(HTMLDivElement);
+    const container = instance(containerMock);
+    const spooler = new SimulationSpooler(simulationDataSerialized, container);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    const createArgs = new SetNotInteractingEventArgs({ withId: withId });
+    const createEvent = new SetNotInteractingEvent(
+      forId,
+      timestamp,
+      createArgs
+    );
+    createEvent.execute(spooler.context);
+
+    event.execute(spooler.context);
+    const sourceEntity = getEntityDisplayObjectById(spooler.context, forId);
+    const targetEntity = getEntityDisplayObjectById(spooler.context, withId);
+
+    expect(sourceEntity.outgoingInteractions).to.have.lengthOf(0);
+    expect(targetEntity.incomingInteractions).to.have.lengthOf(0);
   });
 });
