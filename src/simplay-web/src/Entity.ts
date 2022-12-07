@@ -47,10 +47,6 @@ export interface ExtendedDisplayEntity extends DisplayEntity {
   informationText: PIXI.Text;
 }
 
-export interface ExtendedDisplayEntity extends DisplayEntity {
-  informationText: PIXI.Text;
-}
-
 export function getEntityDisplayObjectById(
   context: SimplayContext,
   id: string
