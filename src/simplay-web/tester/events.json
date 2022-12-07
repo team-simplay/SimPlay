@@ -28,8 +28,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 60,
-        "y": 60
+        "x": 2,
+        "y": 1
       },
       "forId": "Car 0",
       "timestamp": 5
@@ -37,8 +37,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 280,
-        "y": 280
+        "x": 3,
+        "y": 4
       },
       "forId": "Car 1",
       "timestamp": 9
@@ -54,8 +54,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 50,
-        "y": 50
+        "x": 4,
+        "y": 2
       },
       "forId": "Car 0",
       "timestamp": 12
@@ -63,8 +63,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 260,
-        "y": 260
+        "x": 2,
+        "y": 4
       },
       "forId": "Car 1",
       "timestamp": 14
@@ -72,8 +72,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 70,
-        "y": 70
+        "x": 1,
+        "y": 1
       },
       "forId": "Car 0",
       "timestamp": 16
@@ -81,8 +81,8 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 240,
-        "y": 240
+        "x": 0,
+        "y": 3
       },
       "forId": "Car 1",
       "timestamp": 19

@@ -10,6 +10,9 @@ export class SimulationSpooler {
   private DOMContainer: HTMLElement;
   private simulationData: SimulationData;
   public readonly context: SimplayContext;
+  private speedFactor = 1;
+  private stopRequested = false;
+  private currentSimTimeStamp = 0;
 
   constructor(
     simulationData: SimulationDataSerialized,
@@ -23,36 +26,74 @@ export class SimulationSpooler {
     createEntities(this.context);
   }
 
-  run(speedFactor = 1) {
-    throw Error('TODO implement');
+  private spoolTimestamp(timestamp: number) {
+    const events = this.simulationData.events.filter(
+      (event) => Math.round(event.timestamp) === timestamp
+    );
+    events.forEach((event) => {
+      console.log(event);
+      event.execute(this.context);
+    });
+  }
+
+  async run() {
+    const maxTimestamp = Math.max(
+      ...this.simulationData.events.map((event) => event.timestamp)
+    );
+    while (!this.stopRequested) {
+      const frameDuration = 1000 / this.speedFactor;
+      const now = Date.now();
+
+      this.spoolTimestamp(this.currentSimTimeStamp);
+
+      const executionDuration = now - Date.now();
+      if (this.currentSimTimeStamp > maxTimestamp) {
+        this.stopRequested = true;
+      }
+      await new Promise((resolve) =>
+        setTimeout(resolve, frameDuration - executionDuration)
+      );
+      this.currentSimTimeStamp++;
+    }
+    this.stopRequested = false;
   }
 
   pause() {
-    throw Error('TODO implement');
+    this.stopRequested = true;
   }
 
-  continue() {
-    throw Error('TODO implement');
+  advanceOneStep() {
+    this.spoolTimestamp(this.currentSimTimeStamp);
+    this.currentSimTimeStamp++;
   }
 
-  skipTo() {
-    throw Error('TODO implement');
+  skipTo(timestamp: number) {
+    if (timestamp < this.currentSimTimeStamp) {
+      this.reset();
+    }
+    for (let i = this.currentSimTimeStamp; i < timestamp; i++) {
+      this.spoolTimestamp(i);
+    }
   }
 
   reset() {
-    throw Error('TODO implement');
+    this.currentSimTimeStamp = 0;
+    this.stopRequested = false;
   }
 
-  setSpeedFactor() {
-    throw Error('TODO implement');
+  setSpeedFactor(value: number): number {
+    this.speedFactor = value;
+    return this.speedFactor;
   }
 
-  increaseSpeed(increaseBy: number) {
-    throw Error('TODO implement');
+  increaseSpeed(increaseBy: number): number {
+    this.speedFactor += increaseBy;
+    return this.speedFactor;
   }
 
-  decreaseSpeed(decreaseBy: number) {
-    throw Error('TODO implement');
+  decreaseSpeed(decreaseBy: number): number {
+    this.speedFactor -= decreaseBy;
+    return this.speedFactor;
   }
 }
 
