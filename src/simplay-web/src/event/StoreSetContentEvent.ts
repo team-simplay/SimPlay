@@ -2,6 +2,11 @@ import { StoreSetContentEventArgs } from './StoreSetContentEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
+import {
+  ExtendedDisplayEntity,
+  getEntityDisplayObjectById,
+  StoreEntity,
+} from '../Entity';
 
 export class StoreSetContentEvent extends Event {
   constructor(
@@ -12,6 +17,19 @@ export class StoreSetContentEvent extends Event {
     super(forId, timestamp, EventAction.STORE_SET_CONTENT, args);
   }
   execute(context: SimplayContext) {
-    throw new Error('Method not implemented.');
+    const entityDisplayObject = getEntityDisplayObjectById(
+      context,
+      this.forId
+    ) as ExtendedDisplayEntity;
+    const entity = context.simulationData.entities.find(
+      (entity) => entity.id === this.forId
+    ) as StoreEntity;
+    entity.content = this.args.content;
+    entityDisplayObject.informationText.text = `capacity: ${
+      entity.capacity ?? 0
+    }`;
+    for (const item of this.args.content) {
+      entityDisplayObject.informationText.text += `\n${item.resourceId}: ${item.amount}`;
+    }
   }
 }
