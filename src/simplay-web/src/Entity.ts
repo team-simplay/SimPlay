@@ -103,25 +103,22 @@ export async function createEntities(context: SimplayContext) {
   }
 }
 
+const textStyle = new PIXI.TextStyle({
+  fontFamily: 'Arial',
+  fontSize: 12,
+  fill: 0xffffff,
+  align: 'center',
+});
+
 function createDecoratingText(entity: Entity): PIXI.Text {
-  const text = new PIXI.Text(entity.id, {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    fill: 0xffffff,
-    align: 'center',
-  });
+  const text = new PIXI.Text(entity.id, textStyle);
   text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text`;
   return text;
 }
 
 function createInformationText(entity: Entity): PIXI.Text {
-  const text = new PIXI.Text(entity.id, {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    fill: 0xffffff,
-    align: 'center',
-  });
+  const text = new PIXI.Text(entity.id, textStyle);
   text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text-information`;
   text.text = '';
