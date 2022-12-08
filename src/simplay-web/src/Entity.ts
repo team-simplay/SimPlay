@@ -47,11 +47,33 @@ export interface ExtendedDisplayEntity extends DisplayEntity {
   informationText: PIXI.Text;
 }
 
+export function resetDisplayEntity(
+  displayEntity: DisplayEntity,
+  originalTint: number
+) {
+  displayEntity.container.visible = false;
+  displayEntity.animatedSprite.currentFrame = 0;
+  displayEntity.animatedSprite.tint = originalTint;
+  displayEntity.container.x = 0;
+  displayEntity.container.y = 0;
+  displayEntity.decoratingText.text = '';
+  displayEntity.outgoingInteractions.forEach((interactionLine) => {
+    interactionLine.destroy();
+  });
+  displayEntity.outgoingInteractions.clear();
+  // we do not need to loop through incomingInteractions, because they are
+  // are present in outgoingInteractions of the other entity
+  displayEntity.incomingInteractions.clear();
+  if ((displayEntity as ExtendedDisplayEntity).informationText) {
+    (displayEntity as ExtendedDisplayEntity).informationText.text = '';
+  }
+}
+
 export function getEntityDisplayObjectById(
   context: SimplayContext,
   id: string
 ): DisplayEntity {
-  const entity = context.entityDictionary[id];
+  const entity = context.entityDictionary.get(id);
   if (!entity) {
     throw new Error(`Entity with id ${id} not found`);
   }
@@ -104,7 +126,7 @@ export async function createEntities(context: SimplayContext) {
     }
 
     context.entityContainer.addChild(container);
-    context.entityDictionary[entity.id] = displayEntity;
+    context.entityDictionary.set(entity.id, displayEntity);
   }
 }
 
@@ -117,6 +139,7 @@ function createDecoratingText(entity: Entity): PIXI.Text {
   });
   text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text`;
+  text.text = '';
   return text;
 }
 

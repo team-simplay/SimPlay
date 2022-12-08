@@ -4,7 +4,7 @@ import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
-import { createEntities } from './Entity';
+import { createEntities, resetDisplayEntity } from './Entity';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
@@ -31,7 +31,6 @@ export class SimulationSpooler {
       (event) => Math.round(event.timestamp) === timestamp
     );
     events.forEach((event) => {
-      console.log(event);
       event.execute(this.context);
     });
   }
@@ -71,29 +70,42 @@ export class SimulationSpooler {
     if (timestamp < this.currentSimTimeStamp) {
       this.reset();
     }
-    for (let i = this.currentSimTimeStamp; i < timestamp; i++) {
+    for (let i = this.currentSimTimeStamp; i <= timestamp; i++) {
       this.spoolTimestamp(i);
     }
   }
 
-  reset() {
+  async reset() {
+    this.stopRequested = true;
+    // Wait for the current step to finish
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1000 / this.speedFactor)
+    );
     this.currentSimTimeStamp = 0;
     this.stopRequested = false;
+    for (const entity of this.context.entityDictionary.values()) {
+      const entityId = entity.container.name;
+      const originalTint =
+        this.simulationData.entities.find((entity) => entity.id === entityId)
+          ?.tint ?? 0xffffff;
+      resetDisplayEntity(entity, originalTint);
+    }
   }
 
   setSpeedFactor(value: number): number {
+    if (value <= 0) {
+      throw new Error('Speed factor must be greater than 0');
+    }
     this.speedFactor = value;
     return this.speedFactor;
   }
 
   increaseSpeed(increaseBy: number): number {
-    this.speedFactor += increaseBy;
-    return this.speedFactor;
+    return this.setSpeedFactor(this.speedFactor + increaseBy);
   }
 
   decreaseSpeed(decreaseBy: number): number {
-    this.speedFactor -= decreaseBy;
-    return this.speedFactor;
+    return this.increaseSpeed(-decreaseBy);
   }
 }
 

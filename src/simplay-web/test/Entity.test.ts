@@ -1,4 +1,8 @@
-import { createEntities, getEntityDisplayObjectById } from '../src/Entity';
+import {
+  createEntities,
+  getEntityDisplayObjectById,
+  resetDisplayEntity,
+} from '../src/Entity';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
@@ -9,6 +13,7 @@ import { spy, when } from 'ts-mockito';
 import chaiAsPromised from 'chai-as-promised';
 import { ExtendedDisplayEntity } from '../src/Entity';
 import * as chai from 'chai';
+import { InteractionLine } from '../src/event/InteractionLine';
 chai.use(chaiAsPromised);
 
 // ensures that no URL is actually loaded
@@ -174,15 +179,15 @@ describe('Entity tests', async function () {
     await createEntities(context);
     expect(context.entityContainer.children.length).to.equal(3);
     expect(
-      (context.entityDictionary['container1'] as ExtendedDisplayEntity)
+      (context.entityDictionary.get('container1') as ExtendedDisplayEntity)
         .informationText
     ).to.not.be.null.and.not.be.undefined;
     expect(
-      (context.entityDictionary['resource1'] as ExtendedDisplayEntity)
+      (context.entityDictionary.get('resource1') as ExtendedDisplayEntity)
         .informationText
     ).to.not.be.null.and.not.be.undefined;
     expect(
-      (context.entityDictionary['store1'] as ExtendedDisplayEntity)
+      (context.entityDictionary.get('store1') as ExtendedDisplayEntity)
         .informationText
     ).to.not.be.null.and.not.be.undefined;
   });
@@ -241,5 +246,34 @@ describe('getEntityDisplayObjectById tests', async function () {
     expect(() => getEntityDisplayObjectById(context, 'entity2')).to.throw(
       'Entity with id entity2 not found'
     );
+  });
+
+  it('should reset the entities if requested to do so', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    await createEntities(context);
+    // change up some things, so that reset does something
+    const displayEntity = getEntityDisplayObjectById(context, 'entity1');
+    displayEntity.animatedSprite.tint = 0xcafe42;
+    displayEntity.decoratingText.text = 'new text';
+    displayEntity.container.x = 42;
+    displayEntity.container.y = 42;
+    displayEntity.container.visible = true;
+    displayEntity.outgoingInteractions.set(
+      'entity1',
+      new InteractionLine(displayEntity, displayEntity, context)
+    );
+    resetDisplayEntity(displayEntity, context.simulationData.entities[0].tint);
+    expect(displayEntity.animatedSprite.tint).to.equal(0x4512fa);
+    expect(displayEntity.decoratingText.text).to.equal('');
+    expect(displayEntity.container.x).to.equal(0);
+    expect(displayEntity.container.y).to.equal(0);
+    expect(displayEntity.container.visible).to.be.false;
+    expect(displayEntity.outgoingInteractions.size).to.equal(0);
   });
 });

@@ -9,7 +9,7 @@ export interface SimplayContext {
   app: PIXI.Application;
   areaContainer: PIXI.Container;
   entityContainer: PIXI.Container;
-  entityDictionary: Record<string, DisplayEntity>;
+  entityDictionary: Map<string, DisplayEntity>;
   interactionContainer: PIXI.Container;
 }
 
@@ -24,7 +24,7 @@ export function createContext(
     app: app,
     areaContainer: new PIXI.Container(),
     entityContainer: new PIXI.Container(),
-    entityDictionary: {},
+    entityDictionary: new Map(),
     interactionContainer: new PIXI.Container(),
   };
   context.areaContainer.name = 'areaContainer';
