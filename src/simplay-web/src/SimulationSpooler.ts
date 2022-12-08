@@ -57,16 +57,22 @@ export class SimulationSpooler {
     this.stopRequested = false;
   }
 
-  pause() {
+  async pause() {
     this.stopRequested = true;
+    // Wait for the current step to finish
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1000 / this.speedFactor)
+    );
   }
 
-  advanceOneStep() {
+  async advanceOneStep() {
+    await this.pause();
     this.spoolTimestamp(this.currentSimTimeStamp);
     this.currentSimTimeStamp++;
   }
 
-  skipTo(timestamp: number) {
+  async skipTo(timestamp: number) {
+    await this.pause();
     if (timestamp < this.currentSimTimeStamp) {
       this.reset();
     }
@@ -76,11 +82,7 @@ export class SimulationSpooler {
   }
 
   async reset() {
-    this.stopRequested = true;
-    // Wait for the current step to finish
-    await new Promise((resolve) =>
-      setTimeout(resolve, 1000 / this.speedFactor)
-    );
+    await this.pause();
     this.currentSimTimeStamp = 0;
     this.stopRequested = false;
     for (const entity of this.context.entityDictionary.values()) {

@@ -355,7 +355,7 @@ describe('SimulationSpooler tests', async function () {
         eventNotWithinRangeCalled++;
       };
 
-      spooler.skipTo(2);
+      await spooler.skipTo(2);
       expect(eventsWithinRangeCalled).to.equal(3);
       expect(eventNotWithinRangeCalled).to.equal(0);
     });
@@ -436,7 +436,7 @@ describe('SimulationSpooler tests', async function () {
       ) => {
         eventNotWithinRangeCalled++;
       };
-      spooler.advanceOneStep();
+      await spooler.advanceOneStep();
       expect(eventsWithinRangeCalled).to.equal(1);
       expect(eventNotWithinRangeCalled).to.equal(0);
     });
@@ -470,13 +470,14 @@ describe('SimulationSpooler tests', async function () {
       const spooler = new SimulationSpooler(simData, container);
       await new Promise((resolve) => setTimeout(resolve, 100));
       let resetCalled = 0;
+      spooler.setSpeedFactor(100);
       spooler.reset = async () => {
         resetCalled++;
       };
-      spooler.advanceOneStep();
-      spooler.advanceOneStep();
-      spooler.advanceOneStep();
-      spooler.skipTo(0);
+      await spooler.advanceOneStep();
+      await spooler.advanceOneStep();
+      await spooler.advanceOneStep();
+      await spooler.skipTo(0);
       expect(resetCalled).to.equal(1);
     });
 
