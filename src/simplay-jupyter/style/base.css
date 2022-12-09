@@ -5,18 +5,18 @@
 */
 
 .simplay-container {
-    width: 100%;
-    height: 80%;
+  width: 100%;
+  height: 80%;
 }
 
 .simplay-controls {
-    height: 20%;
-    width: 100%;
+  height: 20%;
+  width: 100%;
 }
 
 .start-button {
-    width: 30px;
-    height: 20px;
+  width: 30px;
+  height: 20px;
 }
 
 .start-button:hover {
