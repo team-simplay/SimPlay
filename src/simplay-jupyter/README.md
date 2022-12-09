@@ -1,6 +1,5 @@
 # simplay_jupyter
 
-[![Github Actions Status](https://github.com/team-simplay/SimPlay/workflows/Build/badge.svg)](https://github.com/team-simplay/SimPlay/actions/workflows/build.yml)
 A JupyterLab extension to animate SimPy simulatins enhanced with simplay.
 
 ## Requirements
