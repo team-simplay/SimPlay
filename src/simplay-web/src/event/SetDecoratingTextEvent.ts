@@ -1,6 +1,7 @@
 import { SetDecoratingTextEventArgs } from './SetDecoratingTextEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
+import { SimplayContext } from '../SimplayContext';
 
 export class SetDecoratingTextEvent extends Event {
   constructor(
@@ -10,7 +11,7 @@ export class SetDecoratingTextEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.SET_DECORATING_TEXT, args);
   }
-  execute(context: any) {
+  execute(context: SimplayContext) {
     throw new Error('Method not implemented.');
   }
 }

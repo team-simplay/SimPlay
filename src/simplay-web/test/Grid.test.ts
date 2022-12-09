@@ -29,7 +29,6 @@ describe('Grid tests', function () {
     entities: [],
     visuals: [],
     events: [],
-    sprites: [],
   } as SimulationData;
 
   describe('area tests', () => {
@@ -100,7 +99,6 @@ describe('Grid tests', function () {
         entities: [],
         visuals: [],
         events: [],
-        sprites: [],
       } as SimulationData;
       const context = createContext(app, data);
       expect(() => createGrid(context)).to.throw(
@@ -139,7 +137,6 @@ describe('Grid tests', function () {
         entities: [],
         visuals: [],
         events: [],
-        sprites: [],
       } as SimulationData;
       const context = createContext(app, data);
       expect(() => createGrid(context)).to.throw(

@@ -1,4 +1,3 @@
-import { SimulationData } from '../../src/SimulationData';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 

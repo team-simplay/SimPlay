@@ -1,7 +1,9 @@
 import { SetSpriteFrameEventArgs } from './SetSpriteFrameEventArgs';
 import { Event } from './Event';
 import { EventAction } from './EventAction';
-
+import { SimplayContext } from '../SimplayContext';
+import { getEntityDisplayObjectById } from '../Entity';
+import * as PIXI from 'pixi.js';
 export class SetSpriteFrameEvent extends Event {
   constructor(
     forId: string,
@@ -10,7 +12,16 @@ export class SetSpriteFrameEvent extends Event {
   ) {
     super(forId, timestamp, EventAction.SET_SPRITE_FRAME, args);
   }
-  execute(context: any) {
-    throw new Error('Method not implemented.');
+  execute(context: SimplayContext) {
+    const entityAnimatedSprite = getEntityDisplayObjectById(
+      context,
+      this.forId
+    ) as PIXI.AnimatedSprite;
+    if (entityAnimatedSprite.textures.length <= this.args.frame) {
+      throw new Error(
+        `Frame ${this.args.frame} does not exist for entity ${this.forId}`
+      );
+    }
+    entityAnimatedSprite.gotoAndStop(this.args.frame);
   }
 }

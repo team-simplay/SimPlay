@@ -103,19 +103,19 @@
   ],
   "visuals": [{
       "id": "CAR",
-      "visual": "./resources/car.png"
+      "frames": ["./resources/car.png"]
     },
     {
       "id": "TANK_TRUCK",
-      "visual": "./resources/truck.png"
+      "frames": ["./resources/truck.png"]
     },
     {
       "id": "GAS_STATION",
-      "visual": "./resources/gaspump.png"
+      "frames": ["./resources/gaspump.png"]
     },
     {
       "id": "FUEL_PUMP",
-      "visual": "./resources/pump.png"
+      "frames": ["./resources/pump.png"]
     }
   ],
   "grid": {

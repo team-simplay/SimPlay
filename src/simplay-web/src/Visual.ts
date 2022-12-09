@@ -1,4 +1,4 @@
 export interface Visual {
   id: string;
-  visual: string;
+  frames: string[];
 }

@@ -26,19 +26,20 @@ class VisualComponent:
     :param id: The id of the component.
     :param type: The type of the component, one of
         :class:`~simplay.primitives.ComponentType`..
-    :param graphic: The graphic of the component, either a 'simple' visual or
-        a collection of sprites. Must be registered in the
-        :class:`~simplay.core.VisualizationManager`.
-    :param tint: The tint of the component. This only works with visuals and
-        sprites that have transparent pixels. The tint is applied to the
-        pixelsthat are not transparent. To use HEX values, write them as
+    :param visual: The visualization of the component, must be registered in
+        the :class:`~simplay.core.VisualizationManager`.
+    :param tint: The tint of the component. The tint is multiplied with the
+        pixel value of each pixel. To use HEX values, write them as
         0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
         0x0000FF is blue.
+        If the whole image is white, tinting it will change the color of the
+        image. If the image is black, tinting it will have no effect.
+        If no tint should be applied, set it to 0xFFFFFF.
     :raises TypeError: If the type is invalid.
     :raises TypeError: If the id is not a string.
     :raises TypeError: If the environment is not a
         :class:`~simplay.core.VisualEnvironment`.
-    :raises TypeError: If the graphic is not a string.
+    :raises TypeError: If the visual is not a string.
     :raises TypeError: If the tint is not an integer.
     """
 
@@ -47,7 +48,7 @@ class VisualComponent:
             env: VisualEnvironment,
             id: str,
             type: ComponentType,
-            graphic: str,
+            visual: str,
             tint: int):
         if not isinstance(type, ComponentType):
             raise TypeError(ErrorText.INVALID_COMPONENT_TYPE)
@@ -55,21 +56,21 @@ class VisualComponent:
             raise TypeError(ErrorText.ID_MUST_BE_STRING)
         if not isinstance(env, VisualEnvironment):
             raise TypeError(ErrorText.ENV_MUST_BE_VISUAL_ENVIRONMENT)
-        if not isinstance(graphic, str):
-            raise TypeError(ErrorText.GRAPHIC_MUST_BE_STRING)
+        if not isinstance(visual, str):
+            raise TypeError(ErrorText.VISUAL_MUST_BE_STRING)
         if not isinstance(tint, int):
             raise TypeError(ErrorText.TINT_MUST_BE_INTEGER)
         self.env = env
         self.id = id
         self.type = type
-        self.graphic = graphic
+        self.visual = visual
         self.tint = tint
         self.env.visualization_manager.add_entity(self, type)
 
 
 class VisualizationManager:
     """
-    This class acts as a central point for all entities, visuals, sprites and
+    This class acts as a central point for all entities, visuals and
     events.
     """
 
@@ -85,10 +86,6 @@ class VisualizationManager:
         self.visuals = []
         """
         The visuals that have been registered with the manager.
-        """
-        self.sprites = []
-        """
-        The sprites that have been registered with the manager.
         """
         self.grid = None
         """
@@ -116,7 +113,7 @@ class VisualizationManager:
             {
                 "id": entity.id,
                 "type": type.value,
-                "graphic": entity.graphic,
+                "visual": entity.visual,
                 "tint": entity.tint,
             }
         )
@@ -133,49 +130,46 @@ class VisualizationManager:
     def register_visual(self, id: str, path: str):
         """
         Register a visual with the manager.
+        The visual is a sprite with a list of frames
+        whose length is equal to one.
 
         :param id: The id of the visual, it must be unique and can be used to
-            reference the graphic in components.
+            reference the visual in components.
         :param path: The path to the visual.
         :raises TypeError: If the id is not a string.
         :raises TypeError: If the path is not a string.
         :raises ValueError: If the id is not unique.
         :raises ValueError: If the path is empty.
         """
-        for v in self.visuals:
-            if v["id"] == id:
-                raise ValueError(ErrorText.ID_NOT_UNIQUE)
-        if path is None or path == "":
-            raise ValueError(ErrorText.PATH_EMPTY)
-        if not isinstance(path, str):
-            raise TypeError(ErrorText.PATH_MUST_BE_STRING)
-        if not isinstance(id, str):
-            raise TypeError(ErrorText.ID_MUST_BE_STRING)
-        self.visuals.append({"id": id, "path": path})
+        self.register_sprites(id, [path])
 
-    def register_sprite(self, id: str, frames: List[str]):
+    def register_sprites(self, id: str, frames: List[str]):
         """
-        Register a sprite with the manager.
+        Register sprites with the manager.
 
-        :param id: The id of the sprite, it must be unique and can be used to
-            reference the graphic in components.
+        :param id: The id of the visual, it must be unique and can be used to
+            reference the visual in components.
         :param frames: A list of paths to the frames of the sprite.
         :raises TypeError: If the id is not a string.
         :raises TypeError: If the frames are not a list.
         :raises ValueError: If the id is not unique.
         :raises ValueError: If the frames are empty.
         """
-        for s in self.sprites:
+        for s in self.visuals:
             if s["id"] == id:
                 raise ValueError(ErrorText.ID_NOT_UNIQUE)
         if frames is None or len(frames) == 0:
             raise ValueError(ErrorText.FRAMES_MUST_NOT_BE_EMPTY)
         if not all(isinstance(f, str) for f in frames):
             raise TypeError(ErrorText.FRAMES_MUST_BE_LIST_OF_STRINGS)
+        if not all(f is not None for f in frames):
+            raise ValueError(ErrorText.FRAMES_MUST_NOT_BE_EMPTY)
+        if not all(f != "" for f in frames):
+            raise ValueError(ErrorText.FRAMES_MUST_NOT_BE_EMPTY)
         if not isinstance(id, str):
             raise TypeError(ErrorText.ID_MUST_BE_STRING)
 
-        self.sprites.append({"id": id, "frames": frames})
+        self.visuals.append({"id": id, "frames": frames})
 
     def set_grid(self, grid: VisualGrid):
         """
@@ -201,7 +195,6 @@ class VisualizationManager:
                 "events": self.events,
                 "entities": self.entities,
                 "visuals": self.visuals,
-                "sprites": self.sprites,
                 "grid": self.grid,
             },
             strip_privates=True,
