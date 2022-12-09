@@ -13,6 +13,10 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+      - name: Base Setup
+        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+      - name: Install dependencies
+        run: python -m pip install -U jupyterlab~=3.1
       - name: install & build & publish
         run: |
           cd src/simplay-jupyter
