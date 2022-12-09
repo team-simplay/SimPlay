@@ -91,7 +91,8 @@ const extension: IRenderMime.IExtension = {
       mimeTypes: [SIMPLAY_MIME_TYPE],
       name: 'simplay',
       extensions: ['.simplay', '.simplay.json'],
-      iconClass: 'jp-simplayIcon'
+      iconClass: 'jp-simplayIcon',
+      fileFormat: 'json',
     }
   ]
 };

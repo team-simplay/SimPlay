@@ -90,7 +90,7 @@
     "access": "public"
   },
   "jupyterlab": { 
-    "extension": true,
+    "mimeExtension": true,
     "outputDir": "simplay_jupyter/labextension"
   },
   "jupyter-releaser": {
