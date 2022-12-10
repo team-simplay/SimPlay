@@ -4,12 +4,15 @@ import { SimulationData, simulationDataFactory } from './SimulationData';
 import { SimulationDataSerialized } from './SimulationDataSerialized';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
-import { createEntities } from './Entity';
+import { createEntities, resetDisplayEntity } from './Entity';
 
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
   private simulationData: SimulationData;
   public readonly context: SimplayContext;
+  private speedFactor = 1;
+  private stopRequested = false;
+  private currentSimTimeStamp = 0;
 
   constructor(
     simulationData: SimulationDataSerialized,
@@ -23,36 +26,88 @@ export class SimulationSpooler {
     createEntities(this.context);
   }
 
-  run(speedFactor = 1) {
-    throw Error('TODO implement');
+  private spoolTimestamp(timestamp: number) {
+    const events = this.simulationData.events.filter(
+      (event) => Math.round(event.timestamp) === timestamp
+    );
+    events.forEach((event) => {
+      event.execute(this.context);
+    });
   }
 
-  pause() {
-    throw Error('TODO implement');
+  async run() {
+    const maxTimestamp = Math.max(
+      ...this.simulationData.events.map((event) => event.timestamp)
+    );
+    while (!this.stopRequested) {
+      const frameDuration = 1000 / this.speedFactor;
+      const now = Date.now();
+
+      this.spoolTimestamp(this.currentSimTimeStamp);
+
+      const executionDuration = now - Date.now();
+      if (this.currentSimTimeStamp > maxTimestamp) {
+        this.stopRequested = true;
+      }
+      await new Promise((resolve) =>
+        setTimeout(resolve, frameDuration - executionDuration)
+      );
+      this.currentSimTimeStamp++;
+    }
+    this.stopRequested = false;
   }
 
-  continue() {
-    throw Error('TODO implement');
+  async pause() {
+    this.stopRequested = true;
+    // Wait for the current step to finish
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1000 / this.speedFactor)
+    );
   }
 
-  skipTo() {
-    throw Error('TODO implement');
+  async advanceOneStep() {
+    await this.pause();
+    this.spoolTimestamp(this.currentSimTimeStamp);
+    this.currentSimTimeStamp++;
   }
 
-  reset() {
-    throw Error('TODO implement');
+  async skipTo(timestamp: number) {
+    await this.pause();
+    if (timestamp < this.currentSimTimeStamp) {
+      this.reset();
+    }
+    for (let i = this.currentSimTimeStamp; i <= timestamp; i++) {
+      this.spoolTimestamp(i);
+    }
   }
 
-  setSpeedFactor() {
-    throw Error('TODO implement');
+  async reset() {
+    await this.pause();
+    this.currentSimTimeStamp = 0;
+    this.stopRequested = false;
+    for (const entity of this.context.entityDictionary.values()) {
+      const entityId = entity.container.name;
+      const originalTint =
+        this.simulationData.entities.find((entity) => entity.id === entityId)
+          ?.tint ?? 0xffffff;
+      resetDisplayEntity(entity, originalTint);
+    }
   }
 
-  increaseSpeed(increaseBy: number) {
-    throw Error('TODO implement');
+  setSpeedFactor(value: number): number {
+    if (value <= 0) {
+      throw new Error('Speed factor must be greater than 0');
+    }
+    this.speedFactor = value;
+    return this.speedFactor;
   }
 
-  decreaseSpeed(decreaseBy: number) {
-    throw Error('TODO implement');
+  increaseSpeed(increaseBy: number): number {
+    return this.setSpeedFactor(this.speedFactor + increaseBy);
+  }
+
+  decreaseSpeed(decreaseBy: number): number {
+    return this.increaseSpeed(-decreaseBy);
   }
 }
 
