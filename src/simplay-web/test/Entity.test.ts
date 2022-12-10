@@ -7,6 +7,7 @@ import { SimulationData } from '../src/SimulationData';
 import { getTestGrid } from './event/getTestGrid';
 import { mock, spy, when } from 'ts-mockito';
 import chaiAsPromised from 'chai-as-promised';
+import { ExtendedDisplayEntity } from '../src/Entity';
 import * as chai from 'chai';
 chai.use(chaiAsPromised);
 
@@ -110,12 +111,14 @@ describe('Entity tests', async function () {
       height: 500,
     });
     app.stage = new PIXILAYERS.Stage();
+    const frames = simulationData.visuals[0].frames;
     simulationData.visuals[0].frames = [];
     const context = createContext(app, simulationData);
 
     await expect(createEntities(context)).to.eventually.be.rejectedWith(
       'No frames found for visual visual1'
     );
+    simulationData.visuals[0].frames = frames;
   });
 
   it('should throw if there is no visual', async () => {
@@ -133,6 +136,55 @@ describe('Entity tests', async function () {
     await expect(createEntities(context)).to.eventually.be.rejectedWith(
       'No visual found for entity entity1'
     );
+  });
+
+  it('should create an information text for the appropriate types', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const simData = {
+      ...simulationData,
+      entities: [
+        {
+          id: 'container1',
+          name: 'CONTAINER1',
+          type: 'CONTAINER',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+        {
+          id: 'resource1',
+          name: 'RESOURCE1',
+          type: 'RESOURCE',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+        {
+          id: 'store1',
+          name: 'STORE1',
+          type: 'STORE',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+      ],
+    };
+    const context = createContext(app, simData);
+    await createEntities(context);
+    expect(context.entityContainer.children.length).to.equal(3);
+    expect(
+      (context.entityDictionary['container1'] as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
+    expect(
+      (context.entityDictionary['resource1'] as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
+    expect(
+      (context.entityDictionary['store1'] as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
   });
 });
 

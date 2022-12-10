@@ -16,12 +16,22 @@ export interface Entity {
   tint: number;
 }
 
+export interface ContainerEntity extends Entity {
+  type: 'CONTAINER';
+  capacity: number;
+  level: number;
+}
+
 export interface DisplayEntity {
   animatedSprite: PIXI.AnimatedSprite;
   decoratingText: PIXI.Text;
   container: PIXI.Container;
   outgoingInteractions: Map<string, InteractionLine>;
   incomingInteractions: Map<string, InteractionLine>;
+}
+
+export interface ExtendedDisplayEntity extends DisplayEntity {
+  informationText: PIXI.Text;
 }
 
 export function getEntityDisplayObjectById(
@@ -59,15 +69,32 @@ export async function createEntities(context: SimplayContext) {
     container.addChild(sprite);
     container.addChild(text);
     container.visible = false;
-    context.entityContainer.addChild(container);
 
-    context.entityDictionary[entity.id] = {
+    let displayEntity = {
       animatedSprite: sprite,
       decoratingText: text,
       container: container,
-      outgoingInteractions: new Map(),
-      incomingInteractions: new Map(),
-    };
+      outgoingInteractions: new Map<string, InteractionLine>(),
+      incomingInteractions: new Map<string, InteractionLine>(),
+    } as DisplayEntity;
+
+    if (
+      entity.type === 'CONTAINER' ||
+      entity.type === 'STORE' ||
+      entity.type === 'RESOURCE'
+    ) {
+      const informationText = createInformationText(entity);
+      informationText.y = sprite.y + sprite.height + 6;
+      informationText.x = sprite.x + sprite.width / 2;
+      container.addChild(informationText);
+      displayEntity = {
+        ...displayEntity,
+        informationText: informationText,
+      } as ExtendedDisplayEntity;
+    }
+
+    context.entityContainer.addChild(container);
+    context.entityDictionary[entity.id] = displayEntity;
   }
 }
 
@@ -82,6 +109,14 @@ function createDecoratingText(entity: Entity): PIXI.Text {
   const text = new PIXI.Text(entity.id, textStyle);
   text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text`;
+  return text;
+}
+
+function createInformationText(entity: Entity): PIXI.Text {
+  const text = new PIXI.Text(entity.id, textStyle);
+  text.anchor.set(0.5, 0.5);
+  text.name = `${entity.id}-text-information`;
+  text.text = '';
   return text;
 }
 
