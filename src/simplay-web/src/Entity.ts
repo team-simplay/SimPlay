@@ -23,16 +23,16 @@ export interface ContainerEntity extends Entity {
   level: number;
 }
 
-export interface ResourceEntity extends Entity {
-  type: 'RESOURCE';
-  capacity: number;
-  utilization: number;
-}
-
 export interface StoreEntity extends Entity {
   type: 'STORE';
   capacity: number;
   content: StoreContentItem[];
+}
+
+export interface ResourceEntity extends Entity {
+  type: 'RESOURCE';
+  capacity: number;
+  utilization: number;
 }
 
 export interface DisplayEntity {
