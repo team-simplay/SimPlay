@@ -1,5 +1,6 @@
 import { SimplayContext } from './SimplayContext';
 import * as PIXI from 'pixi.js';
+import { InteractionLine } from './event/InteractionLine';
 
 export type EntityType =
   | 'CUSTOM'
@@ -19,6 +20,8 @@ export interface DisplayEntity {
   animatedSprite: PIXI.AnimatedSprite;
   decoratingText: PIXI.Text;
   container: PIXI.Container;
+  outgoingInteractions: Map<string, InteractionLine>;
+  incomingInteractions: Map<string, InteractionLine>;
 }
 
 export function getEntityDisplayObjectById(
@@ -49,7 +52,7 @@ export async function createEntities(context: SimplayContext) {
     const sprite = await createAnimatedSprite(context, entity, frames);
     const text = createDecoratingText(entity);
     text.y = sprite.y + sprite.height + verticalOffsetDecoratingText;
-    text.x = sprite.x + sprite.width * centerFactor;
+    text.x = sprite.x + sprite.width / centerFactor;
 
     const container = new PIXI.Container();
     container.name = entity.id;
@@ -62,6 +65,8 @@ export async function createEntities(context: SimplayContext) {
       animatedSprite: sprite,
       decoratingText: text,
       container: container,
+      outgoingInteractions: new Map(),
+      incomingInteractions: new Map(),
     };
   }
 }
@@ -75,7 +80,7 @@ const textStyle = new PIXI.TextStyle({
 
 function createDecoratingText(entity: Entity): PIXI.Text {
   const text = new PIXI.Text(entity.id, textStyle);
-  text.anchor.set(centerFactor, centerFactor);
+  text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text`;
   return text;
 }
