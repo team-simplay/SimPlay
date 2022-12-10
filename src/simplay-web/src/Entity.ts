@@ -35,6 +35,9 @@ export function getEntityDisplayObjectById(
   return entity;
 }
 
+const verticalOffsetDecoratingText = 1;
+const centerFactor = 0.5;
+
 export async function createEntities(context: SimplayContext) {
   for (const entity of context.simulationData.entities) {
     const frames = context.simulationData.visuals.find(
@@ -48,8 +51,8 @@ export async function createEntities(context: SimplayContext) {
     }
     const sprite = await createAnimatedSprite(context, entity, frames);
     const text = createDecoratingText(entity);
-    text.y = sprite.y + sprite.height + 1;
-    text.x = sprite.x + sprite.width / 2;
+    text.y = sprite.y + sprite.height + verticalOffsetDecoratingText;
+    text.x = sprite.x + sprite.width / centerFactor;
 
     const container = new PIXI.Container();
     container.name = entity.id;
@@ -68,13 +71,15 @@ export async function createEntities(context: SimplayContext) {
   }
 }
 
+const textStyle = new PIXI.TextStyle({
+  fontFamily: 'Arial',
+  fontSize: 12,
+  fill: 0xffffff,
+  align: 'center',
+});
+
 function createDecoratingText(entity: Entity): PIXI.Text {
-  const text = new PIXI.Text(entity.id, {
-    fontFamily: 'Arial',
-    fontSize: 12,
-    fill: 0xffffff,
-    align: 'center',
-  });
+  const text = new PIXI.Text(entity.id, textStyle);
   text.anchor.set(0.5, 0.5);
   text.name = `${entity.id}-text`;
   return text;
