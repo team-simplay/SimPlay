@@ -61,7 +61,7 @@ export function resetDisplayEntity(
     interactionLine.destroy();
   });
   displayEntity.outgoingInteractions.clear();
-  // we do not need to loop through incomingInteractions, because they are
+  // we do not need to loop through incomingInteractions, because they
   // are present in outgoingInteractions of the other entity
   displayEntity.incomingInteractions.clear();
   if ((displayEntity as ExtendedDisplayEntity).informationText) {
