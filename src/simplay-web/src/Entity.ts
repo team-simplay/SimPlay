@@ -74,6 +74,8 @@ export async function createEntities(context: SimplayContext) {
       animatedSprite: sprite,
       decoratingText: text,
       container: container,
+      outgoingInteractions: new Map<string, InteractionLine>(),
+      incomingInteractions: new Map<string, InteractionLine>(),
     } as DisplayEntity;
 
     if (
