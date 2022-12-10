@@ -1,13 +1,19 @@
-import { createEntities, getEntityDisplayObjectById } from '../src/Entity';
+import {
+  createEntities,
+  getEntityDisplayObjectById,
+  resetDisplayEntity,
+} from '../src/Entity';
 import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { expect } from 'chai';
 import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
 import { getTestGrid } from './event/getTestGrid';
-import { mock, spy, when } from 'ts-mockito';
+import { spy, when } from 'ts-mockito';
 import chaiAsPromised from 'chai-as-promised';
+import { ExtendedDisplayEntity } from '../src/Entity';
 import * as chai from 'chai';
+import { InteractionLine } from '../src/event/InteractionLine';
 chai.use(chaiAsPromised);
 
 // ensures that no URL is actually loaded
@@ -48,7 +54,10 @@ describe('Entity tests', async function () {
 
     await createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    expect(container.visible).to.equal(false);
+    expect(container.children.length).to.equal(2);
+    const entity = container.children[0] as PIXI.AnimatedSprite;
     expect(entity).to.be.an.instanceof(PIXI.AnimatedSprite);
     expect(entity.tint).to.equal(entities[0].tint);
     expect(entity.animationSpeed).to.equal(0);
@@ -57,7 +66,8 @@ describe('Entity tests', async function () {
     expect(entity.currentFrame).to.equal(0);
     expect(entity.position.x).to.equal(0);
     expect(entity.position.y).to.equal(0);
-    expect(entity.visible).to.equal(false);
+    const text = container.children[1] as PIXI.Text;
+    expect(text).to.be.an.instanceof(PIXI.Text);
   });
 
   it('should not set a tint if tint is white', async () => {
@@ -81,7 +91,8 @@ describe('Entity tests', async function () {
     const context = createContext(app, simData);
     await createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    const entity = container.children[0] as PIXI.AnimatedSprite;
     expect(entity.tint).to.equal(0xffffff);
   });
 
@@ -105,12 +116,14 @@ describe('Entity tests', async function () {
       height: 500,
     });
     app.stage = new PIXILAYERS.Stage();
+    const frames = simulationData.visuals[0].frames;
     simulationData.visuals[0].frames = [];
     const context = createContext(app, simulationData);
 
     await expect(createEntities(context)).to.eventually.be.rejectedWith(
       'No frames found for visual visual1'
     );
+    simulationData.visuals[0].frames = frames;
   });
 
   it('should throw if there is no visual', async () => {
@@ -128,6 +141,55 @@ describe('Entity tests', async function () {
     await expect(createEntities(context)).to.eventually.be.rejectedWith(
       'No visual found for entity entity1'
     );
+  });
+
+  it('should create an information text for the appropriate types', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const simData = {
+      ...simulationData,
+      entities: [
+        {
+          id: 'container1',
+          name: 'CONTAINER1',
+          type: 'CONTAINER',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+        {
+          id: 'resource1',
+          name: 'RESOURCE1',
+          type: 'RESOURCE',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+        {
+          id: 'store1',
+          name: 'STORE1',
+          type: 'STORE',
+          tint: 0xffffff,
+          visual: 'visual1',
+        },
+      ],
+    };
+    const context = createContext(app, simData);
+    await createEntities(context);
+    expect(context.entityContainer.children.length).to.equal(3);
+    expect(
+      (context.entityDictionary.get('container1') as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
+    expect(
+      (context.entityDictionary.get('resource1') as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
+    expect(
+      (context.entityDictionary.get('store1') as ExtendedDisplayEntity)
+        .informationText
+    ).to.not.be.null.and.not.be.undefined;
   });
 });
 
@@ -163,8 +225,13 @@ describe('getEntityDisplayObjectById tests', async function () {
     const context = createContext(app, simulationData);
 
     await createEntities(context);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
-    expect(getEntityDisplayObjectById(context, 'entity1')).to.equal(entity);
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    const entity = container.children[0] as PIXI.AnimatedSprite;
+    const text = container.children[1] as PIXI.Text;
+    const displayEntity = getEntityDisplayObjectById(context, 'entity1');
+    expect(displayEntity.animatedSprite).to.equal(entity);
+    expect(displayEntity.decoratingText).to.equal(text);
+    expect(displayEntity.container).to.equal(container);
   });
 
   it('should throw if the entity does not exist', async () => {
@@ -179,5 +246,34 @@ describe('getEntityDisplayObjectById tests', async function () {
     expect(() => getEntityDisplayObjectById(context, 'entity2')).to.throw(
       'Entity with id entity2 not found'
     );
+  });
+
+  it('should reset the entities if requested to do so', async () => {
+    const app = new PIXI.Application({
+      width: 500,
+      height: 500,
+    });
+    app.stage = new PIXILAYERS.Stage();
+    const context = createContext(app, simulationData);
+
+    await createEntities(context);
+    // change up some things, so that reset does something
+    const displayEntity = getEntityDisplayObjectById(context, 'entity1');
+    displayEntity.animatedSprite.tint = 0xcafe42;
+    displayEntity.decoratingText.text = 'new text';
+    displayEntity.container.x = 42;
+    displayEntity.container.y = 42;
+    displayEntity.container.visible = true;
+    displayEntity.outgoingInteractions.set(
+      'entity1',
+      new InteractionLine(displayEntity, displayEntity, context)
+    );
+    resetDisplayEntity(displayEntity, context.simulationData.entities[0].tint);
+    expect(displayEntity.animatedSprite.tint).to.equal(0x4512fa);
+    expect(displayEntity.decoratingText.text).to.equal('');
+    expect(displayEntity.container.x).to.equal(0);
+    expect(displayEntity.container.y).to.equal(0);
+    expect(displayEntity.container.visible).to.be.false;
+    expect(displayEntity.outgoingInteractions.size).to.equal(0);
   });
 });

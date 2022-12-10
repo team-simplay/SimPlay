@@ -5,7 +5,6 @@ import { EventAction } from '../../src/event/EventAction';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getTestGrid } from './getTestGrid';
 import { mock, instance, when, spy } from 'ts-mockito';
-import { createContext } from '../../src/SimplayContext';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import * as PIXI from 'pixi.js';
 

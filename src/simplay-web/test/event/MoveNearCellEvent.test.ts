@@ -72,9 +72,9 @@ describe('MoveNearCellEvent tests', function () {
     const targetCenterY =
       spooler.context.tileHeight * 2 + spooler.context.tileHeight / 2;
     const entity = getEntityDisplayObjectById(spooler.context, forId);
-    const entityPos = entity.position;
-    const entityHeight = entity.getBounds().height;
-    const entityWidth = entity.getBounds().width;
+    const entityPos = entity.container.position;
+    const entityHeight = entity.container.getBounds().height;
+    const entityWidth = entity.container.getBounds().width;
 
     // check that the entity is near the cell, within a range of 1 tile, adjusted for the entity's size
     expect(entityPos.x).to.be.within(
