@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { DisplayEntity } from './Entity';
 import { SimulationData } from './SimulationData';
 
 export interface SimplayContext {
@@ -8,6 +9,7 @@ export interface SimplayContext {
   app: PIXI.Application;
   areaContainer: PIXI.Container;
   entityContainer: PIXI.Container;
+  entityDictionary: Record<string, DisplayEntity>;
   interactionContainer: PIXI.Container;
 }
 
@@ -22,6 +24,7 @@ export function createContext(
     app: app,
     areaContainer: new PIXI.Container(),
     entityContainer: new PIXI.Container(),
+    entityDictionary: {},
     interactionContainer: new PIXI.Container(),
   };
   context.areaContainer.name = 'areaContainer';

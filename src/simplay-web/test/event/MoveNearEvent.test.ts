@@ -66,21 +66,19 @@ describe('MoveNearEvent tests', function () {
 
     const spooler = new SimulationSpooler(simData, container);
     await new Promise((resolve) => setTimeout(resolve, 100));
-    getEntityDisplayObjectById(spooler.context, 'bar').position.set(
+    getEntityDisplayObjectById(spooler.context, 'bar').container.position.set(
       2 * spooler.context.tileWidth + spooler.context.tileWidth / 2,
       2 * spooler.context.tileHeight + spooler.context.tileHeight / 2
     );
     event.execute(spooler.context);
-    const targetPos = getEntityDisplayObjectById(
-      spooler.context,
-      'bar'
-    ).position;
+    const targetPos = getEntityDisplayObjectById(spooler.context, 'bar')
+      .container.position;
 
     const leetEntity = getEntityDisplayObjectById(spooler.context, 'leet');
 
-    const entityPos = leetEntity.position;
-    const entityHeight = leetEntity.getBounds().height;
-    const entityWidth = leetEntity.getBounds().width;
+    const entityPos = leetEntity.container.position;
+    const entityHeight = leetEntity.container.getBounds().height;
+    const entityWidth = leetEntity.container.getBounds().width;
 
     expect(entityPos.x).to.be.within(
       targetPos.x - spooler.context.tileWidth - entityWidth / 2,

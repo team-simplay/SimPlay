@@ -15,16 +15,25 @@ export interface Entity {
   tint: number;
 }
 
+export interface DisplayEntity {
+  animatedSprite: PIXI.AnimatedSprite;
+  decoratingText: PIXI.Text;
+  container: PIXI.Container;
+}
+
 export function getEntityDisplayObjectById(
   context: SimplayContext,
   id: string
-): PIXI.DisplayObject {
-  const entity = context.entityContainer.getChildByName(id);
+): DisplayEntity {
+  const entity = context.entityDictionary[id];
   if (!entity) {
     throw new Error(`Entity with id ${id} not found`);
   }
   return entity;
 }
+
+const verticalOffsetDecoratingText = 1;
+const centerFactor = 0.5;
 
 export async function createEntities(context: SimplayContext) {
   for (const entity of context.simulationData.entities) {
@@ -37,27 +46,64 @@ export async function createEntities(context: SimplayContext) {
     if (frames.length === 0) {
       throw new Error(`No frames found for visual ${entity.visual}`);
     }
-    const loadedFrames: PIXI.Texture[] = [];
-    for (const frame of frames) {
-      const loadedFrame = await PIXI.Texture.fromURL(frame);
-      loadedFrames.push(loadedFrame);
-    }
-    const sprite = new PIXI.AnimatedSprite(loadedFrames);
-    sprite.animationSpeed = 0;
-    sprite.loop = false;
-    const { width, height } = sprite.getBounds();
-    const scale = Math.min(
-      context.tileWidth / width,
-      context.tileHeight / height
-    );
-    // multiplying by 0.5 is a design choice to make the entities look a bit smaller
-    sprite.scale.set(scale * 0.5, scale * 0.5);
-    sprite.name = entity.id;
-    if (entity.tint && entity.tint !== 0xffffff) {
-      sprite.tint = entity.tint;
-    }
-    sprite.visible = false;
+    const sprite = await createAnimatedSprite(context, entity, frames);
+    const text = createDecoratingText(entity);
+    text.y = sprite.y + sprite.height + verticalOffsetDecoratingText;
+    text.x = sprite.x + sprite.width * centerFactor;
 
-    context.entityContainer.addChild(sprite);
+    const container = new PIXI.Container();
+    container.name = entity.id;
+    container.addChild(sprite);
+    container.addChild(text);
+    container.visible = false;
+    context.entityContainer.addChild(container);
+
+    context.entityDictionary[entity.id] = {
+      animatedSprite: sprite,
+      decoratingText: text,
+      container: container,
+    };
   }
+}
+
+const textStyle = new PIXI.TextStyle({
+  fontFamily: 'Arial',
+  fontSize: 12,
+  fill: 0xffffff,
+  align: 'center',
+});
+
+function createDecoratingText(entity: Entity): PIXI.Text {
+  const text = new PIXI.Text(entity.id, textStyle);
+  text.anchor.set(centerFactor, centerFactor);
+  text.name = `${entity.id}-text`;
+  return text;
+}
+
+async function createAnimatedSprite(
+  context: SimplayContext,
+  entity: Entity,
+  frames: string[]
+): Promise<PIXI.AnimatedSprite> {
+  const loadedFrames: PIXI.Texture[] = [];
+  for (const frame of frames) {
+    const loadedFrame = await PIXI.Texture.fromURL(frame);
+    loadedFrames.push(loadedFrame);
+  }
+  const sprite = new PIXI.AnimatedSprite(loadedFrames);
+  sprite.animationSpeed = 0;
+  sprite.loop = false;
+  const { width, height } = sprite.getBounds();
+  const scale = Math.min(
+    context.tileWidth / width,
+    context.tileHeight / height
+  );
+  // multiplying by 0.5 is a design choice to make the entities look a bit smaller
+  sprite.scale.set(scale * 0.5, scale * 0.5);
+  sprite.name = `${entity.id}-sprite`;
+  if (entity.tint && entity.tint !== 0xffffff) {
+    sprite.tint = entity.tint;
+  }
+
+  return sprite;
 }

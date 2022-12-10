@@ -48,7 +48,10 @@ describe('Entity tests', async function () {
 
     await createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    expect(container.visible).to.equal(false);
+    expect(container.children.length).to.equal(2);
+    const entity = container.children[0] as PIXI.AnimatedSprite;
     expect(entity).to.be.an.instanceof(PIXI.AnimatedSprite);
     expect(entity.tint).to.equal(entities[0].tint);
     expect(entity.animationSpeed).to.equal(0);
@@ -57,7 +60,8 @@ describe('Entity tests', async function () {
     expect(entity.currentFrame).to.equal(0);
     expect(entity.position.x).to.equal(0);
     expect(entity.position.y).to.equal(0);
-    expect(entity.visible).to.equal(false);
+    const text = container.children[1] as PIXI.Text;
+    expect(text).to.be.an.instanceof(PIXI.Text);
   });
 
   it('should not set a tint if tint is white', async () => {
@@ -81,7 +85,8 @@ describe('Entity tests', async function () {
     const context = createContext(app, simData);
     await createEntities(context);
     expect(context.entityContainer.children.length).to.equal(1);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    const entity = container.children[0] as PIXI.AnimatedSprite;
     expect(entity.tint).to.equal(0xffffff);
   });
 
@@ -163,8 +168,13 @@ describe('getEntityDisplayObjectById tests', async function () {
     const context = createContext(app, simulationData);
 
     await createEntities(context);
-    const entity = context.entityContainer.children[0] as PIXI.AnimatedSprite;
-    expect(getEntityDisplayObjectById(context, 'entity1')).to.equal(entity);
+    const container = context.entityContainer.children[0] as PIXI.Container;
+    const entity = container.children[0] as PIXI.AnimatedSprite;
+    const text = container.children[1] as PIXI.Text;
+    const displayEntity = getEntityDisplayObjectById(context, 'entity1');
+    expect(displayEntity.animatedSprite).to.equal(entity);
+    expect(displayEntity.decoratingText).to.equal(text);
+    expect(displayEntity.container).to.equal(container);
   });
 
   it('should throw if the entity does not exist', async () => {

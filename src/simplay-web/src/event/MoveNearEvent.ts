@@ -19,18 +19,21 @@ export class MoveNearEvent extends Event {
       this.args.target
     );
     // Math.random() - 0.5 is used to get random position on the circumference of the circle around the center of the cell
-    const x = targetDisplayObject.x + (Math.random() - 0.5) * context.tileWidth;
+    const x =
+      targetDisplayObject.container.x +
+      (Math.random() - 0.5) * context.tileWidth;
     const y =
-      targetDisplayObject.y + (Math.random() - 0.5) * context.tileHeight;
+      targetDisplayObject.container.y +
+      (Math.random() - 0.5) * context.tileHeight;
 
-    const entityWidth = entityDisplayObject.getBounds().width;
-    const entityHeight = entityDisplayObject.getBounds().height;
+    const entityWidth = entityDisplayObject.container.getBounds().width;
+    const entityHeight = entityDisplayObject.container.getBounds().height;
 
     // the adjust variables are used to center the entity on the circumference of the circle, not the top left corner of the entity
     const xAdjust = (entityWidth - context.tileWidth) / 2;
     const yAdjust = (entityHeight - context.tileHeight) / 2;
 
-    entityDisplayObject.x = x - xAdjust;
-    entityDisplayObject.y = y - yAdjust;
+    entityDisplayObject.container.x = x - xAdjust;
+    entityDisplayObject.container.y = y - yAdjust;
   }
 }

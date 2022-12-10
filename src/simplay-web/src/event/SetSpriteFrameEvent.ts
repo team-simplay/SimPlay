@@ -3,7 +3,7 @@ import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
 import { getEntityDisplayObjectById } from '../Entity';
-import * as PIXI from 'pixi.js';
+
 export class SetSpriteFrameEvent extends Event {
   constructor(
     forId: string,
@@ -16,7 +16,7 @@ export class SetSpriteFrameEvent extends Event {
     const entityAnimatedSprite = getEntityDisplayObjectById(
       context,
       this.forId
-    ) as PIXI.AnimatedSprite;
+    ).animatedSprite;
     if (entityAnimatedSprite.textures.length <= this.args.frame) {
       throw new Error(
         `Frame ${this.args.frame} does not exist for entity ${this.forId}`

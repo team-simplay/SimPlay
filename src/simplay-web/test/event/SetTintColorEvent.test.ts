@@ -57,7 +57,7 @@ describe('SetTintColorEvent tests', function () {
     const displayObject = getEntityDisplayObjectById(
       spooler.context,
       forId
-    ) as AnimatedSprite;
+    ).animatedSprite;
     expect(displayObject.tint).to.equal(color);
   });
 
