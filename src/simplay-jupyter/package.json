@@ -1,7 +1,7 @@
 {
   "name": "simplay_jupyter",
   "version": "0.1.1",
-  "description": "A JupyterLab extension to animate SimPy simulatins enhanced with simplay.",
+  "description": "A JupyterLab extension to animate SimPy simulations enhanced with simplay.",
   "keywords": [
     "jupyter",
     "jupyterlab",

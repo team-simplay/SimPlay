@@ -1,6 +1,6 @@
 # simplay_jupyter
 
-A JupyterLab extension to animate SimPy simulatins enhanced with simplay.
+A JupyterLab extension to animate SimPy simulations enhanced with simplay.
 
 ## Requirements
 
