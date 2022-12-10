@@ -1,23 +1,26 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["es2015", "dom"],
-    "module": "ESNext",
+    "incremental": true,
+    "jsx": "react",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmitOnError": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
+    "preserveWatchOutput": true,
     "resolveJsonModule": true,
+    "outDir": "lib",
     "rootDir": "src",
-    "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
-    "strictPropertyInitialization": false,
-    "forceConsistentCasingInFileNames": true,
-    "target": "ESNext",
-    "types": ["jest"]
+    "strictNullChecks": true,
+    "target": "es2017",
+    "types": ["jest"],
+    "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/**/__tests__"]
+  "include": ["src/*"],
+  "exclude": ["node_modules"]
 }

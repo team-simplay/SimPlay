@@ -1,0 +1,24 @@
+/*
+    See the JupyterLab Developer Guide for useful CSS Patterns:
+
+    https://jupyterlab.readthedocs.io/en/stable/developer/css.html
+*/
+
+.simplay-container {
+  width: 100%;
+  height: 80%;
+}
+
+.simplay-controls {
+  height: 20%;
+  width: 100%;
+}
+
+.start-button {
+  width: 30px;
+  height: 20px;
+}
+
+.start-button:hover {
+  opacity: 0.8;
+}

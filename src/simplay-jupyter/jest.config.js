@@ -1,16 +1,47 @@
+const jestJupyterLab = require('@jupyterlab/testutils/lib/jest-config');
+
+const esModules = [
+  '@jupyterlab/',
+  'lib0',
+  'y\\-protocols',
+  'y\\-websocket',
+  'yjs'
+].join('|');
+
+const jlabConfig = jestJupyterLab(__dirname);
+
+const {
+  moduleFileExtensions,
+  moduleNameMapper,
+  preset,
+  setupFilesAfterEnv,
+  setupFiles,
+  testPathIgnorePatterns,
+  transform
+} = jlabConfig;
+
 module.exports = {
+  moduleFileExtensions,
+  moduleNameMapper,
+  preset,
+  setupFilesAfterEnv,
+  setupFiles,
+  testPathIgnorePatterns,
+  transform,
   automock: false,
-  moduleNameMapper: {
-    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-  },
-  preset: 'ts-jest/presets/js-with-babel',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  testPathIgnorePatterns: ['/lib/', '/node_modules/'],
-  testRegex: '/__tests__/.*.spec.ts[x]?$',
-  transformIgnorePatterns: ['/node_modules/(?!(@jupyter(lab|-widgets)/.*)/)'],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/.ipynb_checkpoints/*'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['lcov', 'text'],
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.json',
-    },
+      tsconfig: 'tsconfig.json'
+    }
   },
+  testRegex: 'src/.*/.*.spec.ts[x]?$',
+  testPathIgnorePatterns: ['/node_modules/', 'ui-tests'],
+  transformIgnorePatterns: [`/node_modules/(?!${esModules}).+`]
 };

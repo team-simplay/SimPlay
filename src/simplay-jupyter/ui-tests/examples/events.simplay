@@ -19,7 +19,16 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 1,
+        "x": 2,
+        "y": 1
+      },
+      "forId": "Car0",
+      "timestamp": 2
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 3,
         "y": 1
       },
       "forId": "Car0",
@@ -28,7 +37,24 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 2,
+        "x": 1,
+        "y": 2
+      },
+      "forId": "Car1",
+      "timestamp": 4
+    },
+    {
+      "action": "SET_VISIBLE",
+      "args": {
+        "visible": true
+      },
+      "forId": "Car1",
+      "timestamp": 4
+    },
+    {
+      "action": "SET_POSITION",
+      "args": {
+        "x": 4,
         "y": 1
       },
       "forId": "Car0",
@@ -37,85 +63,59 @@
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 3,
-        "y": 4
-      },
-      "forId": "Car1",
-      "timestamp": 9
-    },
-    {
-      "action": "SET_VISIBLE",
-      "args": {
-        "visible": true
-      },
-      "forId": "Car1",
-      "timestamp": 9
-    },
-    {
-      "action": "SET_POSITION",
-      "args": {
-        "x": 4,
+        "x": 2,
         "y": 2
       },
-      "forId": "Car0",
-      "timestamp": 12
-    },
-    {
-      "action": "SET_POSITION",
-      "args": {
-        "x": 2,
-        "y": 4
-      },
       "forId": "Car1",
-      "timestamp": 14
+      "timestamp": 6
     },
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 1,
+        "x": 5,
         "y": 1
       },
       "forId": "Car0",
-      "timestamp": 16
+      "timestamp": 7
     },
     {
       "action": "SET_POSITION",
       "args": {
-        "x": 0,
-        "y": 3
+        "x": 3,
+        "y": 2
       },
       "forId": "Car1",
-      "timestamp": 19
+      "timestamp": 8
     }
   ],
   "entities": [{
       "id": "Car0",
-      "type": "process",
+      "type": "PROCESS",
       "visual": "CAR",
       "tint": 1867825.2667952755
     },
     {
       "id": "Car1",
-      "type": "process",
+      "type": "PROCESS",
       "visual": "CAR",
       "tint": 300000.2667952755
     }
   ],
   "visuals": [{
       "id": "CAR",
-      "frames": ["./resources/car.png"]
+      "frames": ["http://127.0.0.1:8080/car.png"]
     },
     {
       "id": "TANK_TRUCK",
-      "frames": ["./resources/truck.png"]
+      "frames": ["http://127.0.0.1:8080/truck.png"]
     },
     {
       "id": "GAS_STATION",
-      "frames": ["./resources/gaspump.png"]
+      "frames": ["http://127.0.0.1:8080/gaspump.png"]
     },
     {
       "id": "FUEL_PUMP",
-      "frames": ["./resources/pump.png"]
+      "frames": ["http://127.0.0.1:8080/pump.png"]
     }
   ],
   "grid": {
@@ -130,8 +130,6 @@
         "y": 1
       }
     }],
-    "height": 500,
-    "width": 500,
     "cols": 5,
     "rows": 5
   }
