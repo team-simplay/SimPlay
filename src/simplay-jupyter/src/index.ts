@@ -30,7 +30,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
    */
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
     const data = model.data[this._mimeType] as JSONObject;
-    console.log('data' + JSON.stringify(data));
 
     const container = document.createElement('div');
     container.classList.add('simplay-container');
