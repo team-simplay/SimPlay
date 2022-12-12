@@ -4,18 +4,14 @@ import { MoveNearEventArgs } from '../../src/event/MoveNearEventArgs';
 import { EventAction } from '../../src/event/EventAction';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getTestGrid } from './getTestGrid';
-import { instance, mock, spy, when } from 'ts-mockito';
-import * as PIXI from 'pixi.js';
+import { instance, mock, when } from 'ts-mockito';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import { getEntityDisplayObjectById } from '../../src/Entity';
+import { EMOJI, TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
 const target = 'bar';
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
-when(fromUrlSpy.fromURL('bar.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('MoveNearEvent tests', function () {
   it('should initialize correctly', () => {
@@ -47,11 +43,11 @@ describe('MoveNearEvent tests', function () {
     visuals: [
       {
         id: 'LEET',
-        frames: ['leet.png'],
+        frames: [TRANSPARENT_PIXEL],
       },
       {
         id: 'BAR',
-        frames: ['bar.png'],
+        frames: [EMOJI],
       },
     ],
   } as SimulationDataSerialized;

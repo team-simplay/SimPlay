@@ -4,16 +4,13 @@ import { SetVisibleEventArgs } from '../../src/event/SetVisibleEventArgs';
 import { EventAction } from '../../src/event/EventAction';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getTestGrid } from './getTestGrid';
-import { mock, instance, when, spy } from 'ts-mockito';
+import { mock, instance } from 'ts-mockito';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
-import * as PIXI from 'pixi.js';
+import { TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
 const visible = true;
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('SetVisibleEvent tests', async function () {
   it('should initialize correctly', async () => {
@@ -47,7 +44,7 @@ describe('SetVisibleEvent tests', async function () {
     visuals: [
       {
         id: 'LEET',
-        frames: ['leet.png'],
+        frames: [TRANSPARENT_PIXEL],
       },
     ],
     grid: getTestGrid(),

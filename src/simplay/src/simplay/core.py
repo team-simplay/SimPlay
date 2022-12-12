@@ -1,3 +1,4 @@
+import base64
 from typing import List, Union
 import jsons
 from simpy.core import SimTime, Environment
@@ -143,6 +144,17 @@ class VisualizationManager:
         """
         self.register_sprites(id, [path])
 
+    def __getBase64FromImg(self, path: str):
+        """
+        Get the base64 representation of an image.
+
+        :param path: The path to the image.
+        :return: The base64 representation of the image.
+        """
+        with open(path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+            return f"data:image/png;base64,{encoded_string.decode('utf-8')}"
+
     def register_sprites(self, id: str, frames: List[str]):
         """
         Register sprites with the manager.
@@ -168,6 +180,8 @@ class VisualizationManager:
             raise ValueError(ErrorText.FRAMES_MUST_NOT_BE_EMPTY)
         if not isinstance(id, str):
             raise TypeError(ErrorText.ID_MUST_BE_STRING)
+
+        frames = [self.__getBase64FromImg(f) for f in frames]
 
         self.visuals.append({"id": id, "frames": frames})
 

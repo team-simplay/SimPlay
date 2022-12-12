@@ -4,15 +4,12 @@ import { SetPositionEventArgs } from '../../src/event/SetPositionEventArgs';
 import { EventAction } from '../../src/event/EventAction';
 import { getTestGrid } from './getTestGrid';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
-import { mock, instance, spy, when } from 'ts-mockito';
+import { mock, instance, when } from 'ts-mockito';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
-import * as PIXI from 'pixi.js';
+import { TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('SetPositionEvent tests', async function () {
   const simulationDataSerialized = {
@@ -37,7 +34,7 @@ describe('SetPositionEvent tests', async function () {
     visuals: [
       {
         id: 'LEET',
-        frames: ['leet.png'],
+        frames: [TRANSPARENT_PIXEL],
       },
     ],
     grid: getTestGrid(),

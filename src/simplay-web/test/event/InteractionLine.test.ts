@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { spy, when } from 'ts-mockito';
 import * as PIXI from 'pixi.js';
 import { getTestGrid } from './getTestGrid';
 import { DisplayEntity } from '../../src/Entity';
@@ -7,9 +6,6 @@ import * as PIXILAYERS from '@pixi/layers';
 import { InteractionLine } from '../../src/event/InteractionLine';
 import { SimplayContext } from '../../src/SimplayContext';
 import { SimulationData } from '../../src/SimulationData';
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('InteractionLine tests', async function () {
   const displayEntity1 = {
