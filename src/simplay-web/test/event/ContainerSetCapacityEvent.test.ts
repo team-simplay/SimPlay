@@ -2,8 +2,7 @@ import { ContainerSetCapacityEvent } from '../../src/event/ContainerSetCapacityE
 import { expect } from 'chai';
 import { ContainerSetCapacityEventArgs } from '../../src/event/ContainerSetCapacityEventArgs';
 import { EventAction } from '../../src/event/EventAction';
-import { instance, mock, spy, when } from 'ts-mockito';
-import * as PIXI from 'pixi.js';
+import { instance, mock } from 'ts-mockito';
 import { getTestGrid } from './getTestGrid';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
@@ -12,14 +11,11 @@ import {
   ExtendedDisplayEntity,
   getEntityDisplayObjectById,
 } from '../../src/Entity';
+import { EMOJI, TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
 const capacity = 1848;
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('frame1.png')).thenResolve(PIXI.Texture.WHITE);
-when(fromUrlSpy.fromURL('frame2.png')).thenResolve(PIXI.Texture.WHITE);
 
 const simData = {
   entities: [
@@ -33,7 +29,7 @@ const simData = {
   visuals: [
     {
       id: 'CONTAINER',
-      frames: ['frame1.png', 'frame2.png'],
+      frames: [TRANSPARENT_PIXEL, EMOJI],
     },
   ],
   events: [],

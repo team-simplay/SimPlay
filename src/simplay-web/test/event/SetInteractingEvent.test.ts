@@ -2,20 +2,16 @@ import { SetInteractingEvent } from '../../src/event/SetInteractingEvent';
 import { expect } from 'chai';
 import { SetInteractingEventArgs } from '../../src/event/SetInteractingEventArgs';
 import { EventAction } from '../../src/event/EventAction';
-import { mock, instance, when, spy } from 'ts-mockito';
-import * as PIXI from 'pixi.js';
+import { mock, instance } from 'ts-mockito';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import { getTestGrid } from './getTestGrid';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getEntityDisplayObjectById } from '../../src/Entity';
+import { EMOJI, TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
 const withId = 'foo';
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
-when(fromUrlSpy.fromURL('foo.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('SetInteractingEvent tests', async function () {
   it('should initialize correctly', () => {
@@ -46,11 +42,11 @@ describe('SetInteractingEvent tests', async function () {
     visuals: [
       {
         id: 'LEET',
-        frames: ['leet.png'],
+        frames: [TRANSPARENT_PIXEL],
       },
       {
         id: 'FOO',
-        frames: ['foo.png'],
+        frames: [EMOJI],
       },
     ],
     grid: getTestGrid(),

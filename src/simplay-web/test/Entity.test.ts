@@ -9,17 +9,12 @@ import { expect } from 'chai';
 import { createContext } from '../src/SimplayContext';
 import { SimulationData } from '../src/SimulationData';
 import { getTestGrid } from './event/getTestGrid';
-import { spy, when } from 'ts-mockito';
 import chaiAsPromised from 'chai-as-promised';
 import { ExtendedDisplayEntity } from '../src/Entity';
 import * as chai from 'chai';
 import { InteractionLine } from '../src/event/InteractionLine';
+import { EMOJI, TRANSPARENT_PIXEL } from './event/testImages';
 chai.use(chaiAsPromised);
-
-// ensures that no URL is actually loaded
-const spyTexture = spy(PIXI.Texture);
-when(spyTexture.fromURL('frame1.png')).thenResolve(PIXI.Texture.WHITE);
-when(spyTexture.fromURL('frame2.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('Entity tests', async function () {
   const entities = [
@@ -34,7 +29,7 @@ describe('Entity tests', async function () {
   const visuals = [
     {
       id: 'visual1',
-      frames: ['frame1.png', 'frame2.png'],
+      frames: [TRANSPARENT_PIXEL, EMOJI],
     },
   ];
   const simulationData = {
@@ -206,7 +201,7 @@ describe('getEntityDisplayObjectById tests', async function () {
   const visuals = [
     {
       id: 'visual1',
-      frames: ['frame1.png', 'frame2.png'],
+      frames: [TRANSPARENT_PIXEL, EMOJI],
     },
   ];
   const simulationData = {

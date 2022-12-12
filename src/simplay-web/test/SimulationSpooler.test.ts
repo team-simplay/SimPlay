@@ -4,12 +4,13 @@ import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
 import { SimulationSpooler } from '../src/SimulationSpooler';
 import * as PIXI from 'pixi.js';
 import { SimplayContext } from '../src/SimplayContext';
+import { EMOJI, TRANSPARENT_PIXEL } from './event/testImages';
 
 const simulationDataSerialized = {
   visuals: [
     {
       id: 'visual1',
-      frames: ['frame1.png', 'frame2.png'],
+      frames: [TRANSPARENT_PIXEL, EMOJI],
     },
   ],
   entities: [
@@ -48,10 +49,6 @@ const simulationDataSerialized = {
     },
   ],
 } as SimulationDataSerialized;
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('frame1.png')).thenResolve(PIXI.Texture.WHITE);
-when(fromUrlSpy.fromURL('frame2.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('SimulationSpooler tests', async function () {
   describe('Intialization tests', function () {

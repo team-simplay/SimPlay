@@ -2,19 +2,16 @@ import { SetTintColorEvent } from '../../src/event/SetTintColorEvent';
 import { expect } from 'chai';
 import { SetTintColorEventArgs } from '../../src/event/SetTintColorEventArgs';
 import { EventAction } from '../../src/event/EventAction';
-import { instance, mock, spy, when } from 'ts-mockito';
-import * as PIXI from 'pixi.js';
+import { instance, mock } from 'ts-mockito';
 import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { getTestGrid } from './getTestGrid';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import { getEntityDisplayObjectById } from '../../src/Entity';
+import { TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
 const color = 0x123456;
-
-const fromUrlSpy = spy(PIXI.Texture);
-when(fromUrlSpy.fromURL('leet.png')).thenResolve(PIXI.Texture.WHITE);
 
 describe('SetTintColorEvent tests', function () {
   it('should initialize correctly', () => {
@@ -38,7 +35,7 @@ describe('SetTintColorEvent tests', function () {
     visuals: [
       {
         id: 'LEET',
-        frames: ['leet.png'],
+        frames: [TRANSPARENT_PIXEL],
       },
     ],
     events: [],
