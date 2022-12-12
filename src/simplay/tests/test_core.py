@@ -3,6 +3,9 @@ import simpy
 import src.simplay.core as simplay
 from src.simplay.primitives import ComponentType, ErrorText, EventAction
 
+SAMPLE_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAIAAABrBkF6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTY/hPCFCgYsWKFa2trUAGigq4KBAAGQwMIFkUFXBRZIDTFjggTgWy9ZgApAKr9VDw/z8AS5ITTSmJ+xoAAAAASUVORK5CYII="
+SAMPLE_IMG_PATH = "tests/sample.png"
+
 
 class TestVisualEnvironment:
     def test_visualEnvironment(self):
@@ -100,14 +103,15 @@ class TestVisualizationManager:
 
     def test_register_visual(self):
         self.reset()
-        self.manager.register_visual("test", "p_test")
-        assert {"id": "test", "frames": ["p_test"]} in self.manager.visuals
+        self.manager.register_visual("test", SAMPLE_IMG_PATH)
+        assert {"id": "test", "frames": [
+            SAMPLE_BASE64]} in self.manager.visuals
 
     def test_no_duplicate_visuals(self):
         self.reset()
-        self.manager.register_visual("duplicate", "p_test")
+        self.manager.register_visual("duplicate", SAMPLE_IMG_PATH)
         with pytest.raises(ValueError, match=ErrorText.ID_NOT_UNIQUE):
-            self.manager.register_visual("duplicate", "p_test2")
+            self.manager.register_visual("duplicate", SAMPLE_IMG_PATH)
         assert len(self.manager.visuals) == 1
 
     def test_no_empty_visuals(self):
@@ -129,7 +133,7 @@ class TestVisualizationManager:
     def test_no_nonstring_visual_ids(self):
         self.reset()
         with pytest.raises(TypeError, match=ErrorText.ID_MUST_BE_STRING):
-            self.manager.register_visual(0, "p_test")
+            self.manager.register_visual(0, SAMPLE_IMG_PATH)
 
     def test_no_nonstring_visual_paths(self):
         self.reset()
@@ -139,14 +143,15 @@ class TestVisualizationManager:
 
     def test_register_sprite(self):
         self.reset()
-        self.manager.register_sprites("test", ["p_test"])
-        assert {"id": "test", "frames": ["p_test"]} in self.manager.visuals
+        self.manager.register_sprites("test", [SAMPLE_IMG_PATH])
+        assert {"id": "test", "frames": [
+            SAMPLE_BASE64]} in self.manager.visuals
 
     def test_no_duplicate_sprites(self):
         self.reset()
-        self.manager.register_sprites("duplicate", ["p_test"])
+        self.manager.register_sprites("duplicate", [SAMPLE_IMG_PATH])
         with pytest.raises(ValueError, match=ErrorText.ID_NOT_UNIQUE):
-            self.manager.register_sprites("duplicate", ["p_test2"])
+            self.manager.register_sprites("duplicate", [SAMPLE_IMG_PATH])
         assert len(self.manager.visuals) == 1
 
     def test_no_empty_sprites(self):
@@ -168,7 +173,7 @@ class TestVisualizationManager:
     def test_no_nonstring_sprite_ids(self):
         self.reset()
         with pytest.raises(TypeError, match=ErrorText.ID_MUST_BE_STRING):
-            self.manager.register_sprites(0, ["p_test"])
+            self.manager.register_sprites(0, [SAMPLE_IMG_PATH])
 
     def test_no_nonstring_sprite_frames(self):
         self.reset()
