@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-import { instance, mock, spy, when } from 'ts-mockito';
+import { instance, mock } from 'ts-mockito';
 import { SimulationDataSerialized } from '../src/SimulationDataSerialized';
 import { SimulationSpooler } from '../src/SimulationSpooler';
-import * as PIXI from 'pixi.js';
 import { SimplayContext } from '../src/SimplayContext';
 import { EMOJI, TRANSPARENT_PIXEL } from './event/testImages';
 
