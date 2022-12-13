@@ -3,7 +3,6 @@ import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
 import { getEntityDisplayObjectById } from '../Entity';
-import * as PIXI from 'pixi.js';
 
 export class MoveNearEvent extends Event {
   constructor(
