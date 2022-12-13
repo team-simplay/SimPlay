@@ -9,6 +9,8 @@ export class InteractionLine {
   private offsetY = 0;
   private switch = false;
   private ticker: PIXI.Ticker;
+  private lastRedraw = 0;
+  private frameTime = 1000 / 15;
   constructor(
     private sourceEntity: DisplayEntity,
     private targetEntity: DisplayEntity,
@@ -18,10 +20,11 @@ export class InteractionLine {
     this.graphic.name = `${sourceEntity.container.name} -> ${targetEntity.container.name}`;
     this.context = context;
     this.redraw();
-    this.ticker = this.context.app.ticker.add(() => {
-      this.redraw();
-    });
     this.context.interactionContainer.addChild(this.graphic);
+    this.ticker = new PIXI.Ticker();
+    this.ticker.add(() => this.redraw());
+    this.ticker.speed = 1;
+    this.ticker.start();
   }
 
   public destroy() {
@@ -31,17 +34,25 @@ export class InteractionLine {
   }
 
   redraw() {
-    const interactionLineSegments = 21;
+    if (Date.now() - this.lastRedraw < this.frameTime) {
+      return;
+    }
+    const interactionLineSegments = 11;
     this.graphic.clear();
     this.createGradientLine(
-      this.sourceEntity.container.x + this.sourceEntity.container.width / 2,
-      this.sourceEntity.container.y + this.sourceEntity.container.height / 2,
-      this.targetEntity.container.x + this.targetEntity.container.width / 2,
-      this.targetEntity.container.y + this.targetEntity.container.height / 2,
+      this.sourceEntity.container.x +
+        this.sourceEntity.animatedSprite.width / 2,
+      this.sourceEntity.container.y +
+        this.sourceEntity.animatedSprite.height / 2,
+      this.targetEntity.container.x +
+        this.targetEntity.animatedSprite.width / 2,
+      this.targetEntity.container.y +
+        this.targetEntity.animatedSprite.height / 2,
       interactionLineSegments,
       0x000000,
       0xffffff
     );
+    this.lastRedraw = Date.now();
   }
 
   createStartingSegment(
@@ -50,12 +61,12 @@ export class InteractionLine {
     color1: number,
     color2: number
   ) {
-    this.graphic.lineStyle(2, color2, 0.8);
+    this.graphic.lineStyle(2, color2, 1);
     if (this.switch) {
-      this.graphic.lineStyle(2, color1, 0.8);
+      this.graphic.lineStyle(2, color1, 1);
     }
     this.graphic.moveTo(fromX, fromY);
-    this.graphic.lineTo(this.offsetX + fromX, this.offsetY + fromY);
+    this.graphic.lineTo(fromX + this.offsetX, fromY + this.offsetY);
   }
 
   createInnerSegment(
@@ -71,10 +82,10 @@ export class InteractionLine {
     if (this.switch) {
       color = i % 2 === 0 ? color2 : color1;
     }
-    this.graphic.lineStyle(2, color, 0.8);
+    this.graphic.lineStyle(2, color, 1);
     this.graphic.moveTo(
-      this.offsetX + fromX + deltaX * i,
-      +this.offsetY + fromY + deltaY * i
+      fromX + this.offsetX + deltaX * i,
+      fromY + this.offsetY + deltaY * i
     );
     this.graphic.lineTo(
       this.offsetX + fromX + deltaX * (i + 1),
@@ -91,16 +102,19 @@ export class InteractionLine {
     color1: number,
     color2: number
   ) {
-    if (this.offsetX > deltaX || this.offsetY > deltaY) {
+    if (
+      Math.abs(this.offsetX) > Math.abs(deltaX) ||
+      Math.abs(this.offsetY) > Math.abs(deltaY)
+    ) {
       this.offsetX = 0;
       this.offsetY = 0;
       this.switch = !this.switch;
     }
 
-    if (stops % 2 === 0 || this.switch) {
-      this.graphic.lineStyle(2, color2, 0.8);
+    if (this.switch) {
+      this.graphic.lineStyle(2, color2, 1);
     } else {
-      this.graphic.lineStyle(2, color1, 0.8);
+      this.graphic.lineStyle(2, color1, 1);
     }
 
     this.graphic.moveTo(
@@ -119,14 +133,14 @@ export class InteractionLine {
     color1: number,
     color2: number
   ) {
-    const lineMovementSpeedFactor = 50;
+    const lineMovementSpeedFactor = 5;
     const deltaX = (toX - fromX) / stops;
     const deltaY = (toY - fromY) / stops;
     this.offsetX += deltaX / lineMovementSpeedFactor;
     this.offsetY += deltaY / lineMovementSpeedFactor;
 
     this.createStartingSegment(fromX, fromY, color1, color2);
-    for (let i = 0; i < stops - 1; i++) {
+    for (let i = 0; i < stops; i++) {
       this.createInnerSegment(color1, color2, deltaX, deltaY, fromX, fromY, i);
     }
     this.createEndSegment(toX, toY, deltaX, deltaY, stops, color1, color2);

@@ -3,6 +3,7 @@ import { Event } from './Event';
 import { EventAction } from './EventAction';
 import { SimplayContext } from '../SimplayContext';
 import { getEntityDisplayObjectById } from '../Entity';
+import * as PIXI from 'pixi.js';
 
 export class MoveNearEvent extends Event {
   constructor(
@@ -18,22 +19,22 @@ export class MoveNearEvent extends Event {
       context,
       this.args.target
     );
-    // Math.random() - 0.5 is used to get random position on the circumference of the circle around the center of the cell
-    const x =
+    const targetEntityCenterX =
       targetDisplayObject.container.x +
-      (Math.random() - 0.5) * context.tileWidth;
-    const y =
+      targetDisplayObject.animatedSprite.width / 2;
+    const targetEntityCenterY =
       targetDisplayObject.container.y +
-      (Math.random() - 0.5) * context.tileHeight;
+      targetDisplayObject.animatedSprite.height / 2;
 
-    const entityWidth = entityDisplayObject.container.getBounds().width;
-    const entityHeight = entityDisplayObject.container.getBounds().height;
-
-    // the adjust variables are used to center the entity on the circumference of the circle, not the top left corner of the entity
-    const xAdjust = (entityWidth - context.tileWidth) / 2;
-    const yAdjust = (entityHeight - context.tileHeight) / 2;
-
-    entityDisplayObject.container.x = x - xAdjust;
-    entityDisplayObject.container.y = y - yAdjust;
+    const maxDistanceX = targetDisplayObject.animatedSprite.width;
+    const maxDistanceY = targetDisplayObject.animatedSprite.height;
+    const offsetX = (Math.random() - 0.5) * 2 * maxDistanceX;
+    const offsetY = (Math.random() - 0.5) * 2 * maxDistanceY;
+    const targetX = targetEntityCenterX + offsetX;
+    const targetY = targetEntityCenterY + offsetY;
+    entityDisplayObject.container.x =
+      targetX - entityDisplayObject.animatedSprite.width / 2;
+    entityDisplayObject.container.y =
+      targetY - entityDisplayObject.animatedSprite.height / 2;
   }
 }
