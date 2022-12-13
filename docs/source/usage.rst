@@ -28,6 +28,18 @@ To install SimPlay-Web:
 
 To install the jupyter extension:
 
+.. note::
+   This guide assumes you have a working jupyter-lab installation.
+   The minimum version required is 3.0.
+
+To install the extension, execute the following command:
+
 .. code-block:: console
 
    $ pip install simplay-jupyter
+
+Should you want to uninstall the extension, execute the following command:
+
+.. code-block:: console
+
+   $ pip uninstall simplay-jupyter
