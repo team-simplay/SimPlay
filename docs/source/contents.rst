@@ -14,6 +14,8 @@ Documentation for SimPlay
    index
    usage
    api_reference/index
+   quickstart
+   examples
 
 
 Indices and tables
