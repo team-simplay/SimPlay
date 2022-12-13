@@ -1,3 +1,19 @@
+
+.. only:: html
+
+    .. figure:: assets/simplay_logo.png
+        :align: center
+
+        Animation capabilities for SimPy
+
+        `PyPI (simplay) <https://pypi.python.org/pypi/simplay>`_ |
+        `PyPI (simplay-jupyter) <https://pypi.python.org/pypi/simplay-jupyter>`_ |
+        `npm (simplay-web) <https://www.npmjs.com/package/simplay-web>`_ |
+        `GitHub <https://github.com/team-simplay/SimPlay/>`_ |
+        `Issues
+        <https://github.com/team-simplay/SimPlay/issues>`_ 
+
+
 Overview
 ===================================
 
