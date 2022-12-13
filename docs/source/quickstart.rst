@@ -94,14 +94,14 @@ The following example shows how to set the position of a component:
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
             super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 100, 100)
+            BasicVisualUtil.set_position(self, 5, 5)
 
         def run(self):
             while True:
                 print(f'{self.id} is running')
                 yield self.env.timeout(1)
 
-The code above now sets the position of the component to (100, 100), at
+The code above now sets the position of the component to (5, 5), at
 the time of the simulation when the process is created.
 
 If you've followed this guide critically, you're surely by now asking what the parameters
@@ -165,4 +165,57 @@ with simplay-jupyter
 --------------------
 
 Follow the instructions under :doc:`usage` to install the simplay extension for jupyter.
+Once you've done that, you can start a new notebook and import the ``simplay`` module:
+
+.. code-block:: python
+
+    import simplay
+
+    env = simplay.VisualEnvironment()
+    # create a grid
+    grid = simplay.VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    # add the grid to the environment
+    env.visualization_manager.set_grid(grid)
+
+    class MyProcess(simplay.VisualProcess):
+        def __init__(self, env, id):
+            super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
+            simplay.BasicVisualUtil.set_position(self, 5, 5)
+
+        def run(self):
+            while True:
+                print(f'{self.id} is running')
+                yield self.env.timeout(1)
+
+    env.process(MyProcess(env, 1))
+    env.run(until=10)
+
+The code above is the same as the one in the previous section, but now it is executed in a jupyter notebook.
+To display the visualization, you can use the ``display`` function provided by ``IPython.display``:
+
+.. code-block:: python
+
+    from IPython.display import display
+    output = env.visualization_manager.serialize()
+    display({"application/simplay+json": output}, raw=True)
+
+The extension will now automatically display the visualization in the notebook.
+Please note the MIME-Type ``application/simplay+json``.
+This is the MIME-Type that the extension registers with jupyter.
+
+Since ``simplay`` creates JSON output, you can also save the output to a file and open it in a browser:
+
+.. code-block:: python
+
+    with open("output.simplay", "w") as f:
+        f.write(output)
+
+Then, open the ``.simplay`` file in JupyterLab and the visualization will be displayed.
+
+
+with simplay-web
+----------------
+
+**TODO**
 
