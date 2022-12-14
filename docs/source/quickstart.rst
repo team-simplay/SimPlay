@@ -4,22 +4,23 @@ Getting started
 with simplay
 ------------
 
-SimPlay is designed to integrate with SimPy as easily as possible.
-Hence, you'll find the usual structures and components of SimPy recreated as objects
+SimPlay is designed to integrate with `SimPy <https://simpy.readthedocs.io/en/latest/>`_ as easily as possible.
+Hence, you'll find the usual structures and components of `SimPy <https://simpy.readthedocs.io/en/latest/>`_ recreated as objects
 with capabilities to animate the simulation.
 
-The components known from SimPy are prefixed with ``Visual``.
-For example, ``Environment`` becomes ``VisualEnvironment``.
-The ``VisualEnvironment`` is needed by other components, such as ``VisualProcess``, to gain information
+The components known from `SimPy <https://simpy.readthedocs.io/en/latest/>`_ are prefixed with ``Visual``.
+For example, ``Environment`` becomes :class:`~simplay.core.VisualEnvironment`.
+The :class:`~simplay.core.VisualEnvironment` is needed by other components,
+such as :class:`~simplay.components.VisualProcess`, to gain information
 about the visualization.
 
-So, to get started, you'll need to import the ``VisualEnvironment``:
+So, to get started, you'll need to import the :class:`~simplay.core.VisualEnvironment`:
 
 .. code-block:: python
 
     from simplay import VisualEnvironment
 
-Then, you can create a ``VisualEnvironment`` object and start adding components:
+Then, you can create a :class:`~simplay.core.VisualEnvironment` object and start adding components:
 
 .. code-block:: python
 
@@ -27,7 +28,7 @@ Then, you can create a ``VisualEnvironment`` object and start adding components:
     # add components here
     env.run()
 
-The components that you know, such as simple processes and resources, need to be classes
+The components that you know, such as simple processes and resources, must be classes
 in order to be able to be integrated into the visualization.
 
 For example, a simple process can be created as follows:
@@ -53,12 +54,13 @@ Then, you can create an instance of the process and add it to the environment:
     env.run()
 
 Keep in mind, that the ``id`` parameter should be unique across the whole environment.
-It'll identify the component for which an event is logged.
 
 If you've read the ``__super__`` call of the ``MyProcess`` constructor carefully, you'll have noticed
 that it takes a ``graphic`` and a ``tint`` parameter.
 In the example, the value of ``graphic`` is ``SOMEPNG``.
-In order for the visualzation to work, the ``VisualManager`` - which exists on ``VisualEnvironment`` -
+In order for the visualzation to work,
+the :class:`~simplay.core.VisualizationManager` -
+which exists on :class:`~simplay.core.VisualEnvironment` -
 needs to know where to find the graphic.
 Register visuals with the following call:
 
@@ -82,7 +84,7 @@ You can find a complete list of events in the :doc:`api_reference/simplay.events
 Usually however, you won't be instantiating these classes yourself, but rather use one of the
 ``-VisualUtil`` classes which provide a more declarative way of declaring visual state changes.
 All the methods available are documented in their respective sections in :doc:`api_reference/simplay.visualutil`.
-The following section only provides a few examples for these class.
+The following section only provides a few examples for these ``VisualUtils``.
 
 It is important to notice, that the first parameter of all these functions is of the type ``VisualComponent``.
 This lets the utility functions identify the component for which the event should be logged, and extract additional information
@@ -92,9 +94,7 @@ The following example shows how to set the position of a component:
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualProcess, VisualComponent
-    # import the utility class
-    from simplay import BasicVisualUtil
+    from simplay import VisualEnvironment, VisualProcess, VisualComponent, BasicVisualUtil
 
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
@@ -112,11 +112,11 @@ the time of the simulation when the process is created.
 If you've followed this guide critically, you're surely by now asking what the parameters
 of the ``set_position`` refer to.
 
-This is where the ``VisualGrid`` comes into (Sim)play.
+This is where the :class:`~simplay.visualization.VisualGrid` comes into (Sim)play.
 
-The ``VisualGrid`` is a component that is used to map the simulation space to the screen space.
+The :class:`~simplay.visualization.VisualGrid` is a component that is used to map the simulation space to the screen space.
 
-The following example shows how to create a ``VisualGrid`` and add it to the environment:
+The following example shows how to create a :class:`~simplay.visualization.VisualGrid` and add it to the environment:
 
 .. code-block:: python
 
@@ -129,12 +129,12 @@ The following example shows how to create a ``VisualGrid`` and add it to the env
     env.visualization_manager.set_grid(grid)
 
 The code above creates a grid with a width of 1000 and a height of 1000, split into 10x10 cells.
-The grid must be registered with the ``VisualizationManager`` of the environment.
+The grid must be registered with the :class:`~simplay.core.VisualizationManager` of the environment.
 As you can see, we've also added an area to the grid.
 The area is a rectangle that is drawn on the grid, and can be used to visually separate different parts of the simulation.
 The area is defined by the id, the text that is displayed in the area, the height (in cells) and the width (in cells),
 and the top-left position (in cells) of the area. The following is a visual representation of this,
-where 'X' marks the cells where this area is drawn and colored red, and ' ' marks the cells where it is not:
+where 'X' marks the cells where this area is drawn, and ' ' marks the cells where it is not:
 
 .. code-block:: text
     
@@ -173,12 +173,11 @@ simplay in depth
 
 **Using Resources:**
 
-The following example shows how to use the ``VisualResource`` class:
+The following example shows how to use the :class:`~simplay.components.VisualResource` class:
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualResource
-    from simplay import BasicVisualUtil, ResourceVisualUtil
+    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
 
     class MyResource(VisualResource):
         def __init__(self, env):
@@ -194,23 +193,23 @@ The following example shows how to use the ``VisualResource`` class:
     resource = MyResource(env)
     env.run()
 
-The ``VisualResource`` class inherits from the ``Resource`` class from the ``simpy`` package.
+The :class:`~simplay.components.VisualResource` class inherits from the ``Resource`` class from the ``simpy`` package.
 The API is the same, except that the ``request`` and ``release`` methods are overridden to
 reflect for changes in the utilization and capacity of the resource.
 Within these methods, the ``ResourceVisualUtil`` class is used to update the utilization
 and capacity of the resource, using the ``set_utilization`` and ``set_capacity`` methods.
 Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
-and are inherited by the ``VisualPreemptiveResource`` and ``VisualPriorityResource`` respectively.
+and are inherited by the :class:`~simplay.components.VisualPreemptiveResource`
+and :class:`~simplay.components.VisualPriorityResource` respectively.
 
 The code example above creates a custom class for your resource, and by doing so declares
 the visibility and position of the resource.
-Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the resource.
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualResource
-    from simplay import BasicVisualUtil, ResourceVisualUtil
+    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -226,12 +225,11 @@ and visibility of the resource.
 
 **Using Containers:**
 
-The following example shows how to use the ``VisualContainer`` class:
+The following example shows how to use the :class:`~simplay.components.VisualContainer` class:
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualContainer
-    from simplay import BasicVisualUtil, ContainerVisualUtil
+    from simplay import VisualEnvironment, VisualContainer, BasicVisualUtil, ContainerVisualUtil
 
     class MyContainer(VisualContainer):
         def __init__(self, env):
@@ -247,15 +245,16 @@ The following example shows how to use the ``VisualContainer`` class:
     container = MyContainer(env)
     env.run()
 
-The ``VisualContainer`` class inherits from the ``Container`` class from the ``simpy`` package.
+The :class:`~simplay.components.VisualContainer` class inherits from the ``Container``
+class from the ``simpy`` package.
 The API is the same, except that the ``put`` and ``get`` methods are overridden to
 reflect for changes in the level and capacity of the container.
-Within these methods, the ``ContainerVisualUtil`` class is used to update the level
+Within these methods, the :class:`~simplay.visualutil.BasicVisualUtil` class is used to update the level
 and capacity of the container, using the ``set_level`` and ``set_capacity`` methods.
 
 The code example above creates a custom class for your container, and by doing so declares
 the visibility and position of the container.
-Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the container.
 
 .. code-block:: python
@@ -276,7 +275,7 @@ and visibility of the container.
 
 **Using Stores:**
 
-The following example shows how to use the ``VisualStore`` class:
+The following example shows how to use the :class:`~simplay.components.VisualStore` class:
 
 .. code-block:: python
 
@@ -297,23 +296,22 @@ The following example shows how to use the ``VisualStore`` class:
     store = MyStore(env)
     env.run()
 
-The ``VisualStore`` class inherits from the ``Store`` class from the ``simpy`` package.
+The :class:`~simplay.components.VisualStore` class inherits from the ``Store`` class from the ``simpy`` package.
 The API is the same, except that the ``put`` and ``get`` methods are overridden to
 reflect for changes in the contents and capacity of the store.
-Within these methods, the ``StoreVisualUtil`` class is used to update the contents
+Within these methods, the :class:`~simplay.visualutil.StoreVisualUtil` class is used to update the contents
 and capacity of the store, using the ``set_contents`` and ``set_capacity`` methods.
 The spezialized ``FilterStore`` is also supported, and is inherited by the
-``VisualFilterStore`` class.
+:class:`~simplay.components.VisualStore` class.
 
 The code example above creates a custom class for your store, and by doing so declares
 the visibility and position of the store.
-Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the store.
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualStore
-    from simplay import BasicVisualUtil, StoreVisualUtil
+    from simplay import VisualEnvironment, VisualStore, BasicVisualUtil, StoreVisualUtil
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -335,19 +333,19 @@ Once you've done that, you can start a new notebook and import the ``simplay`` m
 
 .. code-block:: python
 
-    import simplay
+    from simplay import VisualEnvironment, VisualGrid, BasicVisualUtil
 
-    env = simplay.VisualEnvironment()
+    env = VisualEnvironment()
     # create a grid
-    grid = simplay.VisualGrid(1000, 1000, 10, 10)
+    grid = VisualGrid(1000, 1000, 10, 10)
     grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
     # add the grid to the environment
     env.visualization_manager.set_grid(grid)
 
-    class MyProcess(simplay.VisualProcess):
+    class MyProcess(VisualProcess):
         def __init__(self, env, id):
             super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
-            simplay.BasicVisualUtil.set_position(self, 5, 5)
+            BasicVisualUtil.set_position(self, 5, 5)
 
         def run(self):
             while True:
@@ -370,12 +368,11 @@ The extension will now automatically display the visualization in the notebook.
 Please note the MIME-Type ``application/simplay+json``.
 This is the MIME-Type that the extension registers with jupyter.
 
-Since ``simplay`` creates JSON output, you can also save the output to a file and open it in a browser:
+Since ``simplay`` creates JSON output, you can also save the output to a file:
 
 .. code-block:: python
 
-    with open("output.simplay", "w") as f:
-        f.write(output)
+    env.visualization_manager.write_to_file("output.simplay")
 
 Then, open the ``.simplay`` file in JupyterLab and the visualization will be displayed.
 
@@ -383,5 +380,7 @@ Then, open the ``.simplay`` file in JupyterLab and the visualization will be dis
 with simplay-web
 ----------------
 
-**TODO**
+In case a custom generator for `application/simplay+json` exists and there is
+a need to spool the events, the simplay-web package can be used directly.
+Find more information about simplay-web at https://www.npmjs.com/package/simplay-web.
 

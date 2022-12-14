@@ -4,7 +4,7 @@
     .. figure:: assets/simplay_logo.png
         :align: center
 
-        Animation capabilities for SimPy
+        Animation capabilities for `SimPy <https://simpy.readthedocs.io/en/latest/>`_
 
         `PyPI (simplay) <https://pypi.python.org/pypi/simplay>`_ |
         `PyPI (simplay-jupyter) <https://pypi.python.org/pypi/simplay-jupyter>`_ |
@@ -20,16 +20,15 @@
 Overview
 ===================================
 
-**SimPlay** is a project that aims to bring simple animation capabilities to the SimPy project.
+**SimPlay** is a project that aims to bring simple animation capabilities to the `SimPy <https://simpy.readthedocs.io/en/latest/>`_ project.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Check out the :doc:`usage` section for further information, including how to :ref:`installation`.
 
 
 The API documentation is available at :ref:`api`.
 
 Structure of the project
-===================================
+------------------------
 
 SimPlay is split into three parts:
 
@@ -40,8 +39,8 @@ SimPlay is split into three parts:
 -  The **SimPlay-Web** package, which is a TypeScript package that is used to display the generated animation data.
    It is available on npm at https://www.npmjs.com/package/simplay-web.
 
--  The **SimPlay-Jupyter** package, which which depends on both the packages mentioned above.
-   It is used to display the animation data in Jupyter notebooks.
+-  The **SimPlay-Jupyter** package, which depends on both the packages mentioned above.
+   It is used to display the animation data in Jupyter Lab.
    It is available on PyPI at https://pypi.python.org/pypi/simplay-jupyter.
 
 While it is possible, do use the packages separately, it is recommended to use the **SimPlay-Jupyter** package, as it provides the easiest way to use the project.
