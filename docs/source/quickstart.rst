@@ -14,13 +14,13 @@ The :class:`~simplay.core.VisualEnvironment` is needed by other components,
 such as :class:`~simplay.components.VisualProcess`, to gain information
 about the visualization.
 
-So, to get started, you'll need to import the :class:`~simplay.core.VisualEnvironment`:
+To get started, import the :class:`~simplay.core.VisualEnvironment`:
 
 .. code-block:: python
 
     from simplay import VisualEnvironment
 
-Then, you can create a :class:`~simplay.core.VisualEnvironment` object and start adding components:
+Then create a instance of :class:`~simplay.core.VisualEnvironment` and start adding components:
 
 .. code-block:: python
 
@@ -28,10 +28,10 @@ Then, you can create a :class:`~simplay.core.VisualEnvironment` object and start
     # add components here
     env.run()
 
-The components that you know, such as simple processes and resources, must be classes
+The components provided by SimPy, such as simple processes and resources, must be classes
 in order to be able to be integrated into the visualization.
 
-For example, a simple process can be created as follows:
+A simple process can be created as follows:
 
 .. code-block:: python
 
@@ -44,7 +44,7 @@ For example, a simple process can be created as follows:
                 print(f'{self.id} is running')
                 yield self.env.timeout(1)
 
-Then, you can create an instance of the process and add it to the environment:
+Then, create an instance of the process and add it to the environment:
 
 .. code-block:: python
 
@@ -55,7 +55,7 @@ Then, you can create an instance of the process and add it to the environment:
 
 Keep in mind, that the ``id`` parameter should be unique across the whole environment.
 
-If you've read the ``__super__`` call of the ``MyProcess`` constructor carefully, you'll have noticed
+Reading the ``__super__`` call of the ``MyProcess`` constructor carefully, notice
 that it takes a ``graphic`` and a ``tint`` parameter.
 In the example, the value of ``graphic`` is ``SOMEPNG``.
 In order for the visualzation to work,
@@ -74,14 +74,14 @@ Register visuals with the following call:
     This way, you can most effectively use the ``tint`` parameter.
 
 The ``tint`` parameter multiplies the color of the graphic with the given color.
-If you do not wish to apply a tint, set it to 0xFFFFFF, so all pixel values are kept.
+If no tint is to be applied, set it to 0xFFFFFF, so all pixel values are kept the same.
 
-Now that you have successfully created a process, it is time to learn how SimPlay is able to
+After having successfully created a process, it is time to learn how SimPlay is able to
 log visual changes of the simulation.
 
 SimPlay provides utility classes to ``set`` different type of events.
-You can find a complete list of events in the :doc:`api_reference/simplay.events` section.
-Usually however, you won't be instantiating these classes yourself, but rather use one of the
+Find a complete list of events in the :doc:`api_reference/simplay.events` section.
+Usually however, these classes won't be instantiated manually, but rather through the use one of the
 ``-VisualUtil`` classes which provide a more declarative way of declaring visual state changes.
 All the methods available are documented in their respective sections in :doc:`api_reference/simplay.visualutil`.
 The following section only provides a few examples for these ``VisualUtils``.
@@ -109,8 +109,7 @@ The following example shows how to set the position of a component:
 The code above now sets the position of the component to (5, 5), at
 the time of the simulation when the process is created.
 
-If you've followed this guide critically, you're surely by now asking what the parameters
-of the ``set_position`` refer to.
+The parameters of the ``set_position`` function refer to row and column values of a grid.
 
 This is where the :class:`~simplay.visualization.VisualGrid` comes into (Sim)play.
 
@@ -130,7 +129,7 @@ The following example shows how to create a :class:`~simplay.visualization.Visua
 
 The code above creates a grid with a width of 1000 and a height of 1000, split into 10x10 cells.
 The grid must be registered with the :class:`~simplay.core.VisualizationManager` of the environment.
-As you can see, we've also added an area to the grid.
+Additionally, the code above adds an area to the grid.
 The area is a rectangle that is drawn on the grid, and can be used to visually separate different parts of the simulation.
 The area is defined by the id, the text that is displayed in the area, the height (in cells) and the width (in cells),
 and the top-left position (in cells) of the area. The following is a visual representation of this,
@@ -161,12 +160,10 @@ where 'X' marks the cells where this area is drawn, and ' ' marks the cells wher
         +---+---+---+---+---+---+---+---+---+---+
 
 
-You've now learned the basics of how to use SimPlay to visualize your simulation.
-Head over to :doc:`api_reference/index` to learn more about the API, or check out
-the :doc:`examples` to see how SimPlay can be used in practice.
+This guide covers the basics of SimPlay.
+Learn more about the :doc:`api_reference/index`, or view some :doc:`examples` to see how SimPlay can be used in practice.
 
-If you wish to read a more detailed explanation on how to use other components, you can
-follow the section below.
+The section below provides some more in-depth explanation of how to use the components provided by SimPy.
 
 simplay in depth
 ----------------
@@ -202,9 +199,9 @@ Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are als
 and are inherited by the :class:`~simplay.components.VisualPreemptiveResource`
 and :class:`~simplay.components.VisualPriorityResource` respectively.
 
-The code example above creates a custom class for your resource, and by doing so declares
+The code example above creates a custom class for the resource, and by doing so declares
 the visibility and position of the resource.
-Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
+Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the resource.
 
 .. code-block:: python
@@ -252,9 +249,9 @@ reflect for changes in the level and capacity of the container.
 Within these methods, the :class:`~simplay.visualutil.BasicVisualUtil` class is used to update the level
 and capacity of the container, using the ``set_level`` and ``set_capacity`` methods.
 
-The code example above creates a custom class for your container, and by doing so declares
+The code example above creates a custom class for the container, and by doing so declares
 the visibility and position of the container.
-Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
+Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the container.
 
 .. code-block:: python
@@ -306,7 +303,7 @@ The spezialized ``FilterStore`` is also supported, and is inherited by the
 
 The code example above creates a custom class for your store, and by doing so declares
 the visibility and position of the store.
-Should you not wish to do this, you can use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
+Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
 and visibility of the store.
 
 .. code-block:: python
@@ -329,7 +326,7 @@ with simplay-jupyter
 --------------------
 
 Follow the instructions under :doc:`usage` to install the simplay extension for jupyter.
-Once you've done that, you can start a new notebook and import the ``simplay`` module:
+Once the installation is complete, start a new notebook and import the ``simplay`` module:
 
 .. code-block:: python
 
@@ -356,7 +353,7 @@ Once you've done that, you can start a new notebook and import the ``simplay`` m
     env.run(until=10)
 
 The code above is the same as the one in the previous section, but now it is executed in a jupyter notebook.
-To display the visualization, you can use the ``display`` function provided by ``IPython.display``:
+To display the visualization, use the ``display`` function provided by ``IPython.display``:
 
 .. code-block:: python
 
@@ -368,7 +365,7 @@ The extension will now automatically display the visualization in the notebook.
 Please note the MIME-Type ``application/simplay+json``.
 This is the MIME-Type that the extension registers with jupyter.
 
-Since ``simplay`` creates JSON output, you can also save the output to a file:
+Since ``simplay`` creates JSON output, save the output to a file if desired:
 
 .. code-block:: python
 
