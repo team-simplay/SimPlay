@@ -66,6 +66,11 @@ Register visuals with the following call:
 
     env.visual_manager.register_visual('SOMEPNG', 'path/to/your/graphic.png')
 
+.. note::
+
+    We recommend using PNG files with a transparent background, and a white foreground.
+    This way, you can most effectively use the ``tint`` parameter.
+
 The ``tint`` parameter multiplies the color of the graphic with the given color.
 If you do not wish to apply a tint, set it to 0xFFFFFF, so all pixel values are kept.
 
@@ -159,6 +164,167 @@ where 'X' marks the cells where this area is drawn and colored red, and ' ' mark
 You've now learned the basics of how to use SimPlay to visualize your simulation.
 Head over to :doc:`api_reference/index` to learn more about the API, or check out
 the :doc:`examples` to see how SimPlay can be used in practice.
+
+If you wish to read a more detailed explanation on how to use other components, you can
+follow the section below.
+
+simplay in depth
+----------------
+
+**Using Resources:**
+
+The following example shows how to use the ``VisualResource`` class:
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualResource
+    from simplay import BasicVisualUtil, ResourceVisualUtil
+
+    class MyResource(VisualResource):
+        def __init__(self, env):
+            super().__init__(env, "MyResource", 3, graphic="SOMEPNG", tint=0x00FF00)
+            BasicVisualUtil.set_position(self, 5, 5)
+            BasicVisualUtil.set_visible(self)
+
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    resource = MyResource(env)
+    env.run()
+
+The ``VisualResource`` class inherits from the ``Resource`` class from the ``simpy`` package.
+The API is the same, except that the ``request`` and ``release`` methods are overridden to
+reflect for changes in the utilization and capacity of the resource.
+Within these methods, the ``ResourceVisualUtil`` class is used to update the utilization
+and capacity of the resource, using the ``set_utilization`` and ``set_capacity`` methods.
+Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
+and are inherited by the ``VisualPreemptiveResource`` and ``VisualPriorityResource`` respectively.
+
+The code example above creates a custom class for your resource, and by doing so declares
+the visibility and position of the resource.
+Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+and visibility of the resource.
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualResource
+    from simplay import BasicVisualUtil, ResourceVisualUtil
+
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    resource = VisualResource(env, "MyResource", 3, graphic="SOMEPNG", tint=0x00FF00)
+    BasicVisualUtil.set_position(resource, 5, 5)
+    BasicVisualUtil.set_visible(resource)
+
+    env.run()
+
+
+**Using Containers:**
+
+The following example shows how to use the ``VisualContainer`` class:
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualContainer
+    from simplay import BasicVisualUtil, ContainerVisualUtil
+
+    class MyContainer(VisualContainer):
+        def __init__(self, env):
+            super().__init__(env, "MyContainer", 3, graphic="SOMEPNG", tint=0x00FF00)
+            BasicVisualUtil.set_position(self, 5, 5)
+            BasicVisualUtil.set_visible(self)
+    
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    container = MyContainer(env)
+    env.run()
+
+The ``VisualContainer`` class inherits from the ``Container`` class from the ``simpy`` package.
+The API is the same, except that the ``put`` and ``get`` methods are overridden to
+reflect for changes in the level and capacity of the container.
+Within these methods, the ``ContainerVisualUtil`` class is used to update the level
+and capacity of the container, using the ``set_level`` and ``set_capacity`` methods.
+
+The code example above creates a custom class for your container, and by doing so declares
+the visibility and position of the container.
+Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+and visibility of the container.
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualContainer
+    from simplay import BasicVisualUtil, ContainerVisualUtil
+
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    container = VisualContainer(env, "MyContainer", 3, graphic="SOMEPNG", tint=0x00FF00)
+    BasicVisualUtil.set_position(container, 5, 5)
+    BasicVisualUtil.set_visible(container)
+
+    env.run()
+
+**Using Stores:**
+
+The following example shows how to use the ``VisualStore`` class:
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualStore
+    from simplay import BaiscVisualUtil, StoreVisualUtil
+
+    class MyStore(VisualStore):
+        def __init__(self, env):
+            super().__init__(env, "MyStore", 3, graphic="SOMEPNG", tint=0x00FF00)
+            BasicVisualUtil.set_position(self, 5, 5)
+            BasicVisualUtil.set_visible(self)
+    
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    store = MyStore(env)
+    env.run()
+
+The ``VisualStore`` class inherits from the ``Store`` class from the ``simpy`` package.
+The API is the same, except that the ``put`` and ``get`` methods are overridden to
+reflect for changes in the contents and capacity of the store.
+Within these methods, the ``StoreVisualUtil`` class is used to update the contents
+and capacity of the store, using the ``set_contents`` and ``set_capacity`` methods.
+The spezialized ``FilterStore`` is also supported, and is inherited by the
+``VisualFilterStore`` class.
+
+The code example above creates a custom class for your store, and by doing so declares
+the visibility and position of the store.
+Should you not wish to do this, you can use the ``BasicVisualUtil`` class to set the position
+and visibility of the store.
+
+.. code-block:: python
+
+    from simplay import VisualEnvironment, VisualStore
+    from simplay import BasicVisualUtil, StoreVisualUtil
+
+    env = VisualEnvironment()
+    grid = VisualGrid(1000, 1000, 10, 10)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    env.visualization_manager.set_grid(grid)
+
+    store = VisualStore(env, "MyStore", 3, graphic="SOMEPNG", tint=0x00FF00)
+    BasicVisualUtil.set_position(store, 5, 5)
+    BasicVisualUtil.set_visible(store)
+
+    env.run()
 
 
 with simplay-jupyter

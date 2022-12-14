@@ -192,13 +192,16 @@ env.process(car_generator(env, gas_station, fuel_pump))
 # Execute!
 env.run(until=SIM_TIME)
 
+# you can extract the output from the visualization manager
 output = env.visualization_manager.serialize()
 
-# you can now either save the output to a file
-with open("output.simplay", "w") as f:
-    f.write(output)
+# or save the output to a file directly
+env.visualization_manager.write_to_file("output.simplay")
 
-# or, if you're working in jupyter lab, you can display the output
+# or, if you're working in jupyter lab and have the simplay-jupyter
+# extensions installed, you can display the output
+
 # if so, uncomment the following lines
+
 #from IPython.display import display
 #display({"application/simplay+json": output}, raw=True)
