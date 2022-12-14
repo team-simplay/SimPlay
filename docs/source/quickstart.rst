@@ -5,7 +5,7 @@ with simplay
 ------------
 
 SimPlay is designed to integrate with `SimPy <https://simpy.readthedocs.io/en/latest/>`_ as easily as possible.
-Hence, you'll find the usual structures and components of `SimPy <https://simpy.readthedocs.io/en/latest/>`_ recreated as objects
+The usual structures and components of `SimPy <https://simpy.readthedocs.io/en/latest/>`_ are recreated as objects
 with capabilities to animate the simulation.
 
 The components known from `SimPy <https://simpy.readthedocs.io/en/latest/>`_ are prefixed with ``Visual``.
