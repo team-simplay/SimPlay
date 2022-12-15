@@ -31,7 +31,7 @@
 
 .simplay-button {
   flex-grow: 0;
-  padding: 0px;
+  padding: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;
