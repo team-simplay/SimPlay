@@ -168,8 +168,8 @@ env.visualization_manager.register_sprites(
     ],
 )
 
-grid = VisualGrid(500, 500, 5, 5)
-grid.set_area("gasstation01", "GAS_STATION", 5, 5, 0, 0, 0xbdbbbb)
+grid = VisualGrid(500, 500, 5, 3)
+grid.set_area("gasstation01", "GAS_STATION", 3, 5, 0, 0, 0xbdbbbb)
 env.visualization_manager.set_grid(grid)
 
 gas_station = GasStation(env)
