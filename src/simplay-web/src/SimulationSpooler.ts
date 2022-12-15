@@ -83,6 +83,7 @@ export class SimulationSpooler {
     await new Promise((resolve) =>
       setTimeout(resolve, 1000 / this.speedFactor)
     );
+    this.stopRequested = false;
   }
 
   async advanceOneStep() {
