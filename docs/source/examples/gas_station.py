@@ -1,21 +1,16 @@
 """
 Gas Station Refueling example
-
 Covers:
-
 - Resources: Resource
 - Resources: Container
 - Waiting for other processes
-
 Scenario:
   A gas station has a limited number of gas pumps that share a common
   fuel reservoir. Cars randomly arrive at the gas station, request one
   of the fuel pumps and start refueling from that reservoir.
-
   A gas station control process observes the gas station's fuel level
   and calls a tank truck for refueling if the station's level drops
   below a threshold.
-
 """
 import itertools
 import random
@@ -121,7 +116,7 @@ class FuelPump(VisualContainer):
             capacity=GAS_STATION_SIZE,
             init=GAS_STATION_SIZE,
             visual="FUEL_PUMP",
-            tint=0x000000,
+            tint=0x000001,
         )
         BasicVisualUtil.set_position(self, 1, 1)
         BasicVisualUtil.set_visible(self)
@@ -173,8 +168,8 @@ env.visualization_manager.register_sprites(
     ],
 )
 
-grid = VisualGrid(500, 500, 3, 5)
-grid.set_area("gasstation01", "GAS_STATION", 5, 3, 0, 0, 0xFFFFFF)
+grid = VisualGrid(500, 500, 5, 5)
+grid.set_area("gasstation01", "GAS_STATION", 5, 5, 0, 0, 0xbdbbbb)
 env.visualization_manager.set_grid(grid)
 
 gas_station = GasStation(env)
