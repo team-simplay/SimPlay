@@ -24,11 +24,6 @@
   min-width: 10px;
 }
 
-.simplay-spacer {
-  flex-grow: 1;
-  min-width: 10px;
-}
-
 .simplay-label {
   text-align: center;
   align-self: center;
