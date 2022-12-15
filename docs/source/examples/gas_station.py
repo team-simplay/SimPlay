@@ -20,17 +20,10 @@ Scenario:
 import itertools
 import random
 
-import simpy
-from simplay import VisualEnvironment, VisualizationManager, BasicVisualUtil
-
-from simplay import VisualContainer, VisualProcess, VisualResource
-from simplay import VisualGrid
-from simplay import ContainerVisualUtil
-from simplay import VisualEvent
-from simplay import ResourceVisualUtil
-
-from time import sleep
-
+from simplay import (
+    VisualEnvironment, BasicVisualUtil, VisualContainer, VisualProcess, 
+    VisualResource, VisualGrid, ContainerVisualUtil, ResourceVisualUtil
+)
 
 RANDOM_SEED = 42
 GAS_STATION_SIZE = 500  # liters
