@@ -39,6 +39,9 @@ To install the extension, execute the following command:
 
    pip install simplay-jupyter
 
+.. note::
+   Ensure simplay is installed and accessible by the kernel used by jupyter-lab.
+
 Should you want to uninstall the extension, execute the following command:
 
 .. code-block:: console
