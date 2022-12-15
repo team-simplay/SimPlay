@@ -8798,10 +8798,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.7:
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simplay-web@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/simplay-web/-/simplay-web-0.1.4.tgz#ed46e452ce24e6c0b49f49e20cf3f3be15a865f2"
-  integrity sha512-5ULouZGfzWx63ZUHyja2EQefP7Af5Pv+28AE3L6dugKp/hubENa+xfbusWk/4S/Nxxx9kzGfX5K6BH2ZFSCFDQ==
+simplay-web@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/simplay-web/-/simplay-web-0.1.6.tgz#042ff9fc56adf243d287b5a8a1794ed76ff9d043"
+  integrity sha512-uMKw3SV0bcN+B5yfbdruqMPNT+5s7fuixS0nvonwbsQm5Q6ej2w1WlEuRLZyBP03DcwJEoRWYK5FmmOq+pvzJg==
   dependencies:
     "@pixi/layers" "2.0.0"
     pixi.js "7.0.4"
@@ -9362,7 +9362,7 @@ timers-ext@^0.1.7:
     es5-ext "~0.10.46"
     next-tick "1"
 
-tippy.js@^6.3.7:
+tippy.js@6.3.7:
   version "6.3.7"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
   integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
