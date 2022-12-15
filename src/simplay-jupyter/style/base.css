@@ -24,6 +24,11 @@
   min-width: 10px;
 }
 
+.simplay-spacer {
+  flex-grow: 1;
+  min-width: 10px;
+}
+
 .simplay-label {
   text-align: center;
   align-self: center;
@@ -39,7 +44,7 @@
 
 .simplay-number-input {
   flex-grow: 0;
-  width: 30px;
+  width: 50px;
   margin: 5px;
 }
 

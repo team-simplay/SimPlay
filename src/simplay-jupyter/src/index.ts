@@ -58,6 +58,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         data as unknown as SimulationDataSerialized,
         simplayGridContainer
       );
+      const currentStepInfo = document.createElement('p');
+      currentStepInfo.classList.add('simplay-label');
+      simulationSpooler.addStepChangedEventListener((ts) => {
+        currentStepInfo.innerText = 'Current Step: ' + ts;
+      });
       const startPauseButton = this.createStartPauseButton(simulationSpooler);
 
       const resetButton = this.createResetButton();
@@ -106,6 +111,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       controls.appendChild(speedInput);
       controls.appendChild(skipToLabel);
       controls.appendChild(skipToInput);
+      controls.appendChild(currentStepInfo);
       controls.appendChild(spacer2);
     });
 
@@ -115,7 +121,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     simplayContainer.appendChild(controls);
     return Promise.resolve();
   }
-
 
   private createSkipToInput(name: string) {
     const skipToInput = document.createElement('input');
@@ -128,8 +133,8 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
   private createSpeedInput(name: string) {
     const speedInput = document.createElement('input');
     speedInput.type = 'range';
-    speedInput.min = '0.1';
-    speedInput.max = '5';
+    speedInput.min = '0.2';
+    speedInput.max = '20';
     speedInput.step = '0.2';
     speedInput.value = '1';
     speedInput.placeholder = 'Speedfactor';
