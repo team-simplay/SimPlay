@@ -124,7 +124,7 @@ The following example shows how to create a :class:`~simplay.visualization.Visua
     env = VisualEnvironment()
     # create a grid
     grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
+    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xbdbbbb)
     # add the grid to the environment
     env.visualization_manager.set_grid(grid)
 
@@ -160,6 +160,12 @@ where 'X' marks the cells where this area is drawn, and ' ' marks the cells wher
         |   |   |   |   |   |   |   |   |   |   |
         +---+---+---+---+---+---+---+---+---+---+
 
+
+.. note::
+    It is recommended to not have areas with a white background.
+    This is because the decorating and informational texts are also drawn in white, and thus would not be visible.
+    Further, in order to correctly have tints applied to the components, it is recommended to have all-white transparent PNGs,
+    and if no tint is applied, then the visual is invisible.
 
 This guide covers the basics of SimPlay.
 Learn more about the :doc:`api_reference/index`, or view some :doc:`examples` to see how SimPlay can be used in practice.
