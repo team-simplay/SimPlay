@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simplay"
-version = "0.1.5"
+version = "0.1.6"
 authors = [
   { name="David Kühnhanss", email="david.kuehnhanss@ost.ch" },
   { name="Moritz Schiesser", email="moritz.schiesser@ost.ch" },
