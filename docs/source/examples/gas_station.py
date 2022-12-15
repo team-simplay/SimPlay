@@ -21,7 +21,7 @@ import itertools
 import random
 
 from simplay import (
-    VisualEnvironment, BasicVisualUtil, VisualContainer, VisualProcess, 
+    VisualEnvironment, BasicVisualUtil, VisualContainer, VisualProcess,
     VisualResource, VisualGrid, ContainerVisualUtil, ResourceVisualUtil
 )
 
@@ -106,7 +106,8 @@ def car_generator(env, gas_station, fuel_pump):
 
 class GasStation(VisualResource):
     def __init__(self, env):
-        super().__init__(env, "Gas Station", 3, visual="GAS_STATION", tint=0x00FF00)
+        super().__init__(env, "Gas Station", 3, visual="GAS_STATION",
+                         tint=0x00FF00)
         BasicVisualUtil.set_position(self, 3, 1)
         BasicVisualUtil.set_visible(self)
         ResourceVisualUtil.set_utilization(self, self.count)
@@ -120,7 +121,7 @@ class FuelPump(VisualContainer):
             capacity=GAS_STATION_SIZE,
             init=GAS_STATION_SIZE,
             visual="FUEL_PUMP",
-            tint=0x0000FF,
+            tint=0x000000,
         )
         BasicVisualUtil.set_position(self, 1, 1)
         BasicVisualUtil.set_visible(self)
