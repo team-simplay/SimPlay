@@ -5,20 +5,45 @@
 */
 
 .simplay-container {
-  width: 100%;
-  height: 80%;
+  width: 980px;
+  height: 700px;
+}
+
+.simplay-grid-container {
+  width: 980px;
+  height: 500px;
 }
 
 .simplay-controls {
-  height: 20%;
-  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
-.start-button {
-  width: 30px;
-  height: 20px;
+.simplay-spacer {
+  flex-grow: 1;
+  min-width: 10px;
 }
 
-.start-button:hover {
-  opacity: 0.8;
+.simplay-label {
+  text-align: center;
+  align-self: center;
+}
+
+.simplay-button {
+  flex-grow: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.simplay-number-input {
+  flex-grow: 0;
+  width: 50px;
+  margin: 5px;
+}
+
+.simplay-button:disabled,
+.simplay-button[disabled] {
+  cursor: not-allowed;
 }
