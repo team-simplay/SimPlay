@@ -22,7 +22,6 @@ export const SIMPLAY_MIME_TYPE = 'application/simplay+json';
  * A widget for rendering SimPlay, for usage with rendermime.
  */
 export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
-
   private static TOOLTIP_THEME = 'light';
 
   constructor(options: IRenderMime.IRendererOptions) {
@@ -59,7 +58,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       );
       const currentStepInfo = document.createElement('p');
       currentStepInfo.classList.add('simplay-label');
-      simulationSpooler.addStepChangedEventListener((ts) => {
+      simulationSpooler.addStepChangedEventListener(ts => {
         currentStepInfo.innerText = 'Current Step: ' + ts;
       });
       const startPauseButton = this.createStartPauseButton(simulationSpooler);
@@ -78,7 +77,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       const spacer = this.createSpacer();
 
       const speedInputName = 'skipTo';
-      const speedInputLabel = this.createLabel('speedInputLabelId', speedInputName, 'Speed: ');
+      const speedInputLabel = this.createLabel(
+        'speedInputLabelId',
+        speedInputName,
+        'Speed: '
+      );
       const speedInput = this.createSpeedInput(speedInputName);
       speedInput.addEventListener('change', (event: Event) => {
         if (event.currentTarget) {
@@ -89,7 +92,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       });
 
       const skipToInputName = 'skipTo';
-      const skipToLabel = this.createLabel('skipToLabelId', skipToInputName, 'Skip to: ');
+      const skipToLabel = this.createLabel(
+        'skipToLabelId',
+        skipToInputName,
+        'Skip to: '
+      );
       const skipToInput = this.createSkipToInput(skipToInputName);
       skipToInput.addEventListener('keyup', (event: Event) => {
         if (event.currentTarget) {
@@ -125,7 +132,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     skipToInput.type = 'number';
     skipToInput.name = name;
     skipToInput.classList.add('simplay-number-input');
-    return skipToInput
+    return skipToInput;
   }
 
   private createSpeedInput(name: string) {
@@ -153,7 +160,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const spacer = document.createElement('div');
     spacer.classList.add('simplay-spacer');
     return spacer;
-  } 
+  }
 
   private createStartPauseButton(simulationSpooler: SimulationSpooler) {
     const startPauseButton = new StartPauseButton(
@@ -171,13 +178,16 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
 
   private createAdvanceOneStepButton() {
     const advanceOneStepButtonIconSpan = this.createIconSpan(skipIcon);
-    const advanceOneStepButton = this.createButton(advanceOneStepButtonIconSpan, ['simplay-button']);
+    const advanceOneStepButton = this.createButton(
+      advanceOneStepButtonIconSpan,
+      ['simplay-button']
+    );
     tippy(advanceOneStepButton, {
       placement: 'top',
       content: 'Forward 1 Step',
       delay: [300, 50],
       arrow: false,
-      theme: RenderSimplay.TOOLTIP_THEME,
+      theme: RenderSimplay.TOOLTIP_THEME
     });
     return advanceOneStepButton;
   }
@@ -190,7 +200,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       content: 'Reset',
       delay: [300, 50],
       arrow: false,
-      theme: RenderSimplay.TOOLTIP_THEME,
+      theme: RenderSimplay.TOOLTIP_THEME
     });
     return resetButton;
   }

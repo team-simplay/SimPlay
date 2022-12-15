@@ -9,14 +9,14 @@ export class StartPauseButton {
   private iconSpan: HTMLSpanElement;
   private playIcon: string;
   private tooltip: Instance;
-  
-  private playing: boolean; 
+
+  private playing: boolean;
 
   constructor(
     playIcon: string,
     pauseIcon: string,
     pauseClickCallback: () => void,
-    playClickCallback: () => void,
+    playClickCallback: () => void
   ) {
     this.playIcon = playIcon;
     this.playing = false;
@@ -30,9 +30,9 @@ export class StartPauseButton {
       content: StartPauseButton.TOOLTIP_PLAY,
       delay: [300, 50],
       arrow: false,
-      theme: 'light',
+      theme: 'light'
     });
-    
+
     this.button.addEventListener('click', () => {
       if (this.playing) {
         pauseClickCallback();
@@ -51,6 +51,6 @@ export class StartPauseButton {
   public reset() {
     this.iconSpan.innerHTML = this.playIcon;
     this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
-    this.playing = false; 
+    this.playing = false;
   }
 }
