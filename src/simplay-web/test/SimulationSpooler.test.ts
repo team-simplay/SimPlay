@@ -650,16 +650,22 @@ describe('SimulationSpooler tests', async function () {
       await new Promise((resolve) => setTimeout(resolve, 100));
       spooler.setSpeedFactor(10);
       let firstListenerCalled = 0;
+      let firstTimestampTold = 0;
       let secondListenerCalled = 0;
-      spooler.addStepChangedEventListener(() => {
+      let secondTimestampTold = 0;
+      spooler.addStepChangedEventListener((ts) => {
         firstListenerCalled++;
+        firstTimestampTold = ts;
       });
-      spooler.addStepChangedEventListener(() => {
+      spooler.addStepChangedEventListener((ts) => {
         secondListenerCalled++;
+        secondTimestampTold = ts;
       });
       await spooler.advanceOneStep();
       expect(firstListenerCalled).to.equal(1);
       expect(secondListenerCalled).to.equal(1);
+      expect(firstTimestampTold).to.equal(1);
+      expect(secondTimestampTold).to.equal(1);
     });
 
     it('should not notify unregistered listeners when the simulationstep changes', async () => {
@@ -692,12 +698,16 @@ describe('SimulationSpooler tests', async function () {
       await new Promise((resolve) => setTimeout(resolve, 100));
       spooler.setSpeedFactor(10);
       let firstListenerCalled = 0;
+      let firstTimestampTold = 0;
       let secondListenerCalled = 0;
-      spooler.addStepChangedEventListener(() => {
+      let secondTimestampTold = 0;
+      spooler.addStepChangedEventListener((ts) => {
         firstListenerCalled++;
+        firstTimestampTold = ts;
       });
-      const secondListener = () => {
+      const secondListener = (ts: number) => {
         secondListenerCalled++;
+        secondTimestampTold = ts;
       };
       spooler.addStepChangedEventListener(secondListener);
       await spooler.advanceOneStep();
@@ -705,6 +715,8 @@ describe('SimulationSpooler tests', async function () {
       await spooler.advanceOneStep();
       expect(firstListenerCalled).to.equal(2);
       expect(secondListenerCalled).to.equal(1);
+      expect(firstTimestampTold).to.equal(2);
+      expect(secondTimestampTold).to.equal(1);
     });
   });
 });

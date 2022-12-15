@@ -13,7 +13,7 @@ export class SimulationSpooler {
   private speedFactor = 1;
   private stopRequested = false;
   private currentSimTimeStamp = 0;
-  private stepChangedEventListeners: (() => void)[] = [];
+  private stepChangedEventListeners: ((timestamp: number) => void)[] = [];
 
   constructor(
     simulationData: SimulationDataSerialized,
@@ -27,18 +27,18 @@ export class SimulationSpooler {
     createEntities(this.context);
   }
 
-  addStepChangedEventListener(listener: () => void) {
+  addStepChangedEventListener(listener: (timestamp: number) => void) {
     this.stepChangedEventListeners.push(listener);
   }
 
-  removeStepChangedEventListener(listener: () => void) {
+  removeStepChangedEventListener(listener: (timestamp: number) => void) {
     this.stepChangedEventListeners = this.stepChangedEventListeners.filter(
       (l) => l !== listener
     );
   }
 
   private notifyStepChanged() {
-    this.stepChangedEventListeners.forEach((listener) => listener());
+    this.stepChangedEventListeners.forEach((listener) => listener(this.currentSimTimeStamp));
   }
 
   private setSimulationStep(step: number) {
