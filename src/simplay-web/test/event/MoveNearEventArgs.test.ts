@@ -1,12 +1,12 @@
 import { MoveNearEventArgs } from '../../src/event/MoveNearEventArgs';
 import { expect } from 'chai';
 
-const target = 'bar';
+const targetId = 'bar';
 
 describe('MoveNearEventArgs tests', function () {
   it('should initialize correctly', () => {
-    const args = new MoveNearEventArgs({ target: target });
-    expect(args.target).to.equal(target);
+    const args = new MoveNearEventArgs({ targetId: targetId });
+    expect(args.targetId).to.equal(targetId);
   });
   it('should raise an error when initializing with wrong args', () => {
     expect(() => {

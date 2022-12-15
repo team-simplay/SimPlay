@@ -11,16 +11,16 @@ import { EMOJI, TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
-const target = 'bar';
+const targetId = 'bar';
 
 describe('MoveNearEvent tests', function () {
   it('should initialize correctly', () => {
-    const args = new MoveNearEventArgs({ target: target });
+    const args = new MoveNearEventArgs({ targetId: targetId });
     const event = new MoveNearEvent(forId, timestamp, args);
     expect(event.forId).to.equal(forId);
     expect(event.timestamp).to.equal(timestamp);
     expect(event.action).to.equal(EventAction.MOVE_NEAR);
-    expect(event.args.target).to.equal(target);
+    expect(event.args.targetId).to.equal(targetId);
   });
 
   const simData = {
@@ -53,7 +53,7 @@ describe('MoveNearEvent tests', function () {
   } as SimulationDataSerialized;
 
   it('should move the entity near the target', async () => {
-    const args = new MoveNearEventArgs({ target: target });
+    const args = new MoveNearEventArgs({ targetId: targetId });
     const event = new MoveNearEvent(forId, timestamp, args);
     const containerMock = mock(HTMLDivElement);
     when(containerMock.clientHeight).thenReturn(500);

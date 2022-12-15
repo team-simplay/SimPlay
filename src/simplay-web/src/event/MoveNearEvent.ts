@@ -16,7 +16,7 @@ export class MoveNearEvent extends Event {
     const entityDisplayObject = getEntityDisplayObjectById(context, this.forId);
     const targetDisplayObject = getEntityDisplayObjectById(
       context,
-      this.args.target
+      this.args.targetId
     );
     const targetEntityCenterX =
       targetDisplayObject.container.x +
