@@ -7,6 +7,7 @@ import { SimulationDataSerialized } from '../../src/SimulationDataSerialized';
 import { mock, instance, when } from 'ts-mockito';
 import { SimulationSpooler } from '../../src/SimulationSpooler';
 import { TRANSPARENT_PIXEL } from './testImages';
+import { getEntityDisplayObjectById } from '../../src/Entity';
 
 const forId = 'leet';
 const timestamp = 1337;
@@ -61,11 +62,16 @@ describe('SetPositionEvent tests', async function () {
     const spooler = new SimulationSpooler(simulationDataSerialized, container);
     await new Promise((resolve) => setTimeout(resolve, 100));
     event.execute(spooler.context);
-    expect(spooler.context.entityContainer.children[0].x).to.equal(
-      spooler.context.tileWidth + spooler.context.tileWidth / 2
+    const entity = getEntityDisplayObjectById(spooler.context, forId);
+    expect(entity.container.x).to.equal(
+      spooler.context.tileWidth +
+        spooler.context.tileWidth / 2 -
+        entity.animatedSprite.getBounds().width / 2
     );
-    expect(spooler.context.entityContainer.children[0].y).to.equal(
-      spooler.context.tileHeight + spooler.context.tileHeight / 2
+    expect(entity.container.y).to.equal(
+      spooler.context.tileHeight +
+        spooler.context.tileHeight / 2 -
+        entity.animatedSprite.getBounds().height / 2
     );
   });
 });

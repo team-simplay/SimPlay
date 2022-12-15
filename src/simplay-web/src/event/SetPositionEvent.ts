@@ -14,9 +14,14 @@ export class SetPositionEvent extends Event {
   }
   execute(context: SimplayContext) {
     const entity = getEntityDisplayObjectById(context, this.forId);
+    const entityBounds = entity.animatedSprite.getBounds();
     entity.container.x =
-      this.args.x * context.tileWidth + context.tileWidth / 2;
+      this.args.x * context.tileWidth +
+      context.tileWidth / 2 -
+      entityBounds.width / 2;
     entity.container.y =
-      this.args.y * context.tileHeight + context.tileHeight / 2;
+      this.args.y * context.tileHeight +
+      context.tileHeight / 2 -
+      entityBounds.height / 2;
   }
 }
