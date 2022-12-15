@@ -1,6 +1,7 @@
 import base64
 from typing import List, Union
 import jsons
+import json
 from simpy.core import SimTime, Environment
 from simpy.resources.container import ContainerAmount
 
@@ -214,6 +215,12 @@ class VisualizationManager:
             strip_privates=True,
             key_transformer=jsons.KEY_TRANSFORMER_CAMELCASE,
         )
+
+    def serialize_for_jupyter(self) -> dict:
+        """
+        Serialize the visualization for use with Jupyter.
+        """
+        return json.loads(self.serialize())
 
     def write_to_file(self, filename: str):
         """
