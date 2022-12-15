@@ -38,7 +38,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
     let simulationSpooler: SimulationSpooler;
     const data = model.data[this._mimeType] as JSONObject;
-    console.log('data' + JSON.stringify(data));
 
     const simplayContainer = document.createElement('div');
     simplayContainer.classList.add('simplay-container');
@@ -47,7 +46,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     simplayGridContainer.classList.add('simplay-grid-container');
     simplayContainer.appendChild(simplayGridContainer);
 
-    this.node.innerHTML = ''; // clear the output
+    this.node.innerHTML = '';
     this.node.appendChild(simplayContainer);
 
     const controls = document.createElement('div');
@@ -115,7 +114,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       controls.appendChild(spacer2);
     });
 
-    // Start observing the target node for configured mutations
     observer.observe(simplayContainer);
 
     simplayContainer.appendChild(controls);
@@ -175,7 +173,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const advanceOneStepButtonIconSpan = this.createIconSpan(skipIcon);
     const advanceOneStepButton = this.createButton(advanceOneStepButtonIconSpan, ['simplay-button']);
     tippy(advanceOneStepButton, {
-      // default
       placement: 'top',
       content: 'Forward 1 Step',
       delay: [300, 50],
@@ -189,7 +186,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const resetIconSpan = this.createIconSpan(resetIcon);
     const resetButton = this.createButton(resetIconSpan, ['simplay-button']);
     tippy(resetButton, {
-      // default
       placement: 'top',
       content: 'Reset',
       delay: [300, 50],

@@ -10,6 +10,7 @@ export class StartPauseButton {
   private playIcon: string;
   private tooltip: Instance;
   
+  private playing: boolean; 
 
   constructor(
     playIcon: string,
@@ -18,7 +19,7 @@ export class StartPauseButton {
     playClickCallback: () => void,
   ) {
     this.playIcon = playIcon;
-    let playing = false;
+    this.playing = false;
     this.iconSpan = document.createElement('span');
     this.iconSpan.classList.add('simplay-icon');
     this.iconSpan.innerHTML = this.playIcon;
@@ -33,14 +34,14 @@ export class StartPauseButton {
     });
     
     this.button.addEventListener('click', () => {
-      if (playing) {
+      if (this.playing) {
         pauseClickCallback();
-        playing = !playing;
+        this.playing = !this.playing;
         this.iconSpan.innerHTML = playIcon;
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
       } else {
         playClickCallback();
-        playing = !playing;
+        this.playing = !this.playing;
         this.iconSpan.innerHTML = pauseIcon;
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PAUSE);
       }
@@ -50,5 +51,6 @@ export class StartPauseButton {
   public reset() {
     this.iconSpan.innerHTML = this.playIcon;
     this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
+    this.playing = false; 
   }
 }
