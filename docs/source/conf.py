@@ -6,8 +6,8 @@ project = "SimPlay"
 copyright = "2022, David Kühnhanss, Moritz Schiesser"
 author = "David Kühnhanss, Moritz Schiesser"
 
-release = "0.1"
-version = "0.1.3"
+release = "0.2.0"
+version = "0.2.0"
 
 import sys
 import os
