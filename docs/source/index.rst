@@ -11,4 +11,3 @@ The API documentation is available at :ref:`api`.
 .. note::
 
    This project is under active development, everything is a WIP and no installations are actually possible.
-

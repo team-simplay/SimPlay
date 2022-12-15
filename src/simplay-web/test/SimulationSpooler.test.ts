@@ -619,5 +619,104 @@ describe('SimulationSpooler tests', async function () {
         expect.fail('Entity not found');
       }
     });
+
+    it('should notify registered listeners when the simulationstep changes', async () => {
+      const events = [
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: true,
+          },
+          timestamp: 0,
+        },
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: false,
+          },
+          timestamp: 2,
+        },
+      ];
+
+      const simData = {
+        ...simulationDataSerialized,
+        events,
+      } as SimulationDataSerialized;
+      const containerMock = mock(HTMLDivElement);
+      const container = instance(containerMock);
+      const spooler = new SimulationSpooler(simData, container);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
+      let firstListenerCalled = 0;
+      let firstTimestampTold = 0;
+      let secondListenerCalled = 0;
+      let secondTimestampTold = 0;
+      spooler.addStepChangedEventListener((ts) => {
+        firstListenerCalled++;
+        firstTimestampTold = ts;
+      });
+      spooler.addStepChangedEventListener((ts) => {
+        secondListenerCalled++;
+        secondTimestampTold = ts;
+      });
+      await spooler.advanceOneStep();
+      expect(firstListenerCalled).to.equal(1);
+      expect(secondListenerCalled).to.equal(1);
+      expect(firstTimestampTold).to.equal(1);
+      expect(secondTimestampTold).to.equal(1);
+    });
+
+    it('should not notify unregistered listeners when the simulationstep changes', async () => {
+      const events = [
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: true,
+          },
+          timestamp: 0,
+        },
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: false,
+          },
+          timestamp: 2,
+        },
+      ];
+
+      const simData = {
+        ...simulationDataSerialized,
+        events,
+      } as SimulationDataSerialized;
+      const containerMock = mock(HTMLDivElement);
+      const container = instance(containerMock);
+      const spooler = new SimulationSpooler(simData, container);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
+      let firstListenerCalled = 0;
+      let firstTimestampTold = 0;
+      let secondListenerCalled = 0;
+      let secondTimestampTold = 0;
+      spooler.addStepChangedEventListener((ts) => {
+        firstListenerCalled++;
+        firstTimestampTold = ts;
+      });
+      const secondListener = (ts: number) => {
+        secondListenerCalled++;
+        secondTimestampTold = ts;
+      };
+      spooler.addStepChangedEventListener(secondListener);
+      await spooler.advanceOneStep();
+      spooler.removeStepChangedEventListener(secondListener);
+      await spooler.advanceOneStep();
+      expect(firstListenerCalled).to.equal(2);
+      expect(secondListenerCalled).to.equal(1);
+      expect(firstTimestampTold).to.equal(2);
+      expect(secondTimestampTold).to.equal(1);
+    });
   });
 });
