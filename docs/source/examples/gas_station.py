@@ -45,8 +45,8 @@ SIM_TIME = 10000  # Simulation time in seconds
 
 class Car(VisualProcess):
     def __init__(self, name, env, gas_station, fuel_pump):
-        color = random.random() * 0xFFFFFF
-        super().__init__(env, name, graphic="CAR", tint=color)
+        color = int(random.random() * 0xFFFFFF)
+        super().__init__(env, name, visual="CAR", tint=color)
         self.gas_station = gas_station
         self.fuel_pump = fuel_pump
 
@@ -88,7 +88,7 @@ def gas_station_control(env, fuel_pump):
 
 class TankTruck(VisualProcess):
     def __init__(self, env, fuel_pump):
-        super().__init__(env, "Tank Truck", graphic="TANK_TRUCK", tint=0xFF0000)
+        super().__init__(env, "Tank Truck", visual="TANK_TRUCK", tint=0xFF0000)
         self.fuel_pump = fuel_pump
 
     def run(self):
@@ -113,7 +113,7 @@ def car_generator(env, gas_station, fuel_pump):
 
 class GasStation(VisualResource):
     def __init__(self, env):
-        super().__init__(env, "Gas Station", 3, graphic="GAS_STATION", tint=0x00FF00)
+        super().__init__(env, "Gas Station", 3, visual="GAS_STATION", tint=0x00FF00)
         BasicVisualUtil.set_position(self, 3, 1)
         BasicVisualUtil.set_visible(self)
         ResourceVisualUtil.set_utilization(self, self.count)
@@ -126,7 +126,7 @@ class FuelPump(VisualContainer):
             "Fuel Pump",
             capacity=GAS_STATION_SIZE,
             init=GAS_STATION_SIZE,
-            graphic="FUEL_PUMP",
+            visual="FUEL_PUMP",
             tint=0x0000FF,
         )
         BasicVisualUtil.set_position(self, 1, 1)
@@ -164,12 +164,11 @@ random.seed(RANDOM_SEED)
 # Create environment and start processes
 env = VisualEnvironment()
 env.visualization_manager.register_visual("CAR", "./resources/car.png")
-env.visualization_manager.register_visual("CAR", "./resources/car.png")
 env.visualization_manager.register_visual(
     "TANK_TRUCK", "./resources/truck.png")
 env.visualization_manager.register_visual(
     "GAS_STATION", "./resources/gaspump.png")
-env.visualization_manager.register_sprite(
+env.visualization_manager.register_sprites(
     "FUEL_PUMP",
     [
         "./resources/pump_000.png",
@@ -181,7 +180,7 @@ env.visualization_manager.register_sprite(
 )
 
 grid = VisualGrid(500, 500, 3, 5)
-grid.set_area("gasstation01", "GAS_STATION", 3, 5, 0, 0, 0xFFFFFF)
+grid.set_area("gasstation01", "GAS_STATION", 5, 3, 0, 0, 0xFFFFFF)
 env.visualization_manager.set_grid(grid)
 
 gas_station = GasStation(env)

@@ -37,7 +37,7 @@ A simple process can be created as follows:
 
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
-            super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
 
         def run(self):
             while True:
@@ -56,25 +56,26 @@ Then, create an instance of the process and add it to the environment:
 Keep in mind, that the ``id`` parameter should be unique across the whole environment.
 
 Reading the ``__super__`` call of the ``MyProcess`` constructor carefully, notice
-that it takes a ``graphic`` and a ``tint`` parameter.
-In the example, the value of ``graphic`` is ``SOMEPNG``.
+that it takes a ``visual`` and a ``tint`` parameter.
+In the example, the value of ``visual`` is ``SOMEPNG``.
 In order for the visualzation to work,
 the :class:`~simplay.core.VisualizationManager` -
 which exists on :class:`~simplay.core.VisualEnvironment` -
-needs to know where to find the graphic.
+needs to know where to find the visual.
 Register visuals with the following call:
 
 .. code-block:: python
 
-    env.visual_manager.register_visual('SOMEPNG', 'path/to/your/graphic.png')
+    env.visual_manager.register_visual('SOMEPNG', 'path/to/your/visual.png')
 
 .. note::
 
     We recommend using PNG files with a transparent background, and a white foreground.
     This way, you can most effectively use the ``tint`` parameter.
 
-The ``tint`` parameter multiplies the color of the graphic with the given color.
+The ``tint`` parameter multiplies the color of the visual with the given color.
 If no tint is to be applied, set it to 0xFFFFFF, so all pixel values are kept the same.
+The tint parameter must be a whole integer.
 
 After having successfully created a process, it is time to learn how SimPlay is able to
 log visual changes of the simulation.
@@ -98,7 +99,7 @@ The following example shows how to set the position of a component:
 
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
-            super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
             BasicVisualUtil.set_position(self, 5, 5)
 
         def run(self):
@@ -178,7 +179,7 @@ The following example shows how to use the :class:`~simplay.components.VisualRes
 
     class MyResource(VisualResource):
         def __init__(self, env):
-            super().__init__(env, "MyResource", 3, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
             BasicVisualUtil.set_position(self, 5, 5)
             BasicVisualUtil.set_visible(self)
 
@@ -213,7 +214,7 @@ and visibility of the resource.
     grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
     env.visualization_manager.set_grid(grid)
 
-    resource = VisualResource(env, "MyResource", 3, graphic="SOMEPNG", tint=0x00FF00)
+    resource = VisualResource(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
     BasicVisualUtil.set_position(resource, 5, 5)
     BasicVisualUtil.set_visible(resource)
 
@@ -230,7 +231,7 @@ The following example shows how to use the :class:`~simplay.components.VisualCon
 
     class MyContainer(VisualContainer):
         def __init__(self, env):
-            super().__init__(env, "MyContainer", 3, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
             BasicVisualUtil.set_position(self, 5, 5)
             BasicVisualUtil.set_visible(self)
     
@@ -264,7 +265,7 @@ and visibility of the container.
     grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
     env.visualization_manager.set_grid(grid)
 
-    container = VisualContainer(env, "MyContainer", 3, graphic="SOMEPNG", tint=0x00FF00)
+    container = VisualContainer(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
     BasicVisualUtil.set_position(container, 5, 5)
     BasicVisualUtil.set_visible(container)
 
@@ -281,7 +282,7 @@ The following example shows how to use the :class:`~simplay.components.VisualSto
 
     class MyStore(VisualStore):
         def __init__(self, env):
-            super().__init__(env, "MyStore", 3, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
             BasicVisualUtil.set_position(self, 5, 5)
             BasicVisualUtil.set_visible(self)
     
@@ -315,7 +316,7 @@ and visibility of the store.
     grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
     env.visualization_manager.set_grid(grid)
 
-    store = VisualStore(env, "MyStore", 3, graphic="SOMEPNG", tint=0x00FF00)
+    store = VisualStore(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
     BasicVisualUtil.set_position(store, 5, 5)
     BasicVisualUtil.set_visible(store)
 
@@ -341,7 +342,7 @@ Once the installation is complete, start a new notebook and import the ``simplay
 
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
-            super().__init__(env, id, graphic="SOMEPNG", tint=0x00FF00)
+            super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
             BasicVisualUtil.set_position(self, 5, 5)
 
         def run(self):
