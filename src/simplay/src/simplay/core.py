@@ -215,7 +215,7 @@ class VisualizationManager:
             strip_privates=True,
             key_transformer=jsons.KEY_TRANSFORMER_CAMELCASE,
         )
-    
+
     def serialize_for_jupyter(self) -> dict:
         """
         Serialize the visualization for use with Jupyter.
