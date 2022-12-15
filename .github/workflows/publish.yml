@@ -8,16 +8,16 @@ permissions:
   contents: read
 jobs:
   publish-simplay-web:
-    name: 'publish simplay-web'
+    name: "publish simplay-web"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with: 
+        with:
           ref: ${{ github.ref }}
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
       - name: install & build & publish
         run: |
           cd src/simplay-web 
@@ -26,39 +26,40 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
-  update-version-simplay-web: 
+  update-version-simplay-web:
     runs-on: ubuntu-latest
     needs: publish-simplay-web
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with: 
+        with:
           ref: main
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
       - name: update versions
         run: |
           cd src/simplay-web 
           npm version patch
       - name: commit changes
         uses: EndBug/add-and-commit@v9
-        with: 
-          message: 'Update to next version after release'
-          add: 'package.json'
+        with:
+          message: "Update to next version after release"
+          add: "package.json"
   publish-simplay-jupyter-npm:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: publish-simplay-web
     steps:
       - uses: actions/checkout@v3
-        with: 
+        with:
           ref: ${{ github.ref }}
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
       - name: Install dependencies
@@ -73,6 +74,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JUPYTER_ACCESS_TOKEN }}
   publish-simplay-jupyter-pypi:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: publish-simplay-web
     steps:
       - name: Checkout
@@ -80,7 +82,7 @@ jobs:
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
       - name: Install dependencies
-        run: | 
+        run: |
           cd src/simplay-jupyter
           python -m pip install -U jupyterlab~=3.1
       - name: Build the extension
@@ -110,24 +112,24 @@ jobs:
     name: publish simplay
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      with: 
-        ref: ${{ github.ref }}
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build
-    - name: Build package
-      run: |
-        cd src/simplay
-        python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY }}
-        packages_dir: src/simplay/dist/
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: |
+          cd src/simplay
+          python -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY }}
+          packages_dir: src/simplay/dist/
