@@ -1,14 +1,14 @@
 import { EventArgs } from './EventArgs';
 
 export class MoveNearEventArgs extends EventArgs {
-  readonly target: string;
+  readonly targetId: string;
 
-  constructor(args: { target: string }) {
+  constructor(args: { targetId: string }) {
     super(args);
-    this.target = args.target;
+    this.targetId = args.targetId;
   }
 
   getPropertyNames(): string[] {
-    return ['target'];
+    return ['targetId'];
   }
 }

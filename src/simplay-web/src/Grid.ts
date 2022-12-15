@@ -11,6 +11,33 @@ function validateArea(cols: number, rows: number, area: SimplayArea) {
   }
 }
 
+export function createDebugGrid(context: SimplayContext) {
+  const debugGrid = new PIXI.Graphics();
+  debugGrid.name = 'debug-grid';
+  for (let i = 0; i < context.simulationData.grid.cols; i++) {
+    for (let j = 0; j < context.simulationData.grid.rows; j++) {
+      debugGrid.lineStyle(1, 0x000000);
+      debugGrid.drawRect(
+        i * context.tileWidth,
+        j * context.tileHeight,
+        context.tileWidth,
+        context.tileHeight
+      );
+      const text = new PIXI.Text(`${i},${j}`, {
+        fontFamily: 'Arial',
+        fontSize: 16,
+        fill: 0x000000,
+        align: 'center',
+      });
+      text.x = i * context.tileWidth + context.tileWidth / 2;
+      text.y = j * context.tileHeight + context.tileHeight / 2;
+      text.anchor.set(0.5);
+      debugGrid.addChild(text);
+    }
+  }
+  context.areaContainer.addChild(debugGrid);
+}
+
 export function createGrid(context: SimplayContext) {
   for (const area of context.simulationData.grid.areas) {
     validateArea(

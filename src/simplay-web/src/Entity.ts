@@ -80,8 +80,8 @@ export function getEntityDisplayObjectById(
   return entity;
 }
 
-const verticalOffsetDecoratingText = 1;
-const centerFactor = 0.5;
+const verticalOffsetDecoratingText = 15;
+const centerFactor = 2;
 
 export async function createEntities(context: SimplayContext) {
   for (const entity of context.simulationData.entities) {
@@ -96,14 +96,15 @@ export async function createEntities(context: SimplayContext) {
     }
     const sprite = await createAnimatedSprite(context, entity, frames);
     const text = createDecoratingText(entity);
-    text.y = sprite.y + sprite.height + verticalOffsetDecoratingText;
-    text.x = sprite.x + sprite.width / centerFactor;
 
     const container = new PIXI.Container();
     container.name = entity.id;
     container.addChild(sprite);
     container.addChild(text);
     container.visible = false;
+
+    text.y = sprite.getBounds().bottom + verticalOffsetDecoratingText;
+    text.x = sprite.getBounds().left + sprite.getBounds().width / centerFactor;
 
     let displayEntity = {
       animatedSprite: sprite,
@@ -119,8 +120,9 @@ export async function createEntities(context: SimplayContext) {
       entity.type === 'RESOURCE'
     ) {
       const informationText = createInformationText(entity);
-      informationText.y = sprite.y + sprite.height + 6;
-      informationText.x = sprite.x + sprite.width / 2;
+      informationText.y =
+        sprite.y + sprite.height + verticalOffsetDecoratingText * 2;
+      informationText.x = sprite.x + sprite.width / centerFactor;
       container.addChild(informationText);
       displayEntity = {
         ...displayEntity,

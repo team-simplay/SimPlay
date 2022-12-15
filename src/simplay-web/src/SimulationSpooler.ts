@@ -13,6 +13,7 @@ export class SimulationSpooler {
   private speedFactor = 1;
   private stopRequested = false;
   private currentSimTimeStamp = 0;
+  private stepChangedEventListeners: ((timestamp: number) => void)[] = [];
 
   constructor(
     simulationData: SimulationDataSerialized,
@@ -24,6 +25,25 @@ export class SimulationSpooler {
     this.context = createContext(app, this.simulationData);
     createGrid(this.context);
     createEntities(this.context);
+  }
+
+  addStepChangedEventListener(listener: (timestamp: number) => void) {
+    this.stepChangedEventListeners.push(listener);
+  }
+
+  removeStepChangedEventListener(listener: (timestamp: number) => void) {
+    this.stepChangedEventListeners = this.stepChangedEventListeners.filter(
+      (l) => l !== listener
+    );
+  }
+
+  private notifyStepChanged() {
+    this.stepChangedEventListeners.forEach((listener) => listener(this.currentSimTimeStamp));
+  }
+
+  private setSimulationStep(step: number) {
+    this.currentSimTimeStamp = step;
+    this.notifyStepChanged();
   }
 
   private spoolTimestamp(timestamp: number) {
@@ -52,7 +72,7 @@ export class SimulationSpooler {
       await new Promise((resolve) =>
         setTimeout(resolve, frameDuration - executionDuration)
       );
-      this.currentSimTimeStamp++;
+      this.setSimulationStep(this.currentSimTimeStamp + 1);
     }
     this.stopRequested = false;
   }
@@ -68,7 +88,7 @@ export class SimulationSpooler {
   async advanceOneStep() {
     await this.pause();
     this.spoolTimestamp(this.currentSimTimeStamp);
-    this.currentSimTimeStamp++;
+    this.setSimulationStep(this.currentSimTimeStamp + 1);
   }
 
   async skipTo(timestamp: number) {
@@ -79,11 +99,11 @@ export class SimulationSpooler {
     for (let i = this.currentSimTimeStamp; i <= timestamp; i++) {
       this.spoolTimestamp(i);
     }
+    this.setSimulationStep(timestamp);
   }
 
   async reset() {
     await this.pause();
-    this.currentSimTimeStamp = 0;
     this.stopRequested = false;
     for (const entity of this.context.entityDictionary.values()) {
       const entityId = entity.container.name;
@@ -92,6 +112,7 @@ export class SimulationSpooler {
           ?.tint ?? 0xffffff;
       resetDisplayEntity(entity, originalTint);
     }
+    this.setSimulationStep(0);
   }
 
   setSpeedFactor(value: number): number {

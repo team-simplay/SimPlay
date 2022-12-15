@@ -67,7 +67,7 @@ describe('EventFactory tests', function () {
       action: EventAction.MOVE_NEAR,
       forId: forId,
       timestamp: timestamp,
-      args: { target: 'bar' },
+      args: { targetId: 'bar' },
     } as EventSerialized);
     expect(event).to.be.an.instanceOf(MoveNearEvent);
   });
