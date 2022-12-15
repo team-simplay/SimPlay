@@ -5,8 +5,7 @@ API Reference
 =============
 
 The API reference provides detailed descriptions of SimPlay's classes and
-functions. It should be helpful if you plan to extend SimPlay with custom
-components.
+functions.
 
 
 .. toctree::

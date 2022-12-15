@@ -13,6 +13,8 @@ Documentation for SimPlay
 
    index
    usage
+   quickstart
+   examples
    api_reference/index
 
 
