@@ -42,5 +42,3 @@ SimPlay is split into three parts:
 -  The **SimPlay-Jupyter** package, which depends on both the packages mentioned above.
    It is used to display the animation data in Jupyter Lab.
    It is available on PyPI at https://pypi.python.org/pypi/simplay-jupyter.
-
-While it is possible, do use the packages separately, it is recommended to use the **SimPlay-Jupyter** package, as it provides the easiest way to use the project.

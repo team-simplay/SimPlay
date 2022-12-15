@@ -35,7 +35,7 @@ describe('InteractionLine tests', async function () {
     displayEntity2.container.name = 'bar';
 
     displayEntity2.container.x = 0;
-    displayEntity2.container.y = 100;
+    displayEntity2.container.y = 98; // 100 - 2, account for line width and half of the sprite height
 
     const interactionContainer = new PIXI.Container();
 
@@ -61,6 +61,6 @@ describe('InteractionLine tests', async function () {
     expect(line.graphic.x).to.equal(0);
     expect(line.graphic.y).to.equal(0);
     expect(line.graphic.width).to.equal(2);
-    expect(line.graphic.height).to.equal(100);
+    expect(Math.round(line.graphic.height)).to.equal(100);
   });
 });
