@@ -24,7 +24,7 @@ export class StartPauseButton {
     this.iconSpan.classList.add('simplay-icon');
     this.iconSpan.innerHTML = this.playIcon;
     this.button = createButton(this.iconSpan, ['simplay-button']);
-    this.button.ariaLabel = 'Play';
+    this.button.setAttribute('aria-label', 'Play');
     this.tooltip = tippy(this.button, {
       placement: 'top',
       content: StartPauseButton.TOOLTIP_PLAY,
@@ -38,13 +38,13 @@ export class StartPauseButton {
         pauseClickCallback();
         this._playing = !this._playing;
         this.iconSpan.innerHTML = playIcon;
-        this.button.ariaLabel = 'Play';
+        this.button.setAttribute('aria-label', 'Play');
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
       } else {
         playClickCallback();
         this._playing = !this._playing;
         this.iconSpan.innerHTML = pauseIcon;
-        this.button.ariaLabel = 'Pause';
+        this.button.setAttribute('aria-label', 'Pause');
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PAUSE);
       }
     });
