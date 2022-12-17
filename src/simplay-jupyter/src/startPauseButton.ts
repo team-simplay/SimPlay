@@ -10,7 +10,7 @@ export class StartPauseButton {
   private playIcon: string;
   private tooltip: Instance;
 
-  private playing: boolean;
+  private _playing: boolean;
 
   constructor(
     playIcon: string,
@@ -19,13 +19,13 @@ export class StartPauseButton {
     playClickCallback: () => void
   ) {
     this.playIcon = playIcon;
-    this.playing = false;
+    this._playing = false;
     this.iconSpan = document.createElement('span');
     this.iconSpan.classList.add('simplay-icon');
     this.iconSpan.innerHTML = this.playIcon;
     this.button = createButton(this.iconSpan, ['simplay-button']);
+    this.button.ariaLabel = 'Play';
     this.tooltip = tippy(this.button, {
-      // default
       placement: 'top',
       content: StartPauseButton.TOOLTIP_PLAY,
       delay: [300, 50],
@@ -34,23 +34,29 @@ export class StartPauseButton {
     });
 
     this.button.addEventListener('click', () => {
-      if (this.playing) {
+      if (this._playing) {
         pauseClickCallback();
-        this.playing = !this.playing;
+        this._playing = !this._playing;
         this.iconSpan.innerHTML = playIcon;
+        this.button.ariaLabel = 'Play';
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
       } else {
         playClickCallback();
-        this.playing = !this.playing;
+        this._playing = !this._playing;
         this.iconSpan.innerHTML = pauseIcon;
+        this.button.ariaLabel = 'Pause';
         this.tooltip.setContent(StartPauseButton.TOOLTIP_PAUSE);
       }
     });
   }
 
-  public reset() {
+  get playing(): boolean {
+    return this._playing;
+  }
+
+  public reset(): void {
     this.iconSpan.innerHTML = this.playIcon;
     this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
-    this.playing = false;
+    this._playing = false;
   }
 }

@@ -41,6 +41,7 @@ module.exports = {
       tsconfig: 'tsconfig.json'
     }
   },
+  testEnvironment: 'jsdom',
   testRegex: 'src/.*/.*.spec.ts[x]?$',
   testPathIgnorePatterns: ['/node_modules/', 'ui-tests'],
   transformIgnorePatterns: [`/node_modules/(?!${esModules}).+`]

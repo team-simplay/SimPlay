@@ -39,9 +39,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const data = model.data[this._mimeType] as JSONObject;
 
     const simplayContainer = document.createElement('div');
+    simplayContainer.id = 'simplayContainer';
     simplayContainer.classList.add('simplay-container');
 
     const simplayGridContainer = document.createElement('div');
+    simplayGridContainer.id = 'simplayGridContainer';
     simplayGridContainer.classList.add('simplay-grid-container');
     simplayContainer.appendChild(simplayGridContainer);
 
@@ -57,11 +59,15 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         simplayGridContainer
       );
       const currentStepInfo = document.createElement('p');
+      currentStepInfo.id = 'currentStepInfo';
       currentStepInfo.classList.add('simplay-label');
       simulationSpooler.addStepChangedEventListener(ts => {
         currentStepInfo.innerText = 'Current Step: ' + ts;
       });
-      const startPauseButton = this.createStartPauseButton(simulationSpooler);
+      const startPauseButton = this.createStartPauseButton(
+        'startPauseButton',
+        simulationSpooler
+      );
 
       const resetButton = this.createResetButton();
       resetButton.addEventListener('click', () => {
@@ -162,7 +168,10 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     return spacer;
   }
 
-  private createStartPauseButton(simulationSpooler: SimulationSpooler) {
+  private createStartPauseButton(
+    id: string,
+    simulationSpooler: SimulationSpooler
+  ) {
     const startPauseButton = new StartPauseButton(
       playIcon,
       pauseIcon,
@@ -173,6 +182,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         simulationSpooler.run();
       }
     );
+    startPauseButton.button.id = id;
     return startPauseButton;
   }
 
