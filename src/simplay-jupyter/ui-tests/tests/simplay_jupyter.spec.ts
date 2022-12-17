@@ -26,17 +26,13 @@ test('should emit an activation console message', async ({
   ).toHaveLength(1);
 });
 
-test('should stop and pause simulation', async ({
-  page
-}: {
-  page: Page;
-}) => {
+test('should stop and pause simulation', async ({ page }: { page: Page }) => {
   await page.goto();
   await page.filebrowser.open('examples/events.simplay');
 
-  await page.getByRole('button', {name: 'Play'}).click();
-  await expect(page.getByRole('button', {name: 'Pause'})).toBeVisible();
+  await page.getByRole('button', { name: 'Play' }).click();
+  await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible();
 
-  await page.getByRole('button', {name: 'Pause'}).click();
-  await expect(page.getByRole('button', {name: 'Play'})).toBeVisible();
+  await page.getByRole('button', { name: 'Pause' }).click();
+  await expect(page.getByRole('button', { name: 'Play' })).toBeVisible();
 });
