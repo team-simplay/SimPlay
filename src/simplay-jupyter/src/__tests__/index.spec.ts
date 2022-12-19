@@ -10,7 +10,6 @@ const mockSetSpeedFactor = jest.fn();
 const mockSkipTo = jest.fn();
 
 jest.mock('simplay-web', () => {
-  // Works and lets you check for constructor calls:
   return {
     SimulationSpooler: jest.fn().mockImplementation(() => {
       return {
@@ -27,7 +26,6 @@ jest.mock('simplay-web', () => {
     })
   };
 });
-// import events from './resources/events.simplay.json';
 
 class CustomResizeObserver {
   private callback;
