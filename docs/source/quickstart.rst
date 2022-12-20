@@ -111,7 +111,7 @@ Register visuals with the following call:
 
 .. code-block:: python
 
-    env.visual_manager.register_visual('SOMEPNG', 'path/to/your/visual.png')
+    env.visualization_manager.register_visual('SOMEPNG', 'path/to/your/visual.png')
 
 .. note::
 
@@ -168,12 +168,12 @@ The following example shows how to create a :class:`~simplay.visualization.Visua
     from simplay import VisualEnvironment, VisualGrid
     env = VisualEnvironment()
     # create a grid
-    grid = VisualGrid(1000, 1000, 10, 10)
+    grid = VisualGrid(1000, 500, 10, 5)
     grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xbdbbbb)
     # add the grid to the environment
     env.visualization_manager.set_grid(grid)
 
-The code above creates a grid with a width of 1000 and a height of 1000, split into 10x10 cells.
+The code above creates a grid with a width of 1000 and a height of 500, split into 10x5 cells.
 The grid must be registered with the :class:`~simplay.core.VisualizationManager` of the environment.
 Additionally, the code above adds an area to the grid.
 The area is a rectangle that is drawn on the grid, and can be used to visually separate different parts of the simulation.
@@ -193,16 +193,6 @@ where 'X' marks the cells where this area is drawn, and ' ' marks the cells wher
         | X | X |   |   |   |   |   |   |   |   |
         +---+---+---+---+---+---+---+---+---+---+
         | X | X |   |   |   |   |   |   |   |   |
-        +---+---+---+---+---+---+---+---+---+---+
-        |   |   |   |   |   |   |   |   |   |   |
-        +---+---+---+---+---+---+---+---+---+---+
-        |   |   |   |   |   |   |   |   |   |   |
-        +---+---+---+---+---+---+---+---+---+---+
-        |   |   |   |   |   |   |   |   |   |   |
-        +---+---+---+---+---+---+---+---+---+---+
-        |   |   |   |   |   |   |   |   |   |   |
-        +---+---+---+---+---+---+---+---+---+---+
-        |   |   |   |   |   |   |   |   |   |   |
         +---+---+---+---+---+---+---+---+---+---+
 
 
@@ -253,7 +243,7 @@ To display the visualization, use the ``display`` function provided by ``IPython
 .. code-block:: python
 
     from IPython.display import display
-    output = env.visualization_manager.serialize()
+    output = env.visualization_manager.serialize_for_jupyter()
     display({"application/simplay+json": output}, raw=True)
 
 The extension will now automatically display the visualization in the notebook.
