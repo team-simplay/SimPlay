@@ -27,7 +27,7 @@ class TestNonSimComponentShortHand:
         assert {
             "id": "test",
             "type": ComponentType.CUSTOM.value,
-            "visual": "test",
+            "visual": "TEST",
             "tint": 0xFFFFFF,
         } in env.visualization_manager.entities
         assert env.visualization_manager.events[0].for_id == "test"
@@ -45,7 +45,7 @@ class TestNonSimComponentShortHand:
         assert {
             "id": "test",
             "type": ComponentType.CUSTOM.value,
-            "visual": "test",
+            "visual": "TEST",
             "tint": 0xFFFFFF,
         } in env.visualization_manager.entities
         assert env.visualization_manager.events[0].for_id == "test"

@@ -43,56 +43,7 @@ class VisualProcess(VisualComponent):
         super().__init__(env, id, ComponentType.PROCESS, visual, tint)
 
 
-class VisualResourceBase(VisualComponent):
-    """
-    Base class for all resources.
-
-    :param env: The environment instance.
-    :param id: The id of the component.
-    :param visual: The visualization of the component, must be registered in
-        the :class:`~simplay.core.VisualizationManager`.
-    :param tint: The tint of the component. The tint is multiplied with the
-        pixel value of each pixel. To use HEX values, write them as
-        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
-        0x0000FF is blue.
-        If the whole image is white, tinting it will change the color of the
-        image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF, which is the default
-        value.
-    """
-
-    def __init__(
-            self,
-            env: VisualEnvironment,
-            id: str,
-            visual: str,
-            tint: int = 0xFFFFFF):
-        super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
-
-    def has_capacity(self, capacity: int):
-        """
-        Adds an ``ResourceSetCapacity`` event for the given resource to the
-        EventQueue.
-
-        :param capacity: The capacity of the resource.
-        """
-        self.visualization_manager.add_event(
-            ResourceSetCapacity(self.id, self.env.now, capacity)
-        )
-
-    def has_utilization(self, utilization: int):
-        """
-        Adds an ``ResourceSetUtilization`` event for the given resource to the
-        EventQueue.
-
-        :param utilization: The utilization of the resource.
-        """
-        self.visualization_manager.add_event(
-            ResourceSetUtilization(
-                self.id, self.env.now, utilization))
-
-
-class VisualResource(VisualResourceBase, Resource):
+class VisualResource(VisualComponent, Resource):
     """
     Extends the :class:`~simpy.resources.resource.Resource` class with
      visualization.
@@ -125,24 +76,42 @@ class VisualResource(VisualResourceBase, Resource):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
-        VisualResourceBase.__init__(
-            self, env, id, visual, tint)
+        super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
         Resource.__init__(self, env, capacity)
-        self.has_capacity(capacity)
-        self.has_utilization(0)
+        self.__update_capacity()
+        self.__update_utilization()
+
+    @property
+    def capacity(self) -> ContainerAmount:
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, capacity: ContainerAmount):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
+        self.visualization_manager.add_event(
+            ResourceSetCapacity(self.id, self.env.now, self.capacity)
+        )
+
+    def __update_utilization(self):
+        self.visualization_manager.add_event(
+            ResourceSetUtilization(
+                self.id, self.env.now, self.count))
 
     def request(self) -> Request:
         req = super().request()
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return req
 
     def release(self, request: Request) -> Release:
         rel = super().release(request)
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return rel
 
 
-class VisualPreemptiveResource(VisualResourceBase, PreemptiveResource):
+class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
     """
     Extends the :class:`~simpy.resources.resource.PreemptiveResource` class
      with visualization.
@@ -175,27 +144,45 @@ class VisualPreemptiveResource(VisualResourceBase, PreemptiveResource):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
-        VisualResourceBase.__init__(
-            self, env, id, visual, tint)
+        super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
         PreemptiveResource.__init__(self, env, capacity)
-        self.has_capacity(capacity)
-        self.has_utilization(0)
+        self.__update_capacity()
+        self.__update_utilization()
+
+    @property
+    def capacity(self) -> ContainerAmount:
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, capacity: ContainerAmount):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
+        self.visualization_manager.add_event(
+            ResourceSetCapacity(self.id, self.env.now, self.capacity)
+        )
+
+    def __update_utilization(self):
+        self.visualization_manager.add_event(
+            ResourceSetUtilization(
+                self.id, self.env.now, self.count))
 
     def request(
             self,
             priority: int = 0,
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return rel
 
 
-class VisualPriorityResource(VisualResourceBase, PriorityResource):
+class VisualPriorityResource(VisualComponent, PriorityResource):
     """
     Extends the :class:`~simpy.resources.resource.PriorityResource` class with
      visualization.
@@ -228,22 +215,41 @@ class VisualPriorityResource(VisualResourceBase, PriorityResource):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
-        VisualResourceBase.__init__(self, env, id, visual, tint)
+        super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
         PriorityResource.__init__(self, env, capacity)
-        self.has_capacity(capacity)
-        self.has_utilization(0)
+        self.__update_capacity()
+        self.__update_utilization()
+
+    @property
+    def capacity(self) -> ContainerAmount:
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, capacity: ContainerAmount):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
+        self.visualization_manager.add_event(
+            ResourceSetCapacity(self.id, self.env.now, self.capacity)
+        )
+
+    def __update_utilization(self):
+        self.visualization_manager.add_event(
+            ResourceSetUtilization(
+                self.id, self.env.now, self.count))
 
     def request(
             self,
             priority: int = 0,
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
-        self.has_utilization(self.count)
+        self.__update_utilization()
         return rel
 
 
@@ -286,89 +292,40 @@ class VisualContainer(VisualComponent, Container):
         VisualComponent.__init__(
             self, env, id, ComponentType.CONTAINER, visual, tint)
         Container.__init__(self, env, capacity, init)
-        self.has_capacity(capacity)
-        self.has_level(self.level)
+        self.__update_capacity()
+        self.__update_level()
 
-    def has_capacity(self, capacity: ContainerAmount):
-        """
-        Adds an ``ContainerSetCapacity`` event for the given container to the
-        EventQueue.
+    @property
+    def capacity(self) -> ContainerAmount:
+        return self._capacity
 
-        :param capacity: The capacity of the container.
-        """
+    @capacity.setter
+    def capacity(self, capacity: ContainerAmount):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
         self.visualization_manager.add_event(
-            ContainerSetCapacity(self.id, self.env.now, capacity)
+            ContainerSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def has_level(self, level: ContainerAmount):
-        """
-        Adds an ``ContainerSetLevel`` event for the given container to the
-        EventQueue.
-
-        :param level: The level of the container.
-        """
+    def __update_level(self):
         self.visualization_manager.add_event(
-            ContainerSetLevel(self.id, self.env.now, level)
+            ContainerSetLevel(self.id, self.env.now, self.level)
         )
 
     def put(self, amount: ContainerAmount) -> ContainerPut:
         put = super().put(amount)
-        self.has_level(self.level)
+        self.__update_level()
         return put
 
     def get(self, amount: ContainerAmount) -> ContainerGet:
         get = super().get(amount)
-        self.has_level(self.level)
+        self.__update_level()
         return get
 
 
-class VisualStoreBase(VisualComponent):
-    """
-    Base class for all store classes.
-
-    :param env: The environment instance.
-    :param id: The id of the component.
-    :param visual: The visualization of the component, must be registered in
-        the :class:`~simplay.core.VisualizationManager`.
-    :param tint: The tint of the component. The tint is multiplied with the
-        pixel value of each pixel. To use HEX values, write them as
-        0xRRGGBB. For example: 0xFF0000 is red, 0x00FF00 is green,
-        0x0000FF is blue.
-        If the whole image is white, tinting it will change the color of the
-        image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF, which is the default
-        value.
-    """
-
-    def __init__(self, env: VisualEnvironment, id: str,
-                 visual: str, tint: int = 0xFFFFFF):
-        VisualComponent.__init__(
-            self, env, id, ComponentType.STORE, visual, tint)
-
-    def has_capacity(self, capacity: Union[float, int]):
-        """
-        Adds an ``StoreSetCapacity`` event for the given store to the
-        EventQueue.
-
-        :param capacity: The capacity of the store.
-        """
-        self.visualization_manager.add_event(
-            StoreSetCapacity(self.id, self.env.now, capacity)
-        )
-
-    def has_content(self, content):
-        """
-        Adds an ``StoreSetContent`` event for the given store to the
-        EventQueue.
-
-        :param content: The content of the store.
-        """
-        self.visualization_manager.add_event(
-            StoreSetContent(self.id, self.env.now, content)
-        )
-
-
-class VisualStore(VisualStoreBase, Store):
+class VisualStore(VisualComponent, Store):
     """
     Extends the :class:`~simpy.resources.store.Store` class with visualization.
 
@@ -403,23 +360,43 @@ class VisualStore(VisualStoreBase, Store):
         if capacity <= 0:
             raise ValueError(
                 ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
-        VisualStoreBase.__init__(
-            self, env, id, visual, tint)
         Store.__init__(self, env, capacity)
-        self.has_capacity(capacity)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.STORE, visual, tint)
+        self.__update_capacity()
+        self.__update_content()
+
+    @property
+    def capacity(self) -> Union[float, int]:
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, capacity: Union[float, int]):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
+        self.visualization_manager.add_event(
+            StoreSetCapacity(self.id, self.env.now, self.capacity)
+        )
+
+    def __update_content(self):
+        self.visualization_manager.add_event(
+            StoreSetContent(self.id, self.env.now, self.items)
+        )
 
     def put(self, item) -> StorePut:
         put = super().put(item)
-        self.has_content(self.items)
+        self.__update_content()
         return put
 
     def get(self) -> StoreGet:
         get = super().get()
-        self.has_content(self.items)
+        self.__update_content()
         return get
 
 
-class VisualFilterStore(VisualStoreBase, FilterStore):
+class VisualFilterStore(VisualComponent, FilterStore):
     """
     Extends the :class:`~simpy.resources.store.FilterStore` class with
      visualization.
@@ -452,18 +429,38 @@ class VisualFilterStore(VisualStoreBase, FilterStore):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
-        VisualStoreBase.__init__(
-            self, env, id, visual, tint)
         FilterStore.__init__(self, env, capacity)
-        self.has_capacity(capacity)
+        VisualComponent.__init__(
+            self, env, id, ComponentType.STORE, visual, tint)
+        self.__update_capacity()
+        self.__update_content()
+
+    @property
+    def capacity(self) -> int:
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, capacity: int):
+        self._capacity = capacity
+        self.__update_capacity()
+
+    def __update_capacity(self):
+        self.visualization_manager.add_event(
+            StoreSetCapacity(self.id, self.env.now, self.capacity)
+        )
+
+    def __update_content(self):
+        self.visualization_manager.add_event(
+            StoreSetContent(self.id, self.env.now, self.items)
+        )
 
     def put(self, item) -> StorePut:
         put = super().put(item)
-        self.has_content(self.items)
+        self.__update_content()
         return put
 
     def get(self, filter: Callable[[Any], bool]
             = lambda item: True) -> FilterStoreGet:
         get = super().get(filter)
-        self.has_content(self.items)
+        self.__update_content()
         return get
