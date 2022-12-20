@@ -1,7 +1,7 @@
 SimPlay in depth
 ============================================
 
-How to setup a simulation and how to work with processes is explained in :doc:`quickstart`.
+How a simulation is set up, and how to work with processes is explained in :doc:`quickstart`.
 
 Using Resources
 ---------------

@@ -27,8 +27,8 @@ To install the jupyter extension, execute the following command:
 .. note::
    After installing simplay-jupyter, JupyterLab needs to be restarted.
 
-The following installation steps are only necessary, if you don't want to run within JupyterLab,
-otherwise continue with :ref:`AddVisualInformation`.
+The following installation steps are only necessary if you don't want to run within JupyterLab.
+Otherwise continue with :ref:`AddVisualInformation`.
 
 To install SimPlay:
 
