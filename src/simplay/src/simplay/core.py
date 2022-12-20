@@ -7,7 +7,7 @@ import jsons
 import json
 from simpy.core import SimTime, Environment
 
-from .primitives import ComponentType, ErrorText
+from .primitives import ComponentType, ErrorText, SimplayConsts
 from .visualization import VisualGrid
 from .events import (MoveNear, MoveNearCell, SetDecoratingText, SetInteracting,
                      SetNotInteracting, SetPosition,
@@ -390,7 +390,9 @@ class VisualizationManager:
         """
         Serialize the visualization for use with Jupyter.
         """
-        return json.loads(self.serialize())
+        return {
+            SimplayConsts.JUPYTERLAB_MIMETYPE: json.loads(self.serialize())
+        }
 
     def write_to_file(self, filename: str):
         """

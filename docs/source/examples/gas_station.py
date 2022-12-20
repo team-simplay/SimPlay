@@ -192,4 +192,4 @@ env.visualization_manager.write_to_file("output.simplay")
 # if so, uncomment the following lines
 
 #from IPython.display import display
-#display({"application/simplay+json": env.visualization_manager.serialize_for_jupyter()}, raw=True)
+#display(env.visualization_manager.serialize_for_jupyter(), raw=True)

@@ -240,11 +240,9 @@ To display the visualization, use the ``display`` function provided by ``IPython
 
     from IPython.display import display
     output = env.visualization_manager.serialize_for_jupyter()
-    display({"application/simplay+json": output}, raw=True)
+    display(output, raw=True)
 
 The extension will now automatically display the visualization in the notebook.
-Please note the MIME-Type ``application/simplay+json``.
-This is the MIME-Type that the extension registers with jupyter.
 
 Since ``simplay`` creates JSON output, save the output to a file if desired:
 

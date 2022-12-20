@@ -1,6 +1,9 @@
 from enum import Enum
 
 
+class SimplayConsts:
+    JUPYTERLAB_MIMETYPE = "application/simplay+json"
+
 class ComponentType(Enum):
     """Enum for component types."""
     PROCESS = "PROCESS"
