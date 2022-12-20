@@ -69,7 +69,7 @@ class VisualResourceBase(VisualComponent):
             tint: int = 0xFFFFFF):
         super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
 
-    def set_capacity(self, capacity: int):
+    def has_capacity(self, capacity: int):
         """
         Adds an ``ResourceSetCapacity`` event for the given resource to the
         EventQueue.
@@ -80,7 +80,7 @@ class VisualResourceBase(VisualComponent):
             ResourceSetCapacity(self.id, self.env.now, capacity)
         )
 
-    def set_utilization(self, utilization: int):
+    def has_utilization(self, utilization: int):
         """
         Adds an ``ResourceSetUtilization`` event for the given resource to the
         EventQueue.
@@ -128,17 +128,17 @@ class VisualResource(VisualResourceBase, Resource):
         VisualResourceBase.__init__(
             self, env, id, visual, tint)
         Resource.__init__(self, env, capacity)
-        self.set_capacity(capacity)
-        self.set_utilization(0)
+        self.has_capacity(capacity)
+        self.has_utilization(0)
 
     def request(self) -> Request:
         req = super().request()
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return req
 
     def release(self, request: Request) -> Release:
         rel = super().release(request)
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return rel
 
 
@@ -178,20 +178,20 @@ class VisualPreemptiveResource(VisualResourceBase, PreemptiveResource):
         VisualResourceBase.__init__(
             self, env, id, visual, tint)
         PreemptiveResource.__init__(self, env, capacity)
-        self.set_capacity(capacity)
-        self.set_utilization(0)
+        self.has_capacity(capacity)
+        self.has_utilization(0)
 
     def request(
             self,
             priority: int = 0,
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return rel
 
 
@@ -230,20 +230,20 @@ class VisualPriorityResource(VisualResourceBase, PriorityResource):
             raise ValueError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         VisualResourceBase.__init__(self, env, id, visual, tint)
         PriorityResource.__init__(self, env, capacity)
-        self.set_capacity(capacity)
-        self.set_utilization(0)
+        self.has_capacity(capacity)
+        self.has_utilization(0)
 
     def request(
             self,
             priority: int = 0,
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
-        self.set_utilization(self.count)
+        self.has_utilization(self.count)
         return rel
 
 
@@ -286,10 +286,10 @@ class VisualContainer(VisualComponent, Container):
         VisualComponent.__init__(
             self, env, id, ComponentType.CONTAINER, visual, tint)
         Container.__init__(self, env, capacity, init)
-        self.set_capacity(capacity)
-        self.set_level(self.level)
+        self.has_capacity(capacity)
+        self.has_level(self.level)
 
-    def set_capacity(self, capacity: ContainerAmount):
+    def has_capacity(self, capacity: ContainerAmount):
         """
         Adds an ``ContainerSetCapacity`` event for the given container to the
         EventQueue.
@@ -300,7 +300,7 @@ class VisualContainer(VisualComponent, Container):
             ContainerSetCapacity(self.id, self.env.now, capacity)
         )
 
-    def set_level(self, level: ContainerAmount):
+    def has_level(self, level: ContainerAmount):
         """
         Adds an ``ContainerSetLevel`` event for the given container to the
         EventQueue.
@@ -313,12 +313,12 @@ class VisualContainer(VisualComponent, Container):
 
     def put(self, amount: ContainerAmount) -> ContainerPut:
         put = super().put(amount)
-        self.set_level(self.level)
+        self.has_level(self.level)
         return put
 
     def get(self, amount: ContainerAmount) -> ContainerGet:
         get = super().get(amount)
-        self.set_level(self.level)
+        self.has_level(self.level)
         return get
 
 
@@ -345,7 +345,7 @@ class VisualStoreBase(VisualComponent):
         VisualComponent.__init__(
             self, env, id, ComponentType.STORE, visual, tint)
 
-    def set_capacity(self, capacity: Union[float, int]):
+    def has_capacity(self, capacity: Union[float, int]):
         """
         Adds an ``StoreSetCapacity`` event for the given store to the
         EventQueue.
@@ -356,7 +356,7 @@ class VisualStoreBase(VisualComponent):
             StoreSetCapacity(self.id, self.env.now, capacity)
         )
 
-    def set_content(self, content):
+    def has_content(self, content):
         """
         Adds an ``StoreSetContent`` event for the given store to the
         EventQueue.
@@ -406,16 +406,16 @@ class VisualStore(VisualStoreBase, Store):
         VisualStoreBase.__init__(
             self, env, id, visual, tint)
         Store.__init__(self, env, capacity)
-        self.set_capacity(capacity)
+        self.has_capacity(capacity)
 
     def put(self, item) -> StorePut:
         put = super().put(item)
-        self.set_content(self.items)
+        self.has_content(self.items)
         return put
 
     def get(self) -> StoreGet:
         get = super().get()
-        self.set_content(self.items)
+        self.has_content(self.items)
         return get
 
 
@@ -455,15 +455,15 @@ class VisualFilterStore(VisualStoreBase, FilterStore):
         VisualStoreBase.__init__(
             self, env, id, visual, tint)
         FilterStore.__init__(self, env, capacity)
-        self.set_capacity(capacity)
+        self.has_capacity(capacity)
 
     def put(self, item) -> StorePut:
         put = super().put(item)
-        self.set_content(self.items)
+        self.has_content(self.items)
         return put
 
     def get(self, filter: Callable[[Any], bool]
             = lambda item: True) -> FilterStoreGet:
         get = super().get(filter)
-        self.set_content(self.items)
+        self.has_content(self.items)
         return get

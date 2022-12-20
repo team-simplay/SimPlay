@@ -58,40 +58,40 @@ class TestVisualComponent:
             _ = simplay.VisualComponent(
                 env, "test", ComponentType.RESOURCE, "", "")
 
-    def test_set_visible(self):
+    def test_is_visible(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
-        component.set_visible()
+        component.is_visible()
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_VISIBLE.value)
         assert env.visualization_manager.events[0].args == {"visible": True}
 
-    def test_set_invisible(self):
+    def test_is_invisible(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
-        component.set_invisible()
+        component.is_invisible()
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_VISIBLE.value)
         assert env.visualization_manager.events[0].args == {"visible": False}
 
-    def test_set_position(self):
+    def test_is_at(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
-        component.set_position(1, 2)
+        component.is_at(1, 2)
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_POSITION.value)
         assert env.visualization_manager.events[0].args == {"x": 1, "y": 2}
 
-    def test_set_interacting(self):
+    def test_is_interacting_with(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
@@ -100,8 +100,8 @@ class TestVisualComponent:
         with pytest.raises(
             TypeError, match=ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT
         ):
-            component.set_interacting(0)
-        component.set_interacting(other_component)
+            component.is_interacting_with(0)
+        component.is_interacting_with(other_component)
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
@@ -109,7 +109,7 @@ class TestVisualComponent:
         assert env.visualization_manager.events[0].args == {
             "with_id": "other_id"}
 
-    def test_set_not_interacting(self):
+    def test_is_no_longer_interacting_with(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
@@ -119,8 +119,8 @@ class TestVisualComponent:
         with pytest.raises(
             TypeError, match=ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT
         ):
-            component.set_not_interacting(0)
-        component.set_not_interacting(other_component)
+            component.is_no_longer_interacting_with(0)
+        component.is_no_longer_interacting_with(other_component)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
@@ -128,7 +128,7 @@ class TestVisualComponent:
         assert manager.events[0].args == {
             "with_id": "other_id"}
 
-    def test_move_near(self):
+    def test_is_near(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
@@ -137,8 +137,8 @@ class TestVisualComponent:
         with pytest.raises(
             TypeError, match=ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT
         ):
-            component.move_near(0)
-        component.move_near(other_component)
+            component.is_near(0)
+        component.is_near(other_component)
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
@@ -146,46 +146,58 @@ class TestVisualComponent:
         assert env.visualization_manager.events[0].args == {
             "target_id": "other_id"}
 
-    def test_set_tint_color(self):
+    def test_is_near_cell(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
-        component.set_tint_color(0xFFFFFF)
+        component.is_near_cell(1, 2)
+        assert env.visualization_manager.events[0].for_id == "id"
+        assert env.visualization_manager.events[0].timestamp == 0
+        assert (env.visualization_manager.events[0].action ==
+                EventAction.MOVE_NEAR_CELL.value)
+        assert env.visualization_manager.events[0].args == {
+            "x": 1, "y": 2}
+
+    def test_has_tint(self):
+        env = simplay.VisualEnvironment()
+        component = simplay.VisualComponent(
+            env, "id", ComponentType.CUSTOM, "", 0)
+        component.has_tint(0xFFFFFF)
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_TINT_COLOR.value)
         assert env.visualization_manager.events[0].args == {"color": 0xFFFFFF}
 
-    def test_reset_tint_color(self):
+    def test_has_original_tint(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(env, "id", ComponentType.CUSTOM,
                                             "", 0x000000)
-        component.reset_tint_color()
+        component.has_original_tint()
         assert env.visualization_manager.events[0].for_id == "id"
         assert env.visualization_manager.events[0].timestamp == 0
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_TINT_COLOR.value)
         assert env.visualization_manager.events[0].args == {"color": 0x000000}
 
-    def test_set_decorating_text(self):
+    def test_has_decorating_text(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
         manager = env.visualization_manager
-        component.set_decorating_text("text")
+        component.has_decorating_text("text")
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
                 EventAction.SET_DECORATING_TEXT.value)
         assert manager.events[0].args == {"text": "text"}
 
-    def test_set_sprite_frame(self):
+    def test_has_frame(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
             env, "id", ComponentType.CUSTOM, "", 0)
         manager = env.visualization_manager
-        component.set_sprite_frame(0)
+        component.has_frame(0)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==

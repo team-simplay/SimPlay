@@ -77,7 +77,7 @@ class VisualComponent:
         self.visualization_manager = env.visualization_manager
         self.visualization_manager.add_entity(self, type)
 
-    def set_visible(self):
+    def is_visible(self):
         """
         Adds an ``SetVisible`` event for the given component to the EventQueue,
         making it visible.
@@ -86,7 +86,7 @@ class VisualComponent:
             SetVisible(self.id, self.env.now, True)
         )
 
-    def set_invisible(self):
+    def is_invisible(self):
         """
         Adds an ``SetVisible`` event for the given component to the EventQueue,
         making it invisible.
@@ -95,7 +95,7 @@ class VisualComponent:
             SetVisible(self.id, self.env.now, False)
         )
 
-    def set_position(self, x: int, y: int):
+    def is_at(self, x: int, y: int):
         """
         Adds an ``SetPosition`` event for the given component to the
         EventQueue.
@@ -107,7 +107,7 @@ class VisualComponent:
             SetPosition(self.id, self.env.now, x, y)
         )
 
-    def move_near(self, target: VisualComponent):
+    def is_near(self, target: VisualComponent):
         """
         Adds an ``MoveNear`` event for the given component to the EventQueue.
 
@@ -121,7 +121,7 @@ class VisualComponent:
             MoveNear(self.id, self.env.now, target.id)
         )
 
-    def move_near_cell(self, x: int, y: int):
+    def is_near_cell(self, x: int, y: int):
         """
         Adds an ``MoveNearCell`` event for the given component to the
         EventQueue.
@@ -133,7 +133,7 @@ class VisualComponent:
             MoveNearCell(self.id, self.env.now, x, y)
         )
 
-    def set_interacting(self, target: VisualComponent):
+    def is_interacting_with(self, target: VisualComponent):
         """
         Adds an ``SetInteracting`` event for the given component to the
         EventQueue.
@@ -149,7 +149,7 @@ class VisualComponent:
             SetInteracting(self.id, self.env.now, target.id)
         )
 
-    def set_not_interacting(self, target: VisualComponent):
+    def is_no_longer_interacting_with(self, target: VisualComponent):
         """
         Adds an ``SetNotInteracting`` event for the given component to the
         EventQueue.
@@ -165,7 +165,7 @@ class VisualComponent:
             SetNotInteracting(self.id, self.env.now, target.id)
         )
 
-    def set_tint_color(self, color: int):
+    def has_tint(self, color: int):
         """
         Adds an ``SetTintColor`` event for the given component to the
         EventQueue.
@@ -178,7 +178,7 @@ class VisualComponent:
             SetTintColor(self.id, self.env.now, color)
         )
 
-    def reset_tint_color(self):
+    def has_original_tint(self):
         """
         Adds an ``SetTintColor`` event for the given component to the
         EventQueue, resetting the tint color to its initial value.
@@ -188,7 +188,7 @@ class VisualComponent:
             SetTintColor(self.id, self.env.now, self.tint)
         )
 
-    def set_decorating_text(self, text: str):
+    def has_decorating_text(self, text: str):
         """
         Adds an ``SetDecoratingText`` event for the given component to the
         EventQueue.
@@ -199,7 +199,7 @@ class VisualComponent:
             SetDecoratingText(self.id, self.env.now, text)
         )
 
-    def set_sprite_frame(self, frame: int):
+    def has_frame(self, frame: int):
         """
         Adds an ``SetSpriteFrame`` event for the given component to the
         EventQueue.

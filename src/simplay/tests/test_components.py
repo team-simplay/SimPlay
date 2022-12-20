@@ -5,22 +5,22 @@ from src.simplay.primitives import ComponentType, ErrorText, EventAction
 
 
 class TestVisualResourceBase:
-    def test_set_capacity(self):
+    def test_has_capacity(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualResourceBase(env, "id", "", 0)
         manager = env.visualization_manager
-        component.set_capacity(0)
+        component.has_capacity(0)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
                 EventAction.RESOURCE_SET_CAPACITY.value)
         assert manager.events[0].args == {"capacity": 0}
 
-    def test_set_utilization(self):
+    def test_has_utilization(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualResourceBase(env, "id", "", 0)
         manager = env.visualization_manager
-        component.set_utilization(0)
+        component.has_utilization(0)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
@@ -183,7 +183,7 @@ class TestVisualContainer:
         ):
             __ = simplay.VisualContainer(env, "test", "", 1, "", 0)
 
-    def test_set_capacity(self):
+    def test_has_capacity(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualContainer(env, "id", "", 0, 1, 0)
         manager = env.visualization_manager
@@ -193,7 +193,7 @@ class TestVisualContainer:
                 EventAction.CONTAINER_SET_CAPACITY.value)
         assert manager.events[0].args == {"capacity": 1}
 
-    def test_set_level(self):
+    def test_has_level(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualContainer(env, "id", "", 0, 1, 0)
         manager = env.visualization_manager
@@ -205,22 +205,22 @@ class TestVisualContainer:
 
 
 class TestVisualStoreBase:
-    def test_set_capacity(self):
+    def test_has_capacity(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualStoreBase(env, "id", "", 0)
         manager = env.visualization_manager
-        component.set_capacity(0)
+        component.has_capacity(0)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
                 EventAction.STORE_SET_CAPACITY.value)
         assert manager.events[0].args == {"capacity": 0}
 
-    def test_set_content(self):
+    def test_has_content(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualStoreBase(env, "id", "", 0)
         manager = env.visualization_manager
-        component.set_content(0)
+        component.has_content(0)
         assert manager.events[0].for_id == "id"
         assert manager.events[0].timestamp == 0
         assert (manager.events[0].action ==
