@@ -1,13 +1,19 @@
+# this import allows us to use type annotaions of the enclosing class
+from __future__ import annotations
+
 import base64
-from typing import List, Union
+from typing import List
 import jsons
 import json
 from simpy.core import SimTime, Environment
 from simpy.resources.container import ContainerAmount
 
-from .primitives import EventAction, ComponentType, ErrorText
+from .primitives import ComponentType, ErrorText
 from .visualization import VisualGrid
-from .events import VisualEvent
+from .events import (MoveNear, MoveNearCell, SetDecoratingText, SetInteracting,
+                     SetNotInteracting, SetPosition,
+                     SetSpriteFrame, SetTintColor, SetVisible,
+                     VisualEvent)
 
 
 class VisualEnvironment(Environment):
@@ -67,7 +73,141 @@ class VisualComponent:
         self.type = type
         self.visual = visual
         self.tint = tint
-        self.env.visualization_manager.add_entity(self, type)
+        self.visualization_manager = env.visualization_manager
+        self.visualization_manager.add_entity(self, type)
+
+    def set_visible(self):
+        """
+        Adds an ``SetVisible`` event for the given component to the EventQueue,
+        making it visible.
+        """
+        self.visualization_manager.add_event(
+            SetVisible(self.id, self.env.now, True)
+        )
+
+    def set_invisible(self):
+        """
+        Adds an ``SetVisible`` event for the given component to the EventQueue,
+        making it invisible.
+        """
+        self.visualization_manager.add_event(
+            SetVisible(self.id, self.env.now, False)
+        )
+
+    def set_position(self, x: int, y: int):
+        """
+        Adds an ``SetPosition`` event for the given component to the
+        EventQueue.
+
+        :param x: The x coordinate of the component.
+        :param y: The y coordinate of the component.
+        """
+        self.visualization_manager.add_event(
+            SetPosition(self.id, self.env.now, x, y)
+        )
+
+    def move_near(self, target: VisualComponent):
+        """
+        Adds an ``MoveNear`` event for the given component to the EventQueue.
+
+        :param target: The target component.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            MoveNear(self.id, self.env.now, target.id)
+        )
+
+    def move_near_cell(self, x: int, y: int):
+        """
+        Adds an ``MoveNearCell`` event for the given component to the
+        EventQueue.
+
+        :param x: The x coordinate of the target cell.
+        :param y: The y coordinate of the target cell.
+        """
+        self.visualization_manager.add_event(
+            MoveNearCell(self.id, self.env.now, x, y)
+        )
+
+    def set_interacting(self, target: VisualComponent):
+        """
+        Adds an ``SetInteracting`` event for the given component to the
+        EventQueue.
+
+        :param target: The component the first component is interacting with.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            SetInteracting(self.id, self.env.now, target.id)
+        )
+
+    def set_not_interacting(self, target: VisualComponent):
+        """
+        Adds an ``SetNotInteracting`` event for the given component to the
+        EventQueue.
+
+        :param target: The component the first component is not interacting
+            with anymore.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            SetNotInteracting(self.id, self.env.now, target.id)
+        )
+
+    def set_tint_color(self, color: int):
+        """
+        Adds an ``SetTintColor`` event for the given component to the
+        EventQueue.
+
+        :param color: The color to tint the component with, as an integer.
+            To use HEX values, write them as 0xRRGGBB.
+            For example: 0xFF0000 is red, 0x00FF00 is green, 0x0000FF is blue.
+        """
+        self.visualization_manager.add_event(
+            SetTintColor(self.id, self.env.now, color)
+        )
+
+    def reset_tint_color(self):
+        """
+        Adds an ``SetTintColor`` event for the given component to the
+        EventQueue, resetting the tint color to its initial value.
+
+        """
+        self.visualization_manager.add_event(
+            SetTintColor(self.id, self.env.now, self.tint)
+        )
+
+    def set_decorating_text(self, text: str):
+        """
+        Adds an ``SetDecoratingText`` event for the given component to the
+        EventQueue.
+
+        :param text: The text to display.
+        """
+        self.visualization_manager.add_event(
+            SetDecoratingText(self.id, self.env.now, text)
+        )
+
+    def set_sprite_frame(self, frame: int):
+        """
+        Adds an ``SetSpriteFrame`` event for the given component to the
+        EventQueue.
+
+        :param frame: The index of the frame to display.
+        """
+        self.visualization_manager.add_event(
+            SetSpriteFrame(self.id, self.env.now, frame)
+        )
 
 
 class VisualizationManager:
