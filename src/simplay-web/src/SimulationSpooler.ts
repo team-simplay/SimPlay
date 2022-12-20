@@ -38,7 +38,9 @@ export class SimulationSpooler {
   }
 
   private notifyStepChanged() {
-    this.stepChangedEventListeners.forEach((listener) => listener(this.currentSimTimeStamp));
+    this.stepChangedEventListeners.forEach((listener) =>
+      listener(this.currentSimTimeStamp)
+    );
   }
 
   private setSimulationStep(step: number) {
@@ -55,10 +57,14 @@ export class SimulationSpooler {
     });
   }
 
-  async run() {
-    const maxTimestamp = Math.max(
+  getTotalSteps(): number {
+    return Math.max(
       ...this.simulationData.events.map((event) => event.timestamp)
     );
+  }
+
+  async run() {
+    const maxTimestamp = this.getTotalSteps();
     while (!this.stopRequested) {
       const frameDuration = 1000 / this.speedFactor;
       const now = Date.now();
