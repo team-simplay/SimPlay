@@ -1,8 +1,53 @@
 Getting started
 ============================================
 
-with simplay
-------------
+
+.. _installation:
+
+Install SimPlay
+---------------
+
+To use Simplay, first decide how you want to use it.
+Three components exist:
+
+  - `SimPlay-Jupyter <https://pypi.python.org/pypi/simplay-jupyter>`_ (the python package allowing you to view and enhance any SimPy Simulation within a jupyter notebook)
+  - `SimPlay <https://pypi.python.org/pypi/simplay>`_ (the python library allowing you to generate the SimulationData)
+  - `SimPlay-Web <https://www.npmjs.com/package/simplay-web>`_ (the npm packages allowing you to render the SimulationData)
+
+To install the jupyter extension, execute the following command:
+
+.. note::
+   This guide assumes you have a working JupyterLab installation.
+   The minimum version required is 3.0.
+
+.. code-block:: console
+
+   pip install simplay-jupyter
+
+.. note::
+   After installing simplay-jupyter, JupyterLab needs to be restarted.
+
+The following installation steps are only necessary if you don't want to run within JupyterLab.
+Otherwise continue with :ref:`AddVisualInformation`.
+
+To install SimPlay:
+
+.. code-block:: console
+
+   pip install simplay
+
+
+To install SimPlay-Web:
+
+.. code-block:: console
+
+   npm install simplay-web
+
+
+.. _AddVisualInformation:
+
+Adding visual information to your simulation
+--------------------------------------------
 
 SimPlay is designed to integrate with `SimPy <https://simpy.readthedocs.io/en/latest/>`_ as easily as possible.
 The usual structures and components of `SimPy <https://simpy.readthedocs.io/en/latest/>`_ are recreated as objects
@@ -172,167 +217,10 @@ Learn more about the :doc:`api_reference/index`, or view some :doc:`examples` to
 
 The section below provides some more in-depth explanation of how to use the components provided by SimPy.
 
-simplay in depth
-----------------
+Playing the Visualization
+-------------------------
 
-**Using Resources:**
-
-The following example shows how to use the :class:`~simplay.components.VisualResource` class:
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
-
-    class MyResource(VisualResource):
-        def __init__(self, env):
-            super().__init__(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
-
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    resource = MyResource(env)
-    env.run()
-
-The :class:`~simplay.components.VisualResource` class inherits from the ``Resource`` class from the ``simpy`` package.
-The API is the same, except that the ``request`` and ``release`` methods are overridden to
-reflect for changes in the utilization and capacity of the resource.
-Within these methods, the ``ResourceVisualUtil`` class is used to update the utilization
-and capacity of the resource, using the ``set_utilization`` and ``set_capacity`` methods.
-Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
-and are inherited by the :class:`~simplay.components.VisualPreemptiveResource`
-and :class:`~simplay.components.VisualPriorityResource` respectively.
-
-The code example above creates a custom class for the resource, and by doing so declares
-the visibility and position of the resource.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the resource.
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
-
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    resource = VisualResource(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(resource, 5, 5)
-    BasicVisualUtil.set_visible(resource)
-
-    env.run()
-
-
-**Using Containers:**
-
-The following example shows how to use the :class:`~simplay.components.VisualContainer` class:
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualContainer, BasicVisualUtil, ContainerVisualUtil
-
-    class MyContainer(VisualContainer):
-        def __init__(self, env):
-            super().__init__(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
-    
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    container = MyContainer(env)
-    env.run()
-
-The :class:`~simplay.components.VisualContainer` class inherits from the ``Container``
-class from the ``simpy`` package.
-The API is the same, except that the ``put`` and ``get`` methods are overridden to
-reflect for changes in the level and capacity of the container.
-Within these methods, the :class:`~simplay.visualutil.BasicVisualUtil` class is used to update the level
-and capacity of the container, using the ``set_level`` and ``set_capacity`` methods.
-
-The code example above creates a custom class for the container, and by doing so declares
-the visibility and position of the container.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the container.
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualContainer
-    from simplay import BasicVisualUtil, ContainerVisualUtil
-
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    container = VisualContainer(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(container, 5, 5)
-    BasicVisualUtil.set_visible(container)
-
-    env.run()
-
-**Using Stores:**
-
-The following example shows how to use the :class:`~simplay.components.VisualStore` class:
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualStore
-    from simplay import BaiscVisualUtil, StoreVisualUtil
-
-    class MyStore(VisualStore):
-        def __init__(self, env):
-            super().__init__(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
-    
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    store = MyStore(env)
-    env.run()
-
-The :class:`~simplay.components.VisualStore` class inherits from the ``Store`` class from the ``simpy`` package.
-The API is the same, except that the ``put`` and ``get`` methods are overridden to
-reflect for changes in the contents and capacity of the store.
-Within these methods, the :class:`~simplay.visualutil.StoreVisualUtil` class is used to update the contents
-and capacity of the store, using the ``set_contents`` and ``set_capacity`` methods.
-The spezialized ``FilterStore`` is also supported, and is inherited by the
-:class:`~simplay.components.VisualStore` class.
-
-The code example above creates a custom class for your store, and by doing so declares
-the visibility and position of the store.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the store.
-
-.. code-block:: python
-
-    from simplay import VisualEnvironment, VisualStore, BasicVisualUtil, StoreVisualUtil
-
-    env = VisualEnvironment()
-    grid = VisualGrid(1000, 1000, 10, 10)
-    grid.set_area("area51", "ALIENS!", 5, 2, 0, 0, 0xFF0000)
-    env.visualization_manager.set_grid(grid)
-
-    store = VisualStore(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(store, 5, 5)
-    BasicVisualUtil.set_visible(store)
-
-    env.run()
-
-
-with simplay-jupyter
---------------------
-
-Follow the instructions under :doc:`usage` to install the simplay extension for jupyter.
+Follow the instructions under :ref:`installation` to install the simplay extension for jupyter.
 Once the installation is complete, start a new notebook and import the ``simplay`` module:
 
 .. code-block:: python
@@ -380,11 +268,4 @@ Since ``simplay`` creates JSON output, save the output to a file if desired:
 
 Then, open the ``.simplay`` file in JupyterLab and the visualization will be displayed.
 
-
-with simplay-web
-----------------
-
-In case a custom generator for `application/simplay+json` exists and there is
-a need to spool the events, the simplay-web package can be used directly.
-Find more information about simplay-web at https://www.npmjs.com/package/simplay-web.
-
+How to use resources, containers and stores is explained in :doc:`in_depth`.

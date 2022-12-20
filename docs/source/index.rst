@@ -22,7 +22,15 @@ Overview
 
 **SimPlay** is a project that aims to bring simple animation capabilities to the `SimPy <https://simpy.readthedocs.io/en/latest/>`_ project.
 
-Check out the :doc:`usage` section for further information, including how to :ref:`installation`.
+**SimPlay** is integrated into `JupyterLab <https://jupyterlab.readthedocs.io/en/stable/index.html>`_ 
+and is capable of displaying an animation of a `SimPy <https://simpy.readthedocs.io/en/latest/>`_ simulation in a notebook: 
+
+   .. image:: assets/overview.gif
+      :width: 100%
+      :align: center
+
+
+Check out the :doc:`quickstart` section for further information, including how to :ref:`installation`.
 
 
 The API documentation is available at :ref:`api`.
