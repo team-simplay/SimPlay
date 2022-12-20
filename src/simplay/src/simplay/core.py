@@ -215,8 +215,8 @@ class VisualComponent:
                                 visible: bool = True,
                                 tint: int = 0xFFFFFF) -> VisualComponent:
         """
-        Creates a non-simulation component, i.e. a component that is not part of
-        the simulation, but can be used to visualize other components.
+        Creates a non-simulation component, i.e. a component that is not part
+        of the simulation, but can be used to visualize other components.
 
         The positional parameters are used to directly set the position of the
         component. If you want to move the component later, use the
