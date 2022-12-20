@@ -14,7 +14,6 @@ functions.
    simplay
    simplay.core
    simplay.visualization
-   simplay.visualutil
    simplay.components
    simplay.events
    simplay.primitives

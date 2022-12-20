@@ -182,8 +182,8 @@ The following example shows how to use the :class:`~simplay.components.VisualRes
     class MyResource(VisualResource):
         def __init__(self, env):
             super().__init__(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.is_at(5, 5)
+            self.is_visible()
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -217,8 +217,8 @@ and visibility of the resource.
     env.visualization_manager.set_grid(grid)
 
     resource = VisualResource(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(resource, 5, 5)
-    BasicVisualUtil.set_visible(resource)
+    resource.is_at( 5, 5)
+    resource.is_visible()
 
     env.run()
 
@@ -234,8 +234,8 @@ The following example shows how to use the :class:`~simplay.components.VisualCon
     class MyContainer(VisualContainer):
         def __init__(self, env):
             super().__init__(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.ist_at(5, 5)
+            self.is_visible()
     
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -268,8 +268,8 @@ and visibility of the container.
     env.visualization_manager.set_grid(grid)
 
     container = VisualContainer(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(container, 5, 5)
-    BasicVisualUtil.set_visible(container)
+    container.is_at(5, 5)
+    container.is_visible()
 
     env.run()
 
@@ -285,8 +285,8 @@ The following example shows how to use the :class:`~simplay.components.VisualSto
     class MyStore(VisualStore):
         def __init__(self, env):
             super().__init__(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.is_at(5, 5)
+            self.is_visible()
     
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -319,8 +319,8 @@ and visibility of the store.
     env.visualization_manager.set_grid(grid)
 
     store = VisualStore(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(store, 5, 5)
-    BasicVisualUtil.set_visible(store)
+    store.is_at(5, 5)
+    store.is_visible()
 
     env.run()
 
@@ -345,7 +345,7 @@ Once the installation is complete, start a new notebook and import the ``simplay
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
             super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
+            self.is_at(5, 5)
 
         def run(self):
             while True:
