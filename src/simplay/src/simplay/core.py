@@ -42,7 +42,8 @@ class VisualComponent:
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the type is invalid.
     :raises TypeError: If the id is not a string.
     :raises TypeError: If the environment is not a
@@ -57,7 +58,7 @@ class VisualComponent:
             id: str,
             type: ComponentType,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(type, ComponentType):
             raise TypeError(ErrorText.INVALID_COMPONENT_TYPE)
         if not isinstance(id, str):

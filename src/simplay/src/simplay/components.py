@@ -30,7 +30,8 @@ class VisualProcess(VisualComponent):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     """
 
     def __init__(
@@ -38,7 +39,7 @@ class VisualProcess(VisualComponent):
             env: VisualEnvironment,
             id: str,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         super().__init__(env, id, ComponentType.PROCESS, visual, tint)
 
 
@@ -56,7 +57,8 @@ class VisualResourceBase(VisualComponent):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     """
 
     def __init__(
@@ -64,7 +66,7 @@ class VisualResourceBase(VisualComponent):
             env: VisualEnvironment,
             id: str,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         super().__init__(env, id, ComponentType.RESOURCE, visual, tint)
 
     def set_capacity(self, capacity: int):
@@ -106,7 +108,8 @@ class VisualResource(VisualResourceBase, Resource):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises ValueError: If the capacity is not a positive integer.
     :raises TypeError: If the capacity is not a integer.
     """
@@ -117,7 +120,7 @@ class VisualResource(VisualResourceBase, Resource):
             id: str,
             capacity: int,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
@@ -155,7 +158,8 @@ class VisualPreemptiveResource(VisualResourceBase, PreemptiveResource):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the capacity is not a integer.
     :raises ValueError: If the capacity is not a positive integer.
     """
@@ -166,7 +170,7 @@ class VisualPreemptiveResource(VisualResourceBase, PreemptiveResource):
             id: str,
             capacity: int,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
@@ -207,7 +211,8 @@ class VisualPriorityResource(VisualResourceBase, PriorityResource):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the capacity is not a integer.
     :raises ValueError: If the capacity is not a positive integer.
     """
@@ -218,7 +223,7 @@ class VisualPriorityResource(VisualResourceBase, PriorityResource):
             id: str,
             capacity: int,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(capacity, int):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT)
         if capacity <= 0:
@@ -259,7 +264,8 @@ class VisualContainer(VisualComponent, Container):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """
@@ -269,7 +275,7 @@ class VisualContainer(VisualComponent, Container):
         env: VisualEnvironment,
         id: str,
         visual: str,
-        tint: int,
+        tint: int = 0xFFFFFF,
         capacity: ContainerAmount = float("inf"),
         init: ContainerAmount = 0,
     ):
@@ -330,11 +336,12 @@ class VisualStoreBase(VisualComponent):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     """
 
     def __init__(self, env: VisualEnvironment, id: str,
-                 visual: str, tint: int):
+                 visual: str, tint: int = 0xFFFFFF):
         VisualComponent.__init__(
             self, env, id, ComponentType.STORE, visual, tint)
 
@@ -376,7 +383,8 @@ class VisualStore(VisualStoreBase, Store):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """
@@ -386,7 +394,7 @@ class VisualStore(VisualStoreBase, Store):
         env: VisualEnvironment,
         id: str,
         visual: str,
-        tint: int,
+        tint: int = 0xFFFFFF,
         capacity: Union[float, int] = float("inf"),
     ):
         if not isinstance(capacity, (int, float)):
@@ -427,7 +435,8 @@ class VisualFilterStore(VisualStoreBase, FilterStore):
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the capacity is not a integer or float.
     :raises ValueError: If the capacity is not a positive integer or float.
     """
@@ -438,7 +447,7 @@ class VisualFilterStore(VisualStoreBase, FilterStore):
             id: str,
             capacity: int,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(capacity, (int, float)):
             raise TypeError(ErrorText.CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT)
         if capacity <= 0:
