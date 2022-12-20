@@ -6,7 +6,6 @@ from typing import List
 import jsons
 import json
 from simpy.core import SimTime, Environment
-from simpy.resources.container import ContainerAmount
 
 from .primitives import ComponentType, ErrorText
 from .visualization import VisualGrid
@@ -209,6 +208,36 @@ class VisualComponent:
         self.visualization_manager.add_event(
             SetSpriteFrame(self.id, self.env.now, frame)
         )
+
+    @staticmethod
+    def create_custom_component(env: VisualEnvironment, id: str, visual: str,
+                                pos_x: int = 0, pos_y: int = 0,
+                                visible: bool = True,
+                                tint: int = 0xFFFFFF) -> VisualComponent:
+        """
+        Creates a non-simulation component, i.e. a component that is not part of
+        the simulation, but can be used to visualize other components.
+
+        The positional parameters are used to directly set the position of the
+        component. If you want to move the component later, use the
+        :meth:`~simplay.core.VisualComponent.is_at` method.
+
+        :param env: The environment to create the component in.
+        :param id: The id of the component.
+        :param visual: The visual to use for the component.
+        :param pos_x: The x coordinate of the component.
+        :param pos_y: The y coordinate of the component.
+        :param visible: Whether the component should be visible.
+        :param tint: The tint color of the component.
+        :return: The created component.
+        """
+        component = VisualComponent(
+            env, id, ComponentType.CUSTOM, visual, tint)
+        component.is_at(pos_x, pos_y)
+        if visible:
+            component.is_visible()
+
+        return component
 
 
 class VisualizationManager:

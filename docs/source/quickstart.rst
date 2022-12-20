@@ -74,22 +74,17 @@ Register visuals with the following call:
     This way, you can most effectively use the ``tint`` parameter.
 
 The ``tint`` parameter multiplies the color of the visual with the given color.
-If no tint is to be applied, set it to 0xFFFFFF, so all pixel values are kept the same.
+If no tint is to be applied, set it to 0xFFFFFF, which is the default value, 
+so all pixel values are kept the same.
 The tint parameter must be a whole integer.
 
 After having successfully created a process, it is time to learn how SimPlay is able to
 log visual changes of the simulation.
 
-SimPlay provides utility classes to ``set`` different type of events.
+The visual components provide various methods to declare visual changes.
+These methods always start with ``is_`` or ``has_`` and create the corresponding event.
 Find a complete list of events in the :doc:`api_reference/simplay.events` section.
-Usually however, these classes won't be instantiated manually, but rather through the use one of the
-``-VisualUtil`` classes which provide a more declarative way of declaring visual state changes.
-All the methods available are documented in their respective sections in :doc:`api_reference/simplay.visualutil`.
-The following section only provides a few examples for these ``VisualUtils``.
-
-It is important to notice, that the first parameter of all these functions is of the type ``VisualComponent``.
-This lets the utility functions identify the component for which the event should be logged, and extract additional information
-from the component.
+The following section only provides a few examples for these methods, but should make the use of them clear.
 
 The following example shows how to set the position of a component:
 
@@ -100,7 +95,8 @@ The following example shows how to set the position of a component:
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
             super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
+            self.is_at(self, 5, 5)
+            self.is_visible()
 
         def run(self):
             while True:
@@ -108,9 +104,9 @@ The following example shows how to set the position of a component:
                 yield self.env.timeout(1)
 
 The code above now sets the position of the component to (5, 5), at
-the time of the simulation when the process is created.
+the time of the simulation when the process is created, and declares the component visible.
 
-The parameters of the ``set_position`` function refer to row and column values of a grid.
+The parameters of the ``is_at`` function refer to row and column values of a grid.
 
 This is where the :class:`~simplay.visualization.VisualGrid` comes into (Sim)play.
 

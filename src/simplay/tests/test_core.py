@@ -1,6 +1,7 @@
 import pytest
 import simpy
 import src.simplay.core as simplay
+from src.simplay.core import VisualComponent
 from src.simplay.primitives import ComponentType, ErrorText, EventAction
 
 SAMPLE_BASE64 = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAIAAA"
@@ -15,6 +16,48 @@ class TestVisualEnvironment:
     def test_visualEnvironment(self):
         env = simplay.VisualEnvironment()
         assert env.visualization_manager is not None
+
+
+class TestNonSimComponentShortHand:
+    def test_create_custom_component_min(self):
+        env = simplay.VisualEnvironment()
+        component = VisualComponent.create_custom_component(env,
+                                                            "test",
+                                                            "TEST")
+        assert {
+            "id": "test",
+            "type": ComponentType.CUSTOM.value,
+            "visual": "test",
+            "tint": 0xFFFFFF,
+        } in env.visualization_manager.entities
+        assert env.visualization_manager.events[0].for_id == "test"
+        assert env.visualization_manager.events[0].timestamp == 0
+        assert (env.visualization_manager.events[0].action ==
+                EventAction.SET_POSITION.value)
+        assert env.visualization_manager.events[0].args == {"x": 0, "y": 0}
+
+    def test_create_custom_component_visibility(self):
+        env = simplay.VisualEnvironment()
+        component = VisualComponent.create_custom_component(env,
+                                                            "test",
+                                                            "TEST",
+                                                            visible=True)
+        assert {
+            "id": "test",
+            "type": ComponentType.CUSTOM.value,
+            "visual": "test",
+            "tint": 0xFFFFFF,
+        } in env.visualization_manager.entities
+        assert env.visualization_manager.events[0].for_id == "test"
+        assert env.visualization_manager.events[0].timestamp == 0
+        assert (env.visualization_manager.events[0].action ==
+                EventAction.SET_POSITION.value)
+        assert env.visualization_manager.events[0].args == {"x": 0, "y": 0}
+        assert env.visualization_manager.events[1].for_id == "test"
+        assert env.visualization_manager.events[1].timestamp == 0
+        assert (env.visualization_manager.events[1].action ==
+                EventAction.SET_VISIBLE.value)
+        assert env.visualization_manager.events[1].args == {"visible": True}
 
 
 class TestVisualComponent:
