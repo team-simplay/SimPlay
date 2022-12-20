@@ -3,7 +3,11 @@ import simpy
 import src.simplay.core as simplay
 from src.simplay.primitives import ComponentType, ErrorText, EventAction
 
-SAMPLE_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAIAAABrBkF6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTY/hPCFCgYsWKFa2trUAGigq4KBAAGQwMIFkUFXBRZIDTFjggTgWy9ZgApAKr9VDw/z8AS5ITTSmJ+xoAAAAASUVORK5CYII="
+SAMPLE_BASE64 = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAIAAA"
+                 "BrBkF6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADs"
+                 "MAAA7DAcdvqGQAAAA5SURBVChTY/hPCFCgYsWKFa2trUAGigq4KBAAGQwMIF"
+                 "kUFXBRZIDTFjggTgWy9ZgApAKr9VDw/z8AS5ITTSmJ+xoAAAAASUVORK5CYI"
+                 "I=")
 SAMPLE_IMG_PATH = "tests/sample.png"
 
 
@@ -163,7 +167,7 @@ class TestVisualComponent:
         assert (env.visualization_manager.events[0].action ==
                 EventAction.SET_TINT_COLOR.value)
         assert env.visualization_manager.events[0].args == {"color": 0x000000}
-    
+
     def test_set_decorating_text(self):
         env = simplay.VisualEnvironment()
         component = simplay.VisualComponent(
