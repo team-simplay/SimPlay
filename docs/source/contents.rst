@@ -12,9 +12,9 @@ Documentation for SimPlay
    :maxdepth: 2
 
    index
-   usage
    quickstart
    examples
+   in_depth
    api_reference/index
 
 
