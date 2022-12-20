@@ -123,14 +123,6 @@ export class SimulationSpooler {
     this.speedFactor = value;
     return this.speedFactor;
   }
-
-  increaseSpeed(increaseBy: number): number {
-    return this.setSpeedFactor(this.speedFactor + increaseBy);
-  }
-
-  decreaseSpeed(decreaseBy: number): number {
-    return this.increaseSpeed(-decreaseBy);
-  }
 }
 
 function createApp(container: HTMLElement) {
