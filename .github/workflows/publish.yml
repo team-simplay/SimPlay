@@ -7,6 +7,31 @@ on:
 permissions:
   contents: read
 jobs:
+  publish-simplay:
+    name: publish simplay
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: |
+          cd src/simplay
+          python -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY }}
+          packages_dir: src/simplay/dist/
   publish-simplay-web:
     name: "publish simplay-web"
     runs-on: ubuntu-latest
@@ -51,7 +76,7 @@ jobs:
   publish-simplay-jupyter-npm:
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: publish-simplay-web
+    needs: [publish-simplay-web, publish-simplay]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -75,7 +100,7 @@ jobs:
   publish-simplay-jupyter-pypi:
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: publish-simplay-web
+    needs: [publish-simplay-web, publish-simplay]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -108,28 +133,3 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY_JUPYTER }}
           packages_dir: src/simplay-jupyter/dist/
-  publish-simplay:
-    name: publish simplay
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.x"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
-      - name: Build package
-        run: |
-          cd src/simplay
-          python -m build
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN_SIMPLAY }}
-          packages_dir: src/simplay/dist/
