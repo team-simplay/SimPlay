@@ -1,6 +1,10 @@
 from enum import Enum
 
 
+class SimplayConsts:
+    JUPYTERLAB_MIMETYPE = "application/simplay+json"
+
+
 class ComponentType(Enum):
     """Enum for component types."""
     PROCESS = "PROCESS"
@@ -17,27 +21,32 @@ class ErrorText:
     VISUAL_MUST_BE_STRING = "Visual must be a string."
     TINT_MUST_BE_INTEGER = "Tint must be an integer."
     ENTITY_MUST_BE_VISUAL_COMPONENT = "Entity must be of type VisualComponent."
-    COMPONENT_MUST_BE_VISUAL_COMPONENT = "Component must be of type VisualComponent."  # noqa
+    COMPONENT_MUST_BE_VISUAL_COMPONENT = ("Component must be of type"
+                                          " VisualComponent.")
     TARGET_MUST_BE_VISUAL_COMPONENT = "Target must be of type VisualComponent."
     CAPACITY_MUST_BE_POSITIVE_INT = "Capacity must be a positive integer."
-    CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT = "Capacity must be a positive integer or float."  # noqa
+    CAPACITY_MUST_BE_POSITIVE_INT_OR_FLOAT = ("Capacity must be a positive"
+                                              " integer or float.")
     FORID_MUST_BE_STRING = "for_id must be a string."
     TIMESTAMP_MUST_BE_INT_OR_FLOAT = "Timestamp must be an integer or float."
     ACTION_MUST_BE_EVENTACTION = "Action must be a EventAction."
     VISIBLE_MUST_BE_BOOL = "Visible must be a boolean."
     X_MUST_BE_INT = "x must be an integer."
     X_OUT_OF_BOUNDS = "x must be between 0 and cols"
-    X_OFFSET_OUT_OF_BOUNDS = "x added to width must be less than or equal to cols"  # noqa
+    X_OFFSET_OUT_OF_BOUNDS = ("x added to width must be less than or equal"
+                              " to cols")
     Y_MUST_BE_INT = "y must be an integer."
     Y_OUT_OF_BOUNDS = "y must be between 0 and rows"
-    Y_OFFSET_OUT_OF_BOUNDS = "y added to height must be less than or equal to rows"  # noqa
+    Y_OFFSET_OUT_OF_BOUNDS = ("y added to height must be less than or equal"
+                              " to rows")
     WITHID_MUST_BE_STRING = "with_id must be a string."
     TARGETID_MUST_BE_STRING = "target_id must be a string."
     COLOR_MUST_BE_INT = "Color must be an integer."
     TEXT_MUST_BE_STRING = "Text must be a string."
     FRAME_MUST_BE_INT = "Frame must be an integer."
     UTILIZATION_MUST_BE_INT = "Utilization must be a integer."
-    LEVEL_MUST_BE_POSITIVE_INT_OR_FLOAT = "Level must be a positive integer or float."  # noqa
+    LEVEL_MUST_BE_POSITIVE_INT_OR_FLOAT = ("Level must be a positive integer"
+                                           " or float.")
     ID_NOT_UNIQUE = "Id must be unique."
     PATH_EMPTY = "Path must not be None / empty."
     PATH_MUST_BE_STRING = "Path must be a string."

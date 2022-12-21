@@ -10,13 +10,13 @@ The following example shows how to use the :class:`~simplay.components.VisualRes
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
+    from simplay import VisualEnvironment, VisualResource
 
     class MyResource(VisualResource):
         def __init__(self, env):
             super().__init__(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.is_at(5, 5)
+            self.is_visible()
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -28,17 +28,15 @@ The following example shows how to use the :class:`~simplay.components.VisualRes
 
 The :class:`~simplay.components.VisualResource` class inherits from the ``Resource`` class from the ``simpy`` package.
 The API is the same, except that the ``request`` and ``release`` methods are overridden to
-reflect for changes in the utilization and capacity of the resource.
-Within these methods, the ``ResourceVisualUtil`` class is used to update the utilization
-and capacity of the resource, using the ``set_utilization`` and ``set_capacity`` methods.
+reflect for changes in the utilization and capacity of the resource, and will automatically create the
+corresponding events.
 Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
 and are inherited by the :class:`~simplay.components.VisualPreemptiveResource`
 and :class:`~simplay.components.VisualPriorityResource` respectively.
 
 The code example above creates a custom class for the resource, and by doing so declares
-the visibility and position of the resource.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the resource.
+the visibility and position of the resource in the constructor.
+Alternatively, you can create the resource without a custom class.
 
 .. code-block:: python
 
@@ -50,8 +48,8 @@ and visibility of the resource.
     env.visualization_manager.set_grid(grid)
 
     resource = VisualResource(env, "MyResource", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(resource, 5, 5)
-    BasicVisualUtil.set_visible(resource)
+    resource.is_at(5, 5)
+    resource.is_visible()
 
     env.run()
 
@@ -62,13 +60,13 @@ The following example shows how to use the :class:`~simplay.components.VisualCon
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualContainer, BasicVisualUtil, ContainerVisualUtil
+    from simplay import VisualEnvironment, VisualContainer
 
     class MyContainer(VisualContainer):
         def __init__(self, env):
             super().__init__(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.is_at(5, 5)
+            self.is_visible()
     
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -81,14 +79,12 @@ The following example shows how to use the :class:`~simplay.components.VisualCon
 The :class:`~simplay.components.VisualContainer` class inherits from the ``Container``
 class from the ``simpy`` package.
 The API is the same, except that the ``put`` and ``get`` methods are overridden to
-reflect for changes in the level and capacity of the container.
-Within these methods, the :class:`~simplay.visualutil.BasicVisualUtil` class is used to update the level
-and capacity of the container, using the ``set_level`` and ``set_capacity`` methods.
+reflect for changes in the level and capacity of the container, and will automatically create the
+corresponding events.
 
 The code example above creates a custom class for the container, and by doing so declares
 the visibility and position of the container.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the container.
+Alternatively, you can create the container without a custom class.
 
 .. code-block:: python
 
@@ -101,8 +97,8 @@ and visibility of the container.
     env.visualization_manager.set_grid(grid)
 
     container = VisualContainer(env, "MyContainer", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(container, 5, 5)
-    BasicVisualUtil.set_visible(container)
+    container.is_at(5, 5)
+    container.is_visible()
 
     env.run()
 
@@ -114,13 +110,12 @@ The following example shows how to use the :class:`~simplay.components.VisualSto
 .. code-block:: python
 
     from simplay import VisualEnvironment, VisualStore
-    from simplay import BaiscVisualUtil, StoreVisualUtil
 
     class MyStore(VisualStore):
         def __init__(self, env):
             super().__init__(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-            BasicVisualUtil.set_position(self, 5, 5)
-            BasicVisualUtil.set_visible(self)
+            self.is_at(5, 5)
+            self.is_visible()
     
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -132,20 +127,19 @@ The following example shows how to use the :class:`~simplay.components.VisualSto
 
 The :class:`~simplay.components.VisualStore` class inherits from the ``Store`` class from the ``simpy`` package.
 The API is the same, except that the ``put`` and ``get`` methods are overridden to
-reflect for changes in the contents and capacity of the store.
-Within these methods, the :class:`~simplay.visualutil.StoreVisualUtil` class is used to update the contents
-and capacity of the store, using the ``set_contents`` and ``set_capacity`` methods.
+reflect for changes in the contents and capacity of the store, and will automatically create the
+corresponding events.
+
 The spezialized ``FilterStore`` is also supported, and is inherited by the
 :class:`~simplay.components.VisualStore` class.
 
 The code example above creates a custom class for your store, and by doing so declares
 the visibility and position of the store.
-Alternatively, use the :class:`~simplay.visualutil.BasicVisualUtil` class to set the position
-and visibility of the store.
+Alternatively, you can create the store without a custom class.
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualStore, BasicVisualUtil, StoreVisualUtil
+    from simplay import VisualEnvironment, VisualStore
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -153,8 +147,8 @@ and visibility of the store.
     env.visualization_manager.set_grid(grid)
 
     store = VisualStore(env, "MyStore", 3, visual="SOMEPNG", tint=0x00FF00)
-    BasicVisualUtil.set_position(store, 5, 5)
-    BasicVisualUtil.set_visible(store)
+    store.is_at(5, 5)
+    store.is_visible()
 
     env.run()
 

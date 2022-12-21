@@ -16,8 +16,8 @@ import itertools
 import random
 
 from simplay import (
-    VisualEnvironment, BasicVisualUtil, VisualContainer, VisualProcess,
-    VisualResource, VisualGrid, ContainerVisualUtil, ResourceVisualUtil
+    VisualEnvironment, VisualContainer, VisualProcess,
+    VisualResource, VisualGrid
 )
 
 RANDOM_SEED = 42
@@ -39,16 +39,16 @@ class Car(VisualProcess):
         self.fuel_pump = fuel_pump
 
     def run(self):
-        BasicVisualUtil.set_visible(self)
-        BasicVisualUtil.move_near_cell(self, 2, 1)
+        self.is_visible()
+        self.is_near_cell(2, 1)
         fuel_tank_level = random.randint(*FUEL_TANK_LEVEL)
 
         with self.gas_station.request() as req:
             start = self.env.now
             # Request one of the gas pumps
             yield req
-            BasicVisualUtil.move_near(self, self.gas_station)
-            BasicVisualUtil.set_interacting(self, self.gas_station)
+            self.is_near(self.gas_station)
+            self.is_interacting_with(self.gas_station)
 
             # Get the required amount of fuel
             liters_required = FUEL_TANK_SIZE - fuel_tank_level
@@ -56,9 +56,9 @@ class Car(VisualProcess):
 
             # The "actual" refueling process takes some time
             yield self.env.timeout(liters_required / REFUELING_SPEED)
-            BasicVisualUtil.set_not_interacting(self, self.gas_station)
+            self.is_no_longer_interacting_with(self.gas_station)
 
-        BasicVisualUtil.set_invisible(self)
+        self.is_invisible()
 
 
 def gas_station_control(env, fuel_pump):
@@ -80,15 +80,15 @@ class TankTruck(VisualProcess):
         self.fuel_pump = fuel_pump
 
     def run(self):
-        BasicVisualUtil.set_visible(self)
-        BasicVisualUtil.set_position(self, 0, 0)
-        BasicVisualUtil.move_near(self, self.fuel_pump)
-        BasicVisualUtil.set_interacting(self, self.fuel_pump)
+        self.is_visible()
+        self.is_at(0, 0)
+        self.is_near(self.fuel_pump)
+        self.is_interacting_with(self.fuel_pump)
         yield self.env.timeout(TANK_TRUCK_TIME)
         ammount = self.fuel_pump.capacity - self.fuel_pump.level
         yield self.fuel_pump.put(ammount)
-        BasicVisualUtil.set_not_interacting(self, self.fuel_pump)
-        BasicVisualUtil.set_invisible(self)
+        self.is_no_longer_interacting_with(self.fuel_pump)
+        self.is_invisible()
 
 
 def car_generator(env, gas_station, fuel_pump):
@@ -103,9 +103,9 @@ class GasStation(VisualResource):
     def __init__(self, env):
         super().__init__(env, "Gas Station", 3, visual="GAS_STATION",
                          tint=0x00FF00)
-        BasicVisualUtil.set_position(self, 3, 1)
-        BasicVisualUtil.set_visible(self)
-        ResourceVisualUtil.set_utilization(self, self.count)
+        self.is_at(3, 1)
+        self.is_visible()
+        self.has_utilization(self.count)
 
 
 class FuelPump(VisualContainer):
@@ -118,23 +118,23 @@ class FuelPump(VisualContainer):
             visual="FUEL_PUMP",
             tint=0x000001,
         )
-        BasicVisualUtil.set_position(self, 1, 1)
-        BasicVisualUtil.set_visible(self)
-        ContainerVisualUtil.set_level(self, self.level)
-        BasicVisualUtil.set_sprite_frame(self, 4)
+        self.is_at(1, 1)
+        self.is_visible()
+        self.has_level(self.level)
+        self.has_frame(4)
 
     def update_sprite(self):
         fillPercentage = self.level / self.capacity
         if fillPercentage < 0.25:
-            BasicVisualUtil.set_sprite_frame(self, 0)
+            self.has_frame(0)
         elif fillPercentage < 0.5:
-            BasicVisualUtil.set_sprite_frame(self, 1)
+            self.has_frame(1)
         elif fillPercentage < 0.75:
-            BasicVisualUtil.set_sprite_frame(self, 2)
+            self.has_frame(2)
         elif fillPercentage < 1:
-            BasicVisualUtil.set_sprite_frame(self, 3)
+            self.has_frame(3)
         else:
-            BasicVisualUtil.set_sprite_frame(self, 4)
+            self.has_frame(4)
 
     def get(self, amount):
         cget = super().get(amount)
@@ -192,4 +192,4 @@ env.visualization_manager.write_to_file("output.simplay")
 # if so, uncomment the following lines
 
 #from IPython.display import display
-#display({"application/simplay+json": env.visualization_manager.serialize_for_jupyter()}, raw=True)
+#display(env.visualization_manager.serialize_for_jupyter(), raw=True)

@@ -1,13 +1,18 @@
+# this import allows us to use type annotaions of the enclosing class
+from __future__ import annotations
+
 import base64
-from typing import List, Union
+from typing import List
 import jsons
 import json
 from simpy.core import SimTime, Environment
-from simpy.resources.container import ContainerAmount
 
-from .primitives import EventAction, ComponentType, ErrorText
+from .primitives import ComponentType, ErrorText, SimplayConsts
 from .visualization import VisualGrid
-from .events import VisualEvent
+from .events import (MoveNear, MoveNearCell, SetDecoratingText, SetInteracting,
+                     SetNotInteracting, SetPosition,
+                     SetSpriteFrame, SetTintColor, SetVisible,
+                     VisualEvent)
 
 
 class VisualEnvironment(Environment):
@@ -36,7 +41,8 @@ class VisualComponent:
         0x0000FF is blue.
         If the whole image is white, tinting it will change the color of the
         image. If the image is black, tinting it will have no effect.
-        If no tint should be applied, set it to 0xFFFFFF.
+        If no tint should be applied, set it to 0xFFFFFF, which is the default
+        value.
     :raises TypeError: If the type is invalid.
     :raises TypeError: If the id is not a string.
     :raises TypeError: If the environment is not a
@@ -51,7 +57,7 @@ class VisualComponent:
             id: str,
             type: ComponentType,
             visual: str,
-            tint: int):
+            tint: int = 0xFFFFFF):
         if not isinstance(type, ComponentType):
             raise TypeError(ErrorText.INVALID_COMPONENT_TYPE)
         if not isinstance(id, str):
@@ -67,7 +73,171 @@ class VisualComponent:
         self.type = type
         self.visual = visual
         self.tint = tint
-        self.env.visualization_manager.add_entity(self, type)
+        self.visualization_manager = env.visualization_manager
+        self.visualization_manager.add_entity(self, type)
+
+    def is_visible(self):
+        """
+        Adds an ``SetVisible`` event for the given component to the EventQueue,
+        making it visible.
+        """
+        self.visualization_manager.add_event(
+            SetVisible(self.id, self.env.now, True)
+        )
+
+    def is_invisible(self):
+        """
+        Adds an ``SetVisible`` event for the given component to the EventQueue,
+        making it invisible.
+        """
+        self.visualization_manager.add_event(
+            SetVisible(self.id, self.env.now, False)
+        )
+
+    def is_at(self, x: int, y: int):
+        """
+        Adds an ``SetPosition`` event for the given component to the
+        EventQueue.
+
+        :param x: The x coordinate of the component.
+        :param y: The y coordinate of the component.
+        """
+        self.visualization_manager.add_event(
+            SetPosition(self.id, self.env.now, x, y)
+        )
+
+    def is_near(self, target: VisualComponent):
+        """
+        Adds an ``MoveNear`` event for the given component to the EventQueue.
+
+        :param target: The target component.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            MoveNear(self.id, self.env.now, target.id)
+        )
+
+    def is_near_cell(self, x: int, y: int):
+        """
+        Adds an ``MoveNearCell`` event for the given component to the
+        EventQueue.
+
+        :param x: The x coordinate of the target cell.
+        :param y: The y coordinate of the target cell.
+        """
+        self.visualization_manager.add_event(
+            MoveNearCell(self.id, self.env.now, x, y)
+        )
+
+    def is_interacting_with(self, target: VisualComponent):
+        """
+        Adds an ``SetInteracting`` event for the given component to the
+        EventQueue.
+
+        :param target: The component the first component is interacting with.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            SetInteracting(self.id, self.env.now, target.id)
+        )
+
+    def is_no_longer_interacting_with(self, target: VisualComponent):
+        """
+        Adds an ``SetNotInteracting`` event for the given component to the
+        EventQueue.
+
+        :param target: The component the first component is not interacting
+            with anymore.
+        :raises TypeError: If the target is not a
+            :class:`~simplay.core.VisualComponent`.
+        """
+        if not isinstance(target, VisualComponent):
+            raise TypeError(ErrorText.TARGET_MUST_BE_VISUAL_COMPONENT)
+        self.visualization_manager.add_event(
+            SetNotInteracting(self.id, self.env.now, target.id)
+        )
+
+    def has_tint(self, color: int):
+        """
+        Adds an ``SetTintColor`` event for the given component to the
+        EventQueue.
+
+        :param color: The color to tint the component with, as an integer.
+            To use HEX values, write them as 0xRRGGBB.
+            For example: 0xFF0000 is red, 0x00FF00 is green, 0x0000FF is blue.
+        """
+        self.visualization_manager.add_event(
+            SetTintColor(self.id, self.env.now, color)
+        )
+
+    def has_original_tint(self):
+        """
+        Adds an ``SetTintColor`` event for the given component to the
+        EventQueue, resetting the tint color to its initial value.
+
+        """
+        self.visualization_manager.add_event(
+            SetTintColor(self.id, self.env.now, self.tint)
+        )
+
+    def has_decorating_text(self, text: str):
+        """
+        Adds an ``SetDecoratingText`` event for the given component to the
+        EventQueue.
+
+        :param text: The text to display.
+        """
+        self.visualization_manager.add_event(
+            SetDecoratingText(self.id, self.env.now, text)
+        )
+
+    def has_frame(self, frame: int):
+        """
+        Adds an ``SetSpriteFrame`` event for the given component to the
+        EventQueue.
+
+        :param frame: The index of the frame to display.
+        """
+        self.visualization_manager.add_event(
+            SetSpriteFrame(self.id, self.env.now, frame)
+        )
+
+    @staticmethod
+    def create_custom_component(env: VisualEnvironment, id: str, visual: str,
+                                pos_x: int = 0, pos_y: int = 0,
+                                visible: bool = True,
+                                tint: int = 0xFFFFFF) -> VisualComponent:
+        """
+        Creates a non-simulation component, i.e. a component that is not part
+        of the simulation, but can be used to visualize other components.
+
+        The positional parameters are used to directly set the position of the
+        component. If you want to move the component later, use the
+        :meth:`~simplay.core.VisualComponent.is_at` method.
+
+        :param env: The environment to create the component in.
+        :param id: The id of the component.
+        :param visual: The visual to use for the component.
+        :param pos_x: The x coordinate of the component.
+        :param pos_y: The y coordinate of the component.
+        :param visible: Whether the component should be visible.
+        :param tint: The tint color of the component.
+        :return: The created component.
+        """
+        component = VisualComponent(
+            env, id, ComponentType.CUSTOM, visual, tint)
+        component.is_at(pos_x, pos_y)
+        if visible:
+            component.is_visible()
+
+        return component
 
 
 class VisualizationManager:
@@ -220,7 +390,9 @@ class VisualizationManager:
         """
         Serialize the visualization for use with Jupyter.
         """
-        return json.loads(self.serialize())
+        return {
+            SimplayConsts.JUPYTERLAB_MIMETYPE: json.loads(self.serialize())
+        }
 
     def write_to_file(self, filename: str):
         """

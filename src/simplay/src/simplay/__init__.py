@@ -30,13 +30,6 @@ from .components import (
     VisualFilterStore,
 )
 
-from .visualutil import (
-    BasicVisualUtil,
-    ResourceVisualUtil,
-    ContainerVisualUtil,
-    StoreVisualUtil,
-)
-
 from .primitives import (
     ComponentType,
     EventAction
@@ -73,10 +66,6 @@ __all__ = [
     "VisualPriorityResource",
     "VisualStore",
     "VisualFilterStore",
-    "BasicVisualUtil",
-    "ResourceVisualUtil",
-    "ContainerVisualUtil",
-    "StoreVisualUtil",
     "VisualizationManager",
     "VisualGrid",
     "VisualEvent",
@@ -133,15 +122,6 @@ _toc = (
             VisualPriorityResource,
             VisualStore,
             VisualFilterStore,
-        ),
-    ),
-    (
-        "Visual Utilities",
-        (
-            BasicVisualUtil,
-            ResourceVisualUtil,
-            ContainerVisualUtil,
-            StoreVisualUtil,
         ),
     ),
     (
