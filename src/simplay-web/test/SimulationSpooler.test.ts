@@ -115,6 +115,39 @@ describe('SimulationSpooler tests', async function () {
     });
   });
 
+  describe('test total steps', async function() {
+    it('should return the correct total steps', async () => {
+      const events = [
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: true,
+          },
+          timestamp: 0,
+        },
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: false,
+          },
+          timestamp: 10,
+        },
+      ];
+
+      const simData = {
+        ...simulationDataSerialized,
+        events,
+      } as SimulationDataSerialized;
+      const containerMock = mock(HTMLDivElement);
+      const container = instance(containerMock);
+      const spooler = new SimulationSpooler(simData, container);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      expect(spooler.getTotalSteps()).to.equal(10);
+    });
+  })
+
   describe('play tests', async function () {
     it('should spool the simulation', async () => {
       const events = [
