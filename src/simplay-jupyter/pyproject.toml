@@ -23,7 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "simplay==0.2.0",
+    "simplay==0.3.0",
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
