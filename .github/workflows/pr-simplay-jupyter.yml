@@ -129,7 +129,7 @@ jobs:
     name: Check Links
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    steps:          
+    steps:
       - uses: actions/checkout@v2
       - uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
       - uses: jupyterlab/maintainer-tools/.github/actions/check-links@v1
