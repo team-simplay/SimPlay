@@ -48,6 +48,7 @@ jobs:
           name: extension-artifacts
           path: src/simplay-jupyter/dist/simplay_jupyter*
           if-no-files-found: error
+          node-version: "16.x"
 
   test_isolated:
     needs: build-simplay-jupyter
@@ -60,6 +61,7 @@ jobs:
         with:
           python-version: "3.9"
           architecture: "x64"
+          node-version: "16.x"
       - uses: actions/download-artifact@v2
         with:
           name: extension-artifacts
@@ -92,6 +94,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: extension-artifacts
+          node-version: "16.x"
       - name: Install the extension
         run: |
           set -eux
