@@ -79,7 +79,8 @@ in order to be able to be integrated into the visualization.
 A simple process can be created as follows:
 
 .. code-block:: python
-
+    from simplay import VisualProcess
+    
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
             super().__init__(env, id, visual="SOMEPNG", tint=0x00FF00)
@@ -199,9 +200,8 @@ where 'X' marks the cells where this area is drawn, and ' ' marks the cells wher
     and if no tint is applied, then the visual is invisible.
 
 This guide covers the basics of SimPlay.
-Learn more about the :doc:`api_reference/index`, or view some :doc:`examples` to see how SimPlay can be used in practice.
-
-The section below provides some more in-depth explanation of how to use the components provided by SimPy.
+Learn more about Containers, Resources and Stores in :doc:`in_depth` or view some :doc:`examples` to see how SimPlay can be used in practice.
+For detailed information about the API have a look at :doc:`api_reference/index`.
 
 Playing the Visualization
 -------------------------

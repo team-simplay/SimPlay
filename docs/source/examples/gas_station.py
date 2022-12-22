@@ -105,7 +105,6 @@ class GasStation(VisualResource):
                          tint=0x00FF00)
         self.is_at(3, 1)
         self.is_visible()
-        self.has_utilization(self.count)
 
 
 class FuelPump(VisualContainer):
@@ -120,7 +119,6 @@ class FuelPump(VisualContainer):
         )
         self.is_at(1, 1)
         self.is_visible()
-        self.has_level(self.level)
         self.has_frame(4)
 
     def update_sprite(self):
@@ -152,19 +150,19 @@ random.seed(RANDOM_SEED)
 
 # Create environment and start processes
 env = VisualEnvironment()
-env.visualization_manager.register_visual("CAR", "./resources/car.png")
+env.visualization_manager.register_visual("CAR", "./gas_station_assets/car.png")
 env.visualization_manager.register_visual(
-    "TANK_TRUCK", "./resources/truck.png")
+    "TANK_TRUCK", "./gas_station_assets/truck.png")
 env.visualization_manager.register_visual(
-    "GAS_STATION", "./resources/gaspump.png")
+    "GAS_STATION", "./gas_station_assets/gaspump.png")
 env.visualization_manager.register_sprites(
     "FUEL_PUMP",
     [
-        "./resources/pump_000.png",
-        "./resources/pump_025.png",
-        "./resources/pump_050.png",
-        "./resources/pump_075.png",
-        "./resources/pump_100.png",
+        "./gas_station_assets/pump_000.png",
+        "./gas_station_assets/pump_025.png",
+        "./gas_station_assets/pump_050.png",
+        "./gas_station_assets/pump_075.png",
+        "./gas_station_assets/pump_100.png",
     ],
 )
 
