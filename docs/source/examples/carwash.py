@@ -15,7 +15,6 @@ Scenario:
   to finish. If not, they wait until they an use one.
 
 """
-from IPython.display import display
 import random
 
 from simplay import VisualEnvironment, VisualProcess, VisualResource, VisualGrid
@@ -126,5 +125,5 @@ env.visualization_manager.write_to_file("output.simplay")
 # extensions installed, you can display the output
 
 # if so, uncomment the following lines
-
-display(env.visualization_manager.serialize_for_jupyter(), raw=True)
+#from IPython.display import display
+#display(env.visualization_manager.serialize_for_jupyter(), raw=True)

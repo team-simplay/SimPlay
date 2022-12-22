@@ -113,5 +113,5 @@ env.visualization_manager.write_to_file("output.simplay")
 # extensions installed, you can display the output
 
 # if so, uncomment the following lines
-
-display(env.visualization_manager.serialize_for_jupyter(), raw=True)
+# from IPython.display import display
+# display(env.visualization_manager.serialize_for_jupyter(), raw=True)
