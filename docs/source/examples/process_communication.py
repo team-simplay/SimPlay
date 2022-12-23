@@ -54,7 +54,7 @@ class BroadcastPipe(object):
 
     """
 
-    def __init__(self, env, capacity=simpy.core.Infinity):
+    def __init__(self, env, capacity=1000):
         self.env = env
         self.capacity = capacity
         self.pipes = []
