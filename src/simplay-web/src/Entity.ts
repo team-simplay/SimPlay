@@ -121,7 +121,7 @@ export async function createEntities(context: SimplayContext) {
     ) {
       const informationText = createInformationText(entity);
       informationText.y =
-        sprite.y + sprite.height + verticalOffsetDecoratingText * 2;
+        sprite.y + sprite.height + verticalOffsetDecoratingText * 4;
       informationText.x = sprite.x + sprite.width / centerFactor;
       container.addChild(informationText);
       displayEntity = {
