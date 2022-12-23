@@ -79,6 +79,7 @@ in order to be able to be integrated into the visualization.
 A simple process can be created as follows:
 
 .. code-block:: python
+    
     from simplay import VisualProcess
     
     class MyProcess(VisualProcess):
