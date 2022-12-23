@@ -137,7 +137,7 @@ def message_consumer(name, env: VisualEnvironment, in_pipe: VisualStore):
             # significance
             print('LATE Getting Message: at time %d: %s received message: %s' %
                   (env.now, name, msg[1]))
-            in_pipe.has_decorating_text('LATE Getting Message: at time %d: %s received message: %s' %
+            in_pipe.has_decorating_text('LATE Getting Message: at time %d: %s received message: \n %s' %
                                         (env.now, name, msg[1]))
             in_pipe.has_tint(0xFF0000)
 
@@ -145,7 +145,7 @@ def message_consumer(name, env: VisualEnvironment, in_pipe: VisualStore):
             # message_consumer is synchronized with message_generator
             print('at time %d: %s received message: %s.' %
                   (env.now, name, msg[1]))
-            in_pipe.has_decorating_text(str('at time %d: %s received message: %s.' %
+            in_pipe.has_decorating_text(str('at time %d: %s received message: \n %s.' %
                                             (env.now, name, msg[1])))
             in_pipe.has_tint(0x00FF00)
 
