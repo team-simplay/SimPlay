@@ -153,7 +153,7 @@ env.visualization_manager.register_visual(
 
 class Repairman(VisualPreemptiveResource):
     def __init__(self, env, capacity):
-        super().__init__(env, "Repairman", capacity, visual="REPAIRMAN", tint=0xFFFFFF)
+        super().__init__(env, "Repairman", capacity, visual="REPAIRMAN")
         self.home = [2, 3]
         self.is_at(2, 3)
         self.is_visible()

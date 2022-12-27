@@ -66,6 +66,9 @@ Machine Shop
 
    `Person icons created by DinosoftLabs - Flaticon <https://www.flaticon.com/free-icons/person>`_
 
+.. note::
+   This simulation takes a while to run.
+
 .. literalinclude:: examples/machine_shop.py
    :language: python
    :linenos:

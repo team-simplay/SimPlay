@@ -37,7 +37,7 @@ class Carwash(VisualResource):
     """
 
     def __init__(self, env, num_machines, washtime):
-        super().__init__(env, "Carwash", num_machines, visual="CARWASH", tint=0xFFFFFF)
+        super().__init__(env, "Carwash", num_machines, visual="CARWASH")
         self.washtime = washtime
         self.is_at(1, 3)
         self.is_visible()

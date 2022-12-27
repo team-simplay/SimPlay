@@ -94,7 +94,7 @@ env.visualization_manager.register_visual(
 
 class Counter(VisualResource):
     def __init__(self, env):
-        super().__init__(env, "Counter", 1, visual="COUNTER", tint=0xFFFFFF)
+        super().__init__(env, "Counter", 1, visual="COUNTER")
         self.is_at(0, 1)
         self.is_visible()
 
