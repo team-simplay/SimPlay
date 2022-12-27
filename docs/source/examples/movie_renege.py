@@ -33,10 +33,11 @@ def define_next_moviegoer_position():
     global row_current_x
     global row_current_y
     if row_current_x == COLS:
-        row_current_y +=1
+        row_current_y += 1
         row_current_x = 0
     else:
         row_current_x += 1
+
 
 class Moviegoer(VisualProcess):
     def __init__(self, env, id, movie, num_tickets, theater):
