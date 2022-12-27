@@ -95,7 +95,7 @@ class VisualResource(VisualComponent, Resource):
             ResourceSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_utilization(self):
+    def __update_utilization(self, _=None):
         self.visualization_manager.add_event(
             ResourceSetUtilization(
                 self.id, self.env.now, self.count))
@@ -103,11 +103,13 @@ class VisualResource(VisualComponent, Resource):
     def request(self) -> Request:
         req = super().request()
         self.__update_utilization()
+        req.callbacks.append(self.__update_utilization)
         return req
 
     def release(self, request: Request) -> Release:
         rel = super().release(request)
         self.__update_utilization()
+        rel.callbacks.append(self.__update_utilization)
         return rel
 
 
@@ -163,7 +165,7 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
             ResourceSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_utilization(self):
+    def __update_utilization(self, _=None):
         self.visualization_manager.add_event(
             ResourceSetUtilization(
                 self.id, self.env.now, self.count))
@@ -174,11 +176,13 @@ class VisualPreemptiveResource(VisualComponent, PreemptiveResource):
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
         self.__update_utilization()
+        req.callbacks.append(self.__update_utilization)
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
         self.__update_utilization()
+        rel.callbacks.append(self.__update_utilization)
         return rel
 
 
@@ -234,7 +238,7 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
             ResourceSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_utilization(self):
+    def __update_utilization(self, _=None):
         self.visualization_manager.add_event(
             ResourceSetUtilization(
                 self.id, self.env.now, self.count))
@@ -245,11 +249,13 @@ class VisualPriorityResource(VisualComponent, PriorityResource):
             preempt: bool = True) -> PriorityRequest:
         req = super().request(priority, preempt)
         self.__update_utilization()
+        req.callbacks.append(self.__update_utilization)
         return req
 
     def release(self, request: PriorityRequest) -> Release:
         rel = super().release(request)
         self.__update_utilization()
+        rel.callbacks.append(self.__update_utilization)
         return rel
 
 
@@ -309,7 +315,7 @@ class VisualContainer(VisualComponent, Container):
             ContainerSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_level(self):
+    def __update_level(self, _=None):
         self.visualization_manager.add_event(
             ContainerSetLevel(self.id, self.env.now, self.level)
         )
@@ -317,11 +323,13 @@ class VisualContainer(VisualComponent, Container):
     def put(self, amount: ContainerAmount) -> ContainerPut:
         put = super().put(amount)
         self.__update_level()
+        put.callbacks.append(self.__update_level)
         return put
 
     def get(self, amount: ContainerAmount) -> ContainerGet:
         get = super().get(amount)
         self.__update_level()
+        get.callbacks.append(self.__update_level)
         return get
 
 
@@ -380,7 +388,7 @@ class VisualStore(VisualComponent, Store):
             StoreSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_content(self):
+    def __update_content(self, _=None):
         self.visualization_manager.add_event(
             StoreSetContent(self.id, self.env.now, self.items)
         )
@@ -388,11 +396,13 @@ class VisualStore(VisualComponent, Store):
     def put(self, item) -> StorePut:
         put = super().put(item)
         self.__update_content()
+        put.callbacks.append(self.__update_content)
         return put
 
     def get(self) -> StoreGet:
         get = super().get()
         self.__update_content()
+        get.callbacks.append(self.__update_content)
         return get
 
 
@@ -449,7 +459,7 @@ class VisualFilterStore(VisualComponent, FilterStore):
             StoreSetCapacity(self.id, self.env.now, self.capacity)
         )
 
-    def __update_content(self):
+    def __update_content(self, _=None):
         self.visualization_manager.add_event(
             StoreSetContent(self.id, self.env.now, self.items)
         )
@@ -457,10 +467,12 @@ class VisualFilterStore(VisualComponent, FilterStore):
     def put(self, item) -> StorePut:
         put = super().put(item)
         self.__update_content()
+        put.callbacks.append(self.__update_content)
         return put
 
     def get(self, filter: Callable[[Any], bool]
             = lambda item: True) -> FilterStoreGet:
         get = super().get(filter)
         self.__update_content()
+        get.callbacks.append(self.__update_content)
         return get
