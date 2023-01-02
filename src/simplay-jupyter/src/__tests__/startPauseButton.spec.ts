@@ -35,6 +35,7 @@ describe('StartPauseButton tests', () => {
     expect(startPauseButton.playing).toBeFalsy();
     expect(startPauseButton.button.children.item(0)?.innerHTML).toBe(playIcon);
   });
+
   it('should handle reset properly', () => {
     const pauseClickCallback = jest.fn();
     const playClickCallback = jest.fn();

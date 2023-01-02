@@ -1,5 +1,5 @@
 export class AccurateSlider {
-  private static PADDING = 2;
+  private static PADDING = 0;
   private static LEFTSEGEMENTCOLOR = '#55b3b3';
   private static RIGHTSEGEMENTCOLOR = '#e6e6e6';
   private static DEFAULTHEIGHT = 10;
@@ -158,6 +158,7 @@ export class AccurateSlider {
 
   private createRoot(): HTMLDivElement {
     const root = document.createElement('div');
+    root.classList.add('simplay-accurate-slider');
     root.id = this.id;
     root.style.height = this.heigth + 'px';
     root.style.width = `calc(100% - ${AccurateSlider.PADDING * 2}px)`;

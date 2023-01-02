@@ -14,6 +14,11 @@
   height: 500px;
 }
 
+.simplay-controls-container {
+  display: flex; 
+  flex-direction: column;
+}
+
 .simplay-controls {
   display: flex;
   flex-direction: row;
@@ -25,6 +30,7 @@
 }
 
 .simplay-label {
+  flex-grow: 0;
   text-align: center;
   align-self: center;
 }
@@ -37,13 +43,81 @@
   cursor: pointer;
 }
 
+.simplay-step-info {
+  cursor: pointer;
+}
+
 .simplay-number-input {
   flex-grow: 0;
   width: 50px;
   margin: 5px;
 }
 
+.simplay-step-control {
+  flex-grow: 1;
+}
+
 .simplay-button:disabled,
 .simplay-button[disabled] {
   cursor: not-allowed;
+}
+
+.simplay-accurate-slider {
+  background-color: 'transparent';
+  display: 'flex';
+  cursor: 'pointer';
+}
+
+.simplay-speed-container {
+  width: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.simplay-speed-input {
+  -webkit-appearance: slider-vertical; /* Chromium */
+  padding: 0 5px;
+  grid-column-start: 2;
+  grid-row-start: 1;
+  grid-row-end: 9;
+}
+
+.simplay-speed-box {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  text-align: right;
+}
+
+.simplay-speed-box1 {
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+.simplay-speed-box2 {
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.simplay-speed-box3 {
+  grid-row-start: 3;
+  grid-row-end: 3;
+}
+.simplay-speed-box4 {
+  grid-row-start: 4;
+  grid-row-end: 4;
+}
+.simplay-speed-box5 {
+  grid-row-start: 5;
+  grid-row-end: 5;
+}
+.simplay-speed-box6 {
+  grid-row-start: 6;
+  grid-row-end: 6;
+}
+.simplay-speed-box7 {
+  grid-row-start: 7;
+  grid-row-end: 7;
+}
+.simplay-speed-box8 {
+  grid-row-start: 8;
+  grid-row-end: 8;
 }
