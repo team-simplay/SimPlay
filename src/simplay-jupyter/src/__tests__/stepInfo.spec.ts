@@ -8,7 +8,7 @@ describe('StepInfo tests', () => {
 
   it('should handle mode change', () => {
     const stepInfo = new StepInfo(0, 10);
-    stepInfo.changeMode(StepInfo.TIME_MODE)
+    stepInfo.changeMode(StepInfo.TIME_MODE);
     const element = stepInfo.render();
     expect(element.innerHTML).toBe('00:00 / 00:10');
   });

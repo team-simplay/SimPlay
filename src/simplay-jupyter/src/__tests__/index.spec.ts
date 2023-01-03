@@ -1,9 +1,7 @@
 import { RenderSimplay } from '../index';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler } from 'simplay-web';
-import {
-  makeCustomResizeObseverGloballyAvailable
-} from './CustomResizeObserver';
+import { makeCustomResizeObseverGloballyAvailable } from './CustomResizeObserver';
 
 const mockRun = jest.fn();
 const mockPause = jest.fn().mockResolvedValue(true);
