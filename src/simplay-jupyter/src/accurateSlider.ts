@@ -148,11 +148,7 @@ export class AccurateSlider {
     this.slider.appendChild(this.leftSegment.segment);
     this.slider.appendChild(this.rightSegment.segment);
 
-    document.onload = () => {
-      setTimeout(() => {
-        this.updateVisual();
-      }, 50);
-    };
+    new ResizeObserver(() => this.updateVisual()).observe(this.slider);
     this.registerEventHandlers();
   }
 
