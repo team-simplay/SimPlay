@@ -24,4 +24,5 @@ pip uninstall simplay_jupyter
 ```
 
 ## Contributing
+
 See [DEVELOPMENT](DEVELOPMENT.md)
