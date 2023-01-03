@@ -184,6 +184,7 @@ export class AccurateSlider {
       this.mousedown = true;
       this.value = this.getValue(event);
     });
+
     this.slider.addEventListener('mousemove', event => {
       this.onHoverPositionChangesListeners.forEach(listener =>
         listener(Math.round(this.getValue(event)))
@@ -192,12 +193,14 @@ export class AccurateSlider {
         this.value = this.getValue(event);
       }
     });
+
     document.addEventListener('mouseup', event => {
       if (this.mousedown) {
         this.notifyUpdateValue(this.value);
       }
       this.mousedown = false;
     });
+
     let previousMouseX = 0;
     document.addEventListener('mousemove', event => {
       if (this.mousedown && !this.slider.contains(event.target as Node)) {

@@ -1,6 +1,9 @@
 import { RenderSimplay } from '../index';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler } from 'simplay-web';
+import {
+  makeCustomResizeObseverGloballyAvailable
+} from './CustomResizeObserver';
 
 const mockRun = jest.fn();
 const mockPause = jest.fn().mockResolvedValue(true);
@@ -29,18 +32,6 @@ jest.mock('simplay-web', () => {
   };
 });
 
-class CustomResizeObserver {
-  private callback;
-  constructor(callback: ResizeObserverCallback) {
-    this.callback = callback;
-  }
-  public disconnect() {}
-  public observe() {
-    this.callback([], this);
-  }
-  public unobserve() {}
-}
-
 describe('RenderSimplay tests', () => {
   let renderSimplay: RenderSimplay;
   const model = {
@@ -50,7 +41,7 @@ describe('RenderSimplay tests', () => {
   } as IRenderMime.IMimeModel;
 
   beforeAll(() => {
-    globalThis.ResizeObserver = CustomResizeObserver;
+    makeCustomResizeObseverGloballyAvailable();
   });
   beforeEach(() => {
     const options = {
