@@ -171,7 +171,10 @@ export class AccurateSlider {
   }
 
   private getValue(event: MouseEvent) {
-    const x = event.pageX - this.slider.offsetLeft - AccurateSlider.PADDING;
+    const x =
+      event.pageX -
+      this.slider.getBoundingClientRect().left -
+      AccurateSlider.PADDING;
     const value =
       (x /
         (this.slider.getBoundingClientRect().width -
@@ -205,7 +208,7 @@ export class AccurateSlider {
         if (Math.abs(event.pageX - previousMouseX) < 10) {
           return;
         }
-        const diffY = event.pageY - this.slider.offsetTop;
+        const diffY = event.pageY - this.slider.getBoundingClientRect().top;
         const changeValue = Math.max(100, 1000 - diffY) / 100;
         const diff = event.pageX - previousMouseX;
         let multiplier = -1;
