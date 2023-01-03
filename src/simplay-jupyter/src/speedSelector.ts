@@ -24,42 +24,42 @@ export class SpeedSelector {
     });
 
     const box100 = document.createElement('p');
-    box100.innerText = '100';
+    box100.innerText = '0.5';
     box100.classList.add('simplay-speed-box1');
     box100.classList.add('simplay-speed-box');
 
     const box50 = document.createElement('p');
-    box50.innerText = '50';
+    box50.innerText = '1';
     box50.classList.add('simplay-speed-box2');
     box50.classList.add('simplay-speed-box');
 
     const box20 = document.createElement('p');
-    box20.innerText = '20';
+    box20.innerText = '2';
     box20.classList.add('simplay-speed-box3');
     box20.classList.add('simplay-speed-box');
 
     const box10 = document.createElement('p');
-    box10.innerText = '10';
+    box10.innerText = '4';
     box10.classList.add('simplay-speed-box4');
     box10.classList.add('simplay-speed-box');
 
     const box8 = document.createElement('p');
-    box8.innerText = '4';
+    box8.innerText = '10';
     box8.classList.add('simplay-speed-box5');
     box8.classList.add('simplay-speed-box');
 
     const box4 = document.createElement('p');
-    box4.innerText = '2';
+    box4.innerText = '20';
     box4.classList.add('simplay-speed-box6');
     box4.classList.add('simplay-speed-box');
 
     const box2 = document.createElement('p');
-    box2.innerText = '1';
+    box2.innerText = '50';
     box2.classList.add('simplay-speed-box7');
     box2.classList.add('simplay-speed-box');
 
     const box1 = document.createElement('p');
-    box1.innerText = '0.5';
+    box1.innerText = '100';
     box1.classList.add('simplay-speed-box8');
     box1.classList.add('simplay-speed-box');
 

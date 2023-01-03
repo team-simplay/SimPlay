@@ -54,4 +54,10 @@ describe('StepInfo tests', () => {
     element.click();
     expect(modeListener).toHaveBeenCalledTimes(2);
   });
+
+  it('should display a fractional totalSteps properly', () => {
+    const stepInfo = new StepInfo(0, 19.9990784);
+    const element = stepInfo.render();
+    expect(element.innerHTML).toBe('0 / 20');
+  });
 });

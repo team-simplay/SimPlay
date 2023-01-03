@@ -18,12 +18,14 @@ export function createButton(
 export function tsToTime(ts: number): string {
   let minutes = Math.trunc(ts / 60);
   const seconds = ts - 60 * minutes;
-  if (minutes > 60) {
+  const roundedSeconds =
+    seconds > 59.5 ? Math.trunc(seconds) : Math.round(seconds);
+  if (minutes >= 60) {
     const hours = Math.trunc(minutes / 60);
     minutes = minutes - 60 * hours;
-    return enhanceFullTimeStringWithZeros(hours, minutes, seconds);
+    return enhanceFullTimeStringWithZeros(hours, minutes, roundedSeconds);
   }
-  return enhanceMinutesSecondsTimeStringWithZeros(minutes, seconds);
+  return enhanceMinutesSecondsTimeStringWithZeros(minutes, roundedSeconds);
 }
 
 function enhanceMinutesSecondsTimeStringWithZeros(

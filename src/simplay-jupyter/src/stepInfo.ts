@@ -46,8 +46,8 @@ export class StepInfo {
       );
     } else {
       this.element.innerHTML = this.buildElementContent(
-        step.toString(),
-        this.totalSteps.toString()
+        Math.round(step).toString(),
+        Math.round(this.totalSteps).toString()
       );
     }
   }
@@ -65,8 +65,8 @@ export class StepInfo {
       );
     } else {
       this.element.innerHTML = this.buildElementContent(
-        this.currentStep.toString(),
-        step.toString()
+        Math.round(this.currentStep).toString(),
+        Math.round(step).toString()
       );
     }
   }

@@ -69,55 +69,56 @@
 }
 
 .simplay-speed-container {
-  width: 100px;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 3px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .simplay-speed-input {
-  -webkit-appearance: slider-vertical; /* Chromium */
-  padding: 0 5px;
-  grid-column-start: 2;
-  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-column-end: 9;
+  grid-row-start: 2;
   grid-row-end: 9;
+  
 }
 
 .simplay-speed-box {
-  grid-column-start: 1;
-  grid-column-end: 1;
-  text-align: right;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  text-align: center;
 }
 
 .simplay-speed-box1 {
-  grid-row-start: 1;
-  grid-row-end: 1;
+  grid-column-start: 1;
+  grid-column-end: 1;
 }
 .simplay-speed-box2 {
-  grid-row-start: 2;
-  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 2;
 }
 .simplay-speed-box3 {
-  grid-row-start: 3;
-  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 3;
 }
 .simplay-speed-box4 {
-  grid-row-start: 4;
-  grid-row-end: 4;
+  grid-column-start: 4;
+  grid-column-end: 4;
 }
 .simplay-speed-box5 {
-  grid-row-start: 5;
-  grid-row-end: 5;
+  grid-column-start: 5;
+  grid-column-end: 5;
 }
 .simplay-speed-box6 {
-  grid-row-start: 6;
-  grid-row-end: 6;
+  grid-column-start: 6;
+  grid-column-end: 6;
 }
 .simplay-speed-box7 {
-  grid-row-start: 7;
-  grid-row-end: 7;
+  grid-column-start: 7;
+  grid-column-end: 7;
 }
 .simplay-speed-box8 {
-  grid-row-start: 8;
-  grid-row-end: 8;
+  grid-column-start: 8;
+  grid-column-end: 8;
 }
