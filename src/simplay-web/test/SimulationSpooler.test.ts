@@ -115,7 +115,7 @@ describe('SimulationSpooler tests', async function () {
     });
   });
 
-  describe('test total steps', async function() {
+  describe('test total steps', async function () {
     it('should return the correct total steps', async () => {
       const events = [
         {
@@ -146,7 +146,7 @@ describe('SimulationSpooler tests', async function () {
       await new Promise((resolve) => setTimeout(resolve, 100));
       expect(spooler.getTotalSteps()).to.equal(10);
     });
-  })
+  });
 
   describe('play tests', async function () {
     it('should spool the simulation', async () => {
@@ -280,7 +280,7 @@ describe('SimulationSpooler tests', async function () {
       };
 
       // this fire and forget is intentional, we're requestion to pause soon
-      spooler.skipTo(1.535  );
+      spooler.skipTo(1.535);
       expect(timesCalledFirst).to.equal(1);
       expect(timesCalledSecond).to.equal(0);
     });
