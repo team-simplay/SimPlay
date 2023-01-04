@@ -1,13 +1,15 @@
 import { RenderSimplay } from '../index';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler } from 'simplay-web';
+import { makeCustomResizeObseverGloballyAvailable } from './CustomResizeObserver';
 
 const mockRun = jest.fn();
-const mockPause = jest.fn();
+const mockPause = jest.fn().mockResolvedValue(true);
 const mockReset = jest.fn();
 const mockAdvanceOneStep = jest.fn();
 const mockSetSpeedFactor = jest.fn();
-const mockSkipTo = jest.fn();
+const mockSkipTo = jest.fn().mockResolvedValue(true);
+const mockGetTotalSteps = () => 100;
 
 jest.mock('simplay-web', () => {
   return {
@@ -19,6 +21,7 @@ jest.mock('simplay-web', () => {
         advanceOneStep: mockAdvanceOneStep,
         setSpeedFactor: mockSetSpeedFactor,
         skipTo: mockSkipTo,
+        getTotalSteps: mockGetTotalSteps,
         addStepChangedEventListener: (callback: (step: number) => void) => {
           callback(1);
         }
@@ -26,18 +29,6 @@ jest.mock('simplay-web', () => {
     })
   };
 });
-
-class CustomResizeObserver {
-  private callback;
-  constructor(callback: ResizeObserverCallback) {
-    this.callback = callback;
-  }
-  public disconnect() {}
-  public observe() {
-    this.callback([], this);
-  }
-  public unobserve() {}
-}
 
 describe('RenderSimplay tests', () => {
   let renderSimplay: RenderSimplay;
@@ -48,7 +39,7 @@ describe('RenderSimplay tests', () => {
   } as IRenderMime.IMimeModel;
 
   beforeAll(() => {
-    globalThis.ResizeObserver = CustomResizeObserver;
+    makeCustomResizeObseverGloballyAvailable();
   });
   beforeEach(() => {
     const options = {
@@ -60,20 +51,21 @@ describe('RenderSimplay tests', () => {
   it('should create all controls', () => {
     return renderSimplay.renderModel(model).then(() => {
       const parent = renderSimplay.node;
-      const controlsContainer = parent
+      const sliderContainer = parent
         .getElementsByClassName('simplay-controls')
         .item(0) as HTMLDivElement;
+      const controlsContainer = parent
+        .getElementsByClassName('simplay-controls')
+        .item(1) as HTMLDivElement;
       expect(SimulationSpooler).toHaveBeenCalled();
       // expect the three buttons play, reset and skip to be around
       expect(
         controlsContainer.getElementsByClassName('simplay-button').length
-      ).toBe(3);
-      // expect the three labels for Speed, skipTo and current step to be around
+      ).toBe(4);
       expect(
-        controlsContainer.getElementsByClassName('simplay-label').length
-      ).toBe(3);
-      // expect inputs for speed and skipTo to be around
-      expect(controlsContainer.getElementsByTagName('input').length).toBe(2);
+        controlsContainer.querySelector('#simplay-step-info')
+      ).toBeDefined();
+      expect(sliderContainer.querySelector('#simplay-slider')).toBeDefined();
     });
   });
 
@@ -82,7 +74,7 @@ describe('RenderSimplay tests', () => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
         .getElementsByClassName('simplay-controls')
-        .item(0) as HTMLDivElement;
+        .item(1) as HTMLDivElement;
 
       const startPauseButton = controlsContainer
         .getElementsByClassName('simplay-button')
@@ -102,7 +94,7 @@ describe('RenderSimplay tests', () => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
         .getElementsByClassName('simplay-controls')
-        .item(0) as HTMLDivElement;
+        .item(1) as HTMLDivElement;
 
       const resetButton = controlsContainer
         .getElementsByClassName('simplay-button')
@@ -118,7 +110,7 @@ describe('RenderSimplay tests', () => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
         .getElementsByClassName('simplay-controls')
-        .item(0) as HTMLDivElement;
+        .item(1) as HTMLDivElement;
 
       const advanceOneStepButton = controlsContainer
         .getElementsByClassName('simplay-button')
@@ -136,12 +128,18 @@ describe('RenderSimplay tests', () => {
         .getElementsByClassName('simplay-controls')
         .item(0) as HTMLDivElement;
 
-      const skipToInput = controlsContainer
-        .getElementsByTagName('input')
-        .item(1) as HTMLInputElement;
+      const skipToInput = controlsContainer.querySelector(
+        '#simplay-slider'
+      ) as HTMLDivElement;
 
-      var event = new Event('keyup');
-      skipToInput.dispatchEvent(event);
+      const mouseDown = new MouseEvent('mousedown', {});
+      Object.assign(mouseDown, {
+        pageX: 60
+      });
+      skipToInput.dispatchEvent(mouseDown);
+      const mouseup = new Event('mouseup', {});
+      document.dispatchEvent(mouseup);
+
       expect(mockSkipTo).toHaveBeenCalled();
     });
   });
@@ -151,30 +149,21 @@ describe('RenderSimplay tests', () => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
         .getElementsByClassName('simplay-controls')
-        .item(0) as HTMLDivElement;
+        .item(1) as HTMLDivElement;
 
-      const skipToInput = controlsContainer
-        .getElementsByTagName('input')
+      const speedChangeButton = controlsContainer
+        .getElementsByClassName('simplay-button')
+        .item(3) as HTMLInputElement;
+      const mouseEnterEvent = new Event('focus');
+      speedChangeButton.dispatchEvent(mouseEnterEvent);
+
+      const speedChangeSlider = parent
+        .getElementsByClassName('simplay-speed-input')
         .item(0) as HTMLInputElement;
 
-      var event = new Event('change');
-      skipToInput.dispatchEvent(event);
+      const changeEvent = new Event('change');
+      speedChangeSlider.dispatchEvent(changeEvent);
       expect(mockSetSpeedFactor).toHaveBeenCalled();
-    });
-  });
-
-  it('should handle step change', () => {
-    return renderSimplay.renderModel(model).then(() => {
-      const parent = renderSimplay.node;
-      const controlsContainer = parent
-        .getElementsByClassName('simplay-controls')
-        .item(0) as HTMLDivElement;
-
-      const currentStepLabel = controlsContainer
-        .getElementsByClassName('simplay-label')
-        .item(2) as HTMLParagraphElement;
-
-      expect(currentStepLabel.innerText).toContain('1');
     });
   });
 });

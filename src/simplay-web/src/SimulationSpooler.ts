@@ -127,7 +127,7 @@ export class SimulationSpooler {
   async skipTo(timestamp: number) {
     await this.pause();
     if (timestamp < this.currentSimTimeStamp) {
-      this.reset();
+      await this.reset();
     }
     for (let i = this.currentSimTimeStamp; i <= timestamp; i++) {
       this.spoolTimestamp(i);
