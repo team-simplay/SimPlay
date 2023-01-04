@@ -8,5 +8,5 @@ More Information can be found in the [SimPlay Documentation](https://simplay.rea
 To install the extension, execute:
 
 ```bash
-$ pip install simplay
+pip install simplay
 ```

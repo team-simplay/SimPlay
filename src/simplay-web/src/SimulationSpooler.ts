@@ -136,7 +136,7 @@ export class SimulationSpooler {
   }
 
   /**
-   * Pauses the spooler and resets it, to the initial state
+   * Pauses the spooler and resets it to the initial state
    */
   async reset() {
     await this.pause();
