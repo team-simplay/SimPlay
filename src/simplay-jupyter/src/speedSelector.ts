@@ -2,6 +2,8 @@ import speedIcon from '../style/icons/speed.svg';
 import { createButton, createIconSpan } from './utils';
 import tippy from 'tippy.js';
 
+export const SpeedSelectorValues = [0.5, 1, 2, 4, 10, 20, 50, 100];
+
 export class SpeedSelector {
   button: HTMLButtonElement;
   slider: HTMLInputElement;
@@ -23,54 +25,14 @@ export class SpeedSelector {
       }
     });
 
-    const box100 = document.createElement('p');
-    box100.innerText = '0.5';
-    box100.classList.add('simplay-speed-box1');
-    box100.classList.add('simplay-speed-box');
+    for (let i = 0; i < SpeedSelectorValues.length; i++) {
+      const box = this.createDisplayParagraph(
+        SpeedSelectorValues[i].toString(),
+        (i + 1).toString()
+      );
+      containerTippy.appendChild(box);
+    }
 
-    const box50 = document.createElement('p');
-    box50.innerText = '1';
-    box50.classList.add('simplay-speed-box2');
-    box50.classList.add('simplay-speed-box');
-
-    const box20 = document.createElement('p');
-    box20.innerText = '2';
-    box20.classList.add('simplay-speed-box3');
-    box20.classList.add('simplay-speed-box');
-
-    const box10 = document.createElement('p');
-    box10.innerText = '4';
-    box10.classList.add('simplay-speed-box4');
-    box10.classList.add('simplay-speed-box');
-
-    const box8 = document.createElement('p');
-    box8.innerText = '10';
-    box8.classList.add('simplay-speed-box5');
-    box8.classList.add('simplay-speed-box');
-
-    const box4 = document.createElement('p');
-    box4.innerText = '20';
-    box4.classList.add('simplay-speed-box6');
-    box4.classList.add('simplay-speed-box');
-
-    const box2 = document.createElement('p');
-    box2.innerText = '50';
-    box2.classList.add('simplay-speed-box7');
-    box2.classList.add('simplay-speed-box');
-
-    const box1 = document.createElement('p');
-    box1.innerText = '100';
-    box1.classList.add('simplay-speed-box8');
-    box1.classList.add('simplay-speed-box');
-
-    containerTippy.appendChild(box100);
-    containerTippy.appendChild(box50);
-    containerTippy.appendChild(box20);
-    containerTippy.appendChild(box10);
-    containerTippy.appendChild(box8);
-    containerTippy.appendChild(box4);
-    containerTippy.appendChild(box2);
-    containerTippy.appendChild(box1);
     containerTippy.appendChild(this.slider);
 
     const buttonSpan = createIconSpan(speedIcon);
@@ -86,5 +48,16 @@ export class SpeedSelector {
     });
 
     this.button = button;
+  }
+
+  createDisplayParagraph(
+    innerText: string,
+    classSuffix: string
+  ): HTMLParagraphElement {
+    const paragraph = document.createElement('p');
+    paragraph.innerText = innerText;
+    paragraph.classList.add(`simplay-speed-box${classSuffix}`);
+    paragraph.classList.add('simplay-speed-box');
+    return paragraph;
   }
 }

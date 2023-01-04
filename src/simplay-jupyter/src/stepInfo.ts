@@ -5,10 +5,14 @@ export class StepInfo {
   public static TIME_MODE = 'time';
 
   private mode: string;
-  private formatValueDelegate: (value: number) => string = (value: number) =>
+  private _formatValueDelegate: (value: number) => string = (value: number) =>
     Math.round(value).toString();
   private element: HTMLParagraphElement;
   private modeListeners: ((mode: string) => void)[] = [];
+
+  get formatValueDelegate(): (value: number) => string {
+    return this._formatValueDelegate;
+  }
 
   get currentStep(): number {
     return this._currentStep;
@@ -55,7 +59,7 @@ export class StepInfo {
 
   public changeMode(mode: string): void {
     this.mode = mode;
-    this.formatValueDelegate =
+    this._formatValueDelegate =
       mode === StepInfo.TIME_MODE
         ? tsToTime
         : (value: number) => Math.round(value).toString();

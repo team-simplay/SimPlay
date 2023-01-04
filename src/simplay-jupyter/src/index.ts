@@ -9,8 +9,8 @@ import resetIcon from '../style/icons/restart.svg';
 import tippy, { followCursor } from 'tippy.js';
 import '../style/index.css';
 import { StartPauseButton } from './startPauseButton';
-import { ControlHandler, tsToTime } from './utils';
-import { SpeedSelector } from './speedSelector';
+import { ControlHandler } from './utils';
+import { SpeedSelector, SpeedSelectorValues } from './speedSelector';
 import { AccurateSlider } from './accurateSlider';
 import { StepInfo } from './stepInfo';
 
@@ -86,7 +86,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         });
       });
 
-      let stepSliderPopupMode = StepInfo.STEP_MODE;
       const stepSliderPopup = tippy(stepSlider.slider, {
         placement: 'top',
         content: '00:00',
@@ -98,18 +97,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         plugins: [followCursor]
       });
 
+      const stepInfo = new StepInfo(0, simulationSpooler.getTotalSteps());
       stepSlider.addOnHoverPositionChangedListener((value: number) => {
-        if (stepSliderPopupMode === StepInfo.TIME_MODE) {
-          stepSliderPopup.setContent(tsToTime(value));
-        } else {
-          stepSliderPopup.setContent(value.toString());
-        }
+        stepSliderPopup.setContent(stepInfo.formatValueDelegate(value));
       });
 
-      const stepInfo = new StepInfo(0, simulationSpooler.getTotalSteps());
-      stepInfo.addModeListener((mode: string) => {
-        stepSliderPopupMode = mode;
-      });
       simulationSpooler.addStepChangedEventListener(ts => {
         stepInfo.currentStep = ts;
         if (controlHandler.state === 'enabled') {
@@ -139,9 +131,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       });
 
       const speedInput = new SpeedSelector((value: string) => {
-        const values = [0.5, 1, 2, 4, 10, 20, 50, 100];
-
-        simulationSpooler.setSpeedFactor(values[Number(value)]);
+        simulationSpooler.setSpeedFactor(SpeedSelectorValues[Number(value)]);
       });
       // container to have tippy popover in the same parent as the button supporting better accessibility
       const speedInputContainer = document.createElement('div');
