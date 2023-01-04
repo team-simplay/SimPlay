@@ -1,6 +1,10 @@
 import { AccurateSlider } from '../accurateSlider';
+import { makeCustomResizeObseverGloballyAvailable } from './CustomResizeObserver';
 
 describe('AccurateSlider tests', () => {
+  beforeAll(() => {
+    makeCustomResizeObseverGloballyAvailable();
+  });
   it('should create a div', () => {
     const accurateSlider = new AccurateSlider('sli', 0, 100);
     expect(accurateSlider.slider).toBeInstanceOf(HTMLDivElement);
@@ -101,5 +105,212 @@ describe('AccurateSlider tests', () => {
     accurateSlider.value = 60;
     expect(spy).not.toBeCalledWith(60);
     expect(spy2).toBeCalledWith(60);
+  });
+
+  it('setting minVal updates minVal', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100);
+    accurateSlider.minVal = 10;
+    expect(accurateSlider.minVal).toBe(10);
+  });
+
+  it('setting maxVal updates maxVal', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100);
+    accurateSlider.maxVal = 10;
+    expect(accurateSlider.maxVal).toBe(10);
+  });
+
+  it('sets the correct color for left segment', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10, 'red');
+    expect(accurateSlider.leftSegment.color).toBe('red');
+  });
+
+  it('sets the correct color for right segment', () => {
+    const accurateSlider = new AccurateSlider(
+      'sli',
+      0,
+      100,
+      50,
+      10,
+      'red',
+      'blue'
+    );
+    expect(accurateSlider.rightSegment.color).toBe('blue');
+  });
+
+  it('sets the correct color for left segment when changing color', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10, 'red');
+    accurateSlider.leftSegment.color = 'blue';
+    expect(accurateSlider.leftSegment.color).toBe('blue');
+  });
+
+  it('sets the correct color for right segment when changing color', () => {
+    const accurateSlider = new AccurateSlider(
+      'sli',
+      0,
+      100,
+      50,
+      10,
+      'red',
+      'blue'
+    );
+    accurateSlider.rightSegment.color = 'green';
+    expect(accurateSlider.rightSegment.color).toBe('green');
+  });
+
+  it('updates the width of the left segment when changing value', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10, 'red');
+    accurateSlider.leftSegment.width = 60;
+    expect(accurateSlider.leftSegment.width).toBe(60);
+  });
+
+  it('updates the value when clicking on the slider', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousedown', {});
+    Object.assign(event, {
+      pageX: 60
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    accurateSlider.slider.dispatchEvent(event);
+    expect(accurateSlider.value).toBe(60);
+  });
+
+  it('fires an event when updating the value from a click', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousedown', {});
+    Object.assign(event, {
+      pageX: 60
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    const spy = jest.fn();
+    accurateSlider.addOnStagedValueChangedListener(spy);
+    accurateSlider.slider.dispatchEvent(event);
+    expect(spy).toBeCalledWith(60);
+  });
+
+  it('fires hoverchanegd information when hovering', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousemove', {});
+    Object.assign(event, {
+      pageX: 40
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    const spy = jest.fn();
+    accurateSlider.addOnHoverPositionChangedListener(spy);
+    accurateSlider.slider.dispatchEvent(event);
+    expect(spy).toBeCalledWith(40);
+  });
+
+  it('fires staged value changes', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousedown', {});
+    Object.assign(event, {
+      pageX: 40
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    const spy = jest.fn();
+    accurateSlider.addOnStagedValueChangedListener(spy);
+    accurateSlider.slider.dispatchEvent(event);
+    expect(spy).toBeCalledWith(40);
+  });
+
+  it('fires staged value changes when moving with mousedown', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousedown', {});
+    Object.assign(event, {
+      pageX: 40
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    const event2 = new MouseEvent('mousemove', {
+      buttons: 1
+    });
+    Object.assign(event2, {
+      pageX: 60
+    });
+    accurateSlider.slider.dispatchEvent(event);
+    const spy = jest.fn();
+    accurateSlider.addOnStagedValueChangedListener(spy);
+    accurateSlider.slider.dispatchEvent(event2);
+    expect(spy).toBeCalledWith(60);
+  });
+
+  it('fires after scribbling', () => {
+    const accurateSlider = new AccurateSlider('sli', 0, 100, 50, 10);
+    const event = new MouseEvent('mousedown', {});
+    Object.assign(event, {
+      pageX: 40
+    });
+    accurateSlider.slider.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      width: 100,
+      height: 10,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    });
+
+    const event2 = new MouseEvent('mouseup', {});
+    const spy = jest.fn();
+    accurateSlider.addOnValueChangedListener(spy);
+    accurateSlider.slider.dispatchEvent(event);
+    document.dispatchEvent(event2);
+    expect(spy).toBeCalledWith(40);
   });
 });

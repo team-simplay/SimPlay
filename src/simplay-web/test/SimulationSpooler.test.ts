@@ -117,7 +117,7 @@ describe('SimulationSpooler tests', async function () {
     });
   });
 
-  describe('test total steps', async function() {
+  describe('test total steps', async function () {
     it('should return the correct total steps', async () => {
       const events = [
         {
@@ -148,7 +148,7 @@ describe('SimulationSpooler tests', async function () {
       await new Promise((resolve) => setTimeout(resolve, 100));
       expect(spooler.getTotalSteps()).to.equal(10);
     });
-  })
+  });
 
   describe('play tests', async function () {
     it('should spool the simulation', async () => {
