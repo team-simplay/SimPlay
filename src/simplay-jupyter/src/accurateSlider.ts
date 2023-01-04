@@ -10,6 +10,16 @@ export class AccurateSlider {
   public readonly leftSegment: SliderSegment;
   public readonly rightSegment: SliderSegment;
 
+  private _lastClickedValue = 0;
+
+  private set lastClickedValue(value: number) {
+    this._lastClickedValue = Math.round(value);
+  }
+
+  private get lastClickedValue(): number {
+    return this._lastClickedValue;
+  }
+
   private onValueChangedListeners: ((value: number) => void)[] = [];
   private onStagedValueChangedListeners: ((value: number) => void)[] = [];
   private onHoverPositionChangesListeners: ((value: number) => void)[] = [];
@@ -182,7 +192,8 @@ export class AccurateSlider {
   private registerEventHandlers() {
     this.slider.addEventListener('mousedown', event => {
       this.mousedown = true;
-      this.value = this.getValue(event);
+      this.lastClickedValue = this.getValue(event);
+      this.value = this.lastClickedValue;
     });
 
     this.slider.addEventListener('mousemove', event => {
@@ -190,33 +201,17 @@ export class AccurateSlider {
         listener(Math.round(this.getValue(event)))
       );
       if (event.buttons === 1) {
-        this.value = this.getValue(event);
+        this.lastClickedValue = this.getValue(event);
+        this.value = this.lastClickedValue;
       }
     });
 
-    document.addEventListener('mouseup', event => {
+    document.addEventListener('mouseup', _ => {
       if (this.mousedown) {
-        this.notifyUpdateValue(this.value);
+        this.notifyUpdateValue(this.lastClickedValue);
+        this.value = this.lastClickedValue;
       }
       this.mousedown = false;
-    });
-
-    let previousMouseX = 0;
-    document.addEventListener('mousemove', event => {
-      if (this.mousedown && !this.slider.contains(event.target as Node)) {
-        if (Math.abs(event.pageX - previousMouseX) < 10) {
-          return;
-        }
-        const diffY = event.pageY - this.slider.getBoundingClientRect().top;
-        const changeValue = Math.max(100, 1000 - diffY) / 100;
-        const diff = event.pageX - previousMouseX;
-        let multiplier = -1;
-        if (diff < 0) {
-          multiplier = 1;
-        }
-        this.value = this.value - changeValue * multiplier;
-        previousMouseX = event.pageX;
-      }
     });
   }
 
