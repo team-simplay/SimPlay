@@ -1,4 +1,3 @@
-import { JSONObject } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler, SimulationDataSerialized } from 'simplay-web';
@@ -42,7 +41,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     let simulationSpooler: SimulationSpooler;
     const data = model.data[
       this._mimeType
-    ] as unknown as SimulationDataSerialize;
+    ] as unknown as SimulationDataSerialized;
 
     const simplayContainer = document.createElement('div');
     simplayContainer.id = 'simplayContainer';
@@ -152,8 +151,6 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
 
     controlsContainer.appendChild(controlsStepInfo);
     controlsContainer.appendChild(controls);
-
-    observer.observe(simplayContainer);
 
     simplayContainer.appendChild(controlsContainer);
     return Promise.resolve();
