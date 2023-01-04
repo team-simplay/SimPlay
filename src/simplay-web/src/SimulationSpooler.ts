@@ -6,6 +6,9 @@ import * as PIXI from 'pixi.js';
 import * as PIXILAYERS from '@pixi/layers';
 import { createEntities, resetDisplayEntity } from './Entity';
 
+/**
+ * Spools and displays a simulation in the given container
+ */
 export class SimulationSpooler {
   private DOMContainer: HTMLElement;
   private simulationData: SimulationData;
@@ -27,10 +30,17 @@ export class SimulationSpooler {
     createEntities(this.context);
   }
 
+  /**
+   * Add listener that gets called once the currentSimTimeStamp changes
+   * @param listener 
+   */
   addStepChangedEventListener(listener: (timestamp: number) => void) {
     this.stepChangedEventListeners.push(listener);
   }
 
+  /**
+   * Remove currentSimTimeStamp change listener 
+   */
   removeStepChangedEventListener(listener: (timestamp: number) => void) {
     this.stepChangedEventListeners = this.stepChangedEventListeners.filter(
       (l) => l !== listener
@@ -57,12 +67,18 @@ export class SimulationSpooler {
     });
   }
 
+  /**
+   * @returns step total number of steps
+   */
   getTotalSteps(): number {
     return Math.max(
       ...this.simulationData.events.map((event) => event.timestamp)
     );
   }
 
+  /**
+   * Starts spooling the events
+   */
   async run() {
     const maxTimestamp = this.getTotalSteps();
     while (!this.stopRequested) {
@@ -83,6 +99,9 @@ export class SimulationSpooler {
     this.stopRequested = false;
   }
 
+  /**
+   * Pauses the spooler
+   */
   async pause() {
     this.stopRequested = true;
     // Wait for the current step to finish
@@ -92,12 +111,19 @@ export class SimulationSpooler {
     this.stopRequested = false;
   }
 
+  /**
+   * Pauses the spooler and makes one step forward
+   */
   async advanceOneStep() {
     await this.pause();
     this.spoolTimestamp(this.currentSimTimeStamp);
     this.setSimulationStep(this.currentSimTimeStamp + 1);
   }
 
+  /**
+   * Pauses the spooler and skips to the given timestamp
+   * @param timestamp to skip to
+   */
   async skipTo(timestamp: number) {
     await this.pause();
     if (timestamp < this.currentSimTimeStamp) {
@@ -109,6 +135,9 @@ export class SimulationSpooler {
     this.setSimulationStep(timestamp);
   }
 
+  /**
+   * Pauses the spooler and resets it to the initial state
+   */
   async reset() {
     await this.pause();
     this.stopRequested = false;
@@ -122,6 +151,11 @@ export class SimulationSpooler {
     this.setSimulationStep(0);
   }
 
+  /**
+   * Set the speedFactor of the spooler to the given value
+   * @param value speedFactor
+   * @returns speedFactor 
+   */
   setSpeedFactor(value: number): number {
     if (value <= 0) {
       throw new Error('Speed factor must be greater than 0');
