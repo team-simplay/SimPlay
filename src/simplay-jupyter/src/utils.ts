@@ -23,34 +23,34 @@ export function tsToTime(ts: number): string {
   if (minutes >= 60) {
     const hours = Math.trunc(minutes / 60);
     minutes = minutes - 60 * hours;
-    return enhanceFullTimeStringWithZeros(hours, minutes, roundedSeconds);
+    return padFullTimeStringWithZeros(hours, minutes, roundedSeconds);
   }
-  return enhanceMinutesSecondsTimeStringWithZeros(minutes, roundedSeconds);
+  return padMinutesSecondsTimeStringWithZeros(minutes, roundedSeconds);
 }
 
-function enhanceMinutesSecondsTimeStringWithZeros(
+function padMinutesSecondsTimeStringWithZeros(
   minutes: number,
   seconds: number
 ) {
-  const minutesString = enhanceWithZero(minutes);
-  const secondsString = enhanceWithZero(seconds);
+  const minutesString = padWithZero(minutes);
+  const secondsString = padWithZero(seconds);
 
   return `${minutesString}:${secondsString}`;
 }
 
-function enhanceFullTimeStringWithZeros(
+function padFullTimeStringWithZeros(
   hours: number,
   minutes: number,
   seconds: number
 ) {
-  const hoursString = enhanceWithZero(hours);
-  const minutesString = enhanceWithZero(minutes);
-  const secondsString = enhanceWithZero(seconds);
+  const hoursString = padWithZero(hours);
+  const minutesString = padWithZero(minutes);
+  const secondsString = padWithZero(seconds);
 
   return `${hoursString}:${minutesString}:${secondsString}`;
 }
 
-function enhanceWithZero(time: number) {
+function padWithZero(time: number) {
   if (time < 10) {
     return '0' + time;
   }

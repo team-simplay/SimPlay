@@ -29,21 +29,11 @@
   min-width: 10px;
 }
 
-.simplay-label {
-  flex-grow: 0;
-  text-align: center;
-  align-self: center;
-}
-
 .simplay-button {
   flex-grow: 0;
   padding: 0;
   background-color: transparent;
   border: none;
-  cursor: pointer;
-}
-
-.simplay-step-info {
   cursor: pointer;
 }
 

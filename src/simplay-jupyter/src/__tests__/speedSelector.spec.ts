@@ -6,7 +6,7 @@ describe('speedSelector tests', () => {
     expect(speedSelector.button).toBeInstanceOf(HTMLButtonElement);
   });
 
-  it('should call callack', () => {
+  it('should call callback', () => {
     const callback = jest.fn();
     const speedSelector = new SpeedSelector(callback);
     speedSelector.button.click();

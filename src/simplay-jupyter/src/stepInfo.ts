@@ -32,10 +32,11 @@ export class StepInfo {
     this.updateStepDisplay();
   }
 
-  constructor(private _currentStep: number, private _totalSteps: number) {
+  constructor(id: string, private _currentStep: number, private _totalSteps: number) {
     this.mode = StepInfo.STEP_MODE;
 
     this.element = document.createElement('p') as HTMLParagraphElement;
+    this.element.id = id;
     this.element.addEventListener('click', () => {
       if (this.mode === StepInfo.TIME_MODE) {
         this.changeMode(StepInfo.STEP_MODE);
@@ -79,8 +80,10 @@ export class StepInfo {
   }
 
   public render(): HTMLParagraphElement {
-    this.element.classList.add('simplay-step-info');
-    this.element.classList.add('simplay-label');
+    this.element.style.cursor = 'pointer';
+    this.element.style.flexGrow = '0';
+    this.element.style.textAlign = 'center';
+    this.element.style.alignSelf = 'center';
     return this.element;
   }
 }

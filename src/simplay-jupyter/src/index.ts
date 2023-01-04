@@ -72,7 +72,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       );
 
       const stepSlider = new AccurateSlider(
-        'sli',
+        'simplay-slider',
         0,
         simulationSpooler.getTotalSteps(),
         0
@@ -97,7 +97,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         plugins: [followCursor]
       });
 
-      const stepInfo = new StepInfo(0, simulationSpooler.getTotalSteps());
+      const stepInfo = new StepInfo('simplay-step-info', 0, simulationSpooler.getTotalSteps());
       stepSlider.addOnHoverPositionChangedListener((value: number) => {
         stepSliderPopup.setContent(stepInfo.formatValueDelegate(value));
       });

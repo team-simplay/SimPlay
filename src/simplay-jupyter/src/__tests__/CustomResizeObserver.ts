@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export class CustomResizeObserver {
   private callback;
   constructor(callback: ResizeObserverCallback) {

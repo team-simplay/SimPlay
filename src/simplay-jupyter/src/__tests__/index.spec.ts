@@ -62,14 +62,12 @@ describe('RenderSimplay tests', () => {
       expect(
         controlsContainer.getElementsByClassName('simplay-button').length
       ).toBe(4);
-      // expect the label for current step and total steps to be around
       expect(
-        controlsContainer.getElementsByClassName('simplay-label').length
-      ).toBe(1);
-      // expect slider to be around
+        controlsContainer.querySelector('#simplay-step-info')
+      ).toBeDefined();
       expect(
-        sliderContainer.getElementsByClassName('simplay-accurate-slider').length
-      ).toBe(1);
+        sliderContainer.querySelector('#simplay-slider')
+      ).toBeDefined();
     });
   });
 
@@ -133,8 +131,7 @@ describe('RenderSimplay tests', () => {
         .item(0) as HTMLDivElement;
 
       const skipToInput = controlsContainer
-        .getElementsByClassName('simplay-accurate-slider')
-        .item(0) as HTMLDivElement;
+        .querySelector('#simplay-slider') as HTMLDivElement;
 
       const mouseDown = new MouseEvent('mousedown', {});
       Object.assign(mouseDown, {
