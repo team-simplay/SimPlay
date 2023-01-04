@@ -143,12 +143,15 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
 
         simulationSpooler.setSpeedFactor(values[Number(value)]);
       });
+      // container to have tippy popover in the same parent as the button supporting better accessibility
+      const speedInputContainer = document.createElement('div');
+      speedInputContainer.appendChild(speedInput.button);
 
       // Changing the order of the append calls affects the actual order in the UI.
       controls.appendChild(startPauseButton.button);
       controls.appendChild(resetButton);
       controls.appendChild(advanceOneStepButton);
-      controls.appendChild(speedInput.button);
+      controls.appendChild(speedInputContainer);
       controls.appendChild(stepInfo.render());
 
       controlsContainer.appendChild(controlsStepInfo);

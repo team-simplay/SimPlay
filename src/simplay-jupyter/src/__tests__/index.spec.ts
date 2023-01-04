@@ -8,7 +8,7 @@ const mockPause = jest.fn().mockResolvedValue(true);
 const mockReset = jest.fn();
 const mockAdvanceOneStep = jest.fn();
 const mockSetSpeedFactor = jest.fn();
-const mockSkipTo = jest.fn();
+const mockSkipTo = jest.fn().mockResolvedValue(true);
 const mockGetTotalSteps = () => 100;
 
 jest.mock('simplay-web', () => {
@@ -125,26 +125,30 @@ describe('RenderSimplay tests', () => {
     });
   });
 
-  // TODO this fails as the skipTo slider is not present from the beginning
-  /* it('should handle skipTo', () => {
+  it('should handle skipTo', () => {
     return renderSimplay.renderModel(model).then(() => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
         .getElementsByClassName('simplay-controls')
         .item(0) as HTMLDivElement;
 
-      const skipToInput = controlsContainer
-        .getElementsByTagName('simplay-accurate-slider')
-        .item(0) as HTMLInputElement;
+      const skipToInput = controlsContainer.q
+        .getElementsByClassName('simplay-accurate-slider')
+        .item(0) as HTMLDivElement;
 
-      var event = new Event('change');
-      skipToInput.dispatchEvent(event);
+      const mouseDown = new MouseEvent('mousedown', {});
+      Object.assign(mouseDown, {
+        pageX: 60
+      });
+      skipToInput.dispatchEvent(mouseDown);
+      const mouseup = new Event('mouseup', {});
+      document.dispatchEvent(mouseup);
+
       expect(mockSkipTo).toHaveBeenCalled();
     });
-  }); */
+  });
 
-  // TODO found no way yet to trigger the hover effect and find the tippy js popover
-  /* it('should handle speedInput', () => {
+  it('should handle speedInput', () => {
     return renderSimplay.renderModel(model).then(() => {
       const parent = renderSimplay.node;
       const controlsContainer = parent
@@ -154,7 +158,7 @@ describe('RenderSimplay tests', () => {
       const speedChangeButton = controlsContainer
         .getElementsByClassName('simplay-button')
         .item(3) as HTMLInputElement;
-      const mouseEnterEvent = new Event('mouseover');
+      const mouseEnterEvent = new Event('focus');
       speedChangeButton.dispatchEvent(mouseEnterEvent);
 
       const speedChangeSlider = parent
@@ -165,5 +169,5 @@ describe('RenderSimplay tests', () => {
       speedChangeSlider.dispatchEvent(changeEvent);
       expect(mockSetSpeedFactor).toHaveBeenCalled();
     });
-  }); */
+  });
 });

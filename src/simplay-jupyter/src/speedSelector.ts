@@ -7,8 +7,8 @@ export class SpeedSelector {
   slider: HTMLInputElement;
 
   constructor(changeCallback: (value: string) => void) {
-    const container = document.createElement('div');
-    container.classList.add('simplay-speed-container');
+    const containerTippy = document.createElement('div');
+    containerTippy.classList.add('simplay-speed-container');
     this.slider = document.createElement('input');
     this.slider.type = 'range';
     this.slider.min = '0';
@@ -63,21 +63,21 @@ export class SpeedSelector {
     box1.classList.add('simplay-speed-box8');
     box1.classList.add('simplay-speed-box');
 
-    container.appendChild(box100);
-    container.appendChild(box50);
-    container.appendChild(box20);
-    container.appendChild(box10);
-    container.appendChild(box8);
-    container.appendChild(box4);
-    container.appendChild(box2);
-    container.appendChild(box1);
-    container.appendChild(this.slider);
+    containerTippy.appendChild(box100);
+    containerTippy.appendChild(box50);
+    containerTippy.appendChild(box20);
+    containerTippy.appendChild(box10);
+    containerTippy.appendChild(box8);
+    containerTippy.appendChild(box4);
+    containerTippy.appendChild(box2);
+    containerTippy.appendChild(box1);
+    containerTippy.appendChild(this.slider);
 
     const buttonSpan = createIconSpan(speedIcon);
     const button = createButton(buttonSpan, ['simplay-button']);
     tippy(button, {
       placement: 'top',
-      content: container,
+      content: containerTippy,
       allowHTML: true,
       delay: [300, 50],
       interactive: true,
