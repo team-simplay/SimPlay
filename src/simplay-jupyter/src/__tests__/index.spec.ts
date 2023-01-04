@@ -132,7 +132,7 @@ describe('RenderSimplay tests', () => {
         .getElementsByClassName('simplay-controls')
         .item(0) as HTMLDivElement;
 
-      const skipToInput = controlsContainer.q
+      const skipToInput = controlsContainer
         .getElementsByClassName('simplay-accurate-slider')
         .item(0) as HTMLDivElement;
 

@@ -111,7 +111,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         stepSliderPopupMode = mode;
       });
       simulationSpooler.addStepChangedEventListener(ts => {
-        stepInfo.setCurrentStep(ts);
+        stepInfo.currentStep = ts;
         if (controlHandler.state === 'enabled') {
           stepSlider.value = ts;
         }

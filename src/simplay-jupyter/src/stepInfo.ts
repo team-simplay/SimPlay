@@ -5,15 +5,31 @@ export class StepInfo {
   public static TIME_MODE = 'time';
 
   private mode: string;
-  private currentStep: number;
-  private totalSteps: number;
+  private formatValueDelegate: (value: number) => string = (value: number) =>
+    Math.round(value).toString();
   private element: HTMLParagraphElement;
   private modeListeners: ((mode: string) => void)[] = [];
 
-  constructor(currentStep: number, totalSteps: number) {
+  get currentStep(): number {
+    return this._currentStep;
+  }
+
+  set currentStep(value: number) {
+    this._currentStep = value;
+    this.updateStepDisplay();
+  }
+
+  get totalSteps(): number {
+    return this._totalSteps;
+  }
+
+  set totalSteps(value: number) {
+    this._totalSteps = value;
+    this.updateStepDisplay();
+  }
+
+  constructor(private _currentStep: number, private _totalSteps: number) {
     this.mode = StepInfo.STEP_MODE;
-    this.currentStep = currentStep;
-    this.totalSteps = totalSteps;
 
     this.element = document.createElement('p') as HTMLParagraphElement;
     this.element.addEventListener('click', () => {
@@ -22,60 +38,29 @@ export class StepInfo {
       } else {
         this.changeMode(StepInfo.TIME_MODE);
       }
-      this.updateCurrentStep();
-      this.updateTotalSteps();
+      this.updateStepDisplay();
     });
-    this.updateCurrentStep();
-    this.updateTotalSteps();
+    this.updateStepDisplay();
   }
 
-  private updateCurrentStep(): void {
-    this.setCurrentStep(this.currentStep);
+  private updateStepDisplay(): void {
+    this.element.innerHTML = this.buildElementContent();
   }
 
-  private updateTotalSteps(): void {
-    this.setTotalSteps(this.totalSteps);
-  }
-
-  public setCurrentStep(step: number): void {
-    this.currentStep = step;
-    if (this.mode === StepInfo.TIME_MODE) {
-      this.element.innerHTML = this.buildElementContent(
-        tsToTime(step),
-        tsToTime(this.totalSteps)
-      );
-    } else {
-      this.element.innerHTML = this.buildElementContent(
-        Math.round(step).toString(),
-        Math.round(this.totalSteps).toString()
-      );
-    }
-  }
-
-  private buildElementContent(current: string, total: string) {
+  private buildElementContent() {
+    const current = this.formatValueDelegate(this.currentStep);
+    const total = this.formatValueDelegate(this.totalSteps);
     return `${current} / ${total}`;
-  }
-
-  public setTotalSteps(step: number): void {
-    this.totalSteps = step;
-    if (this.mode === StepInfo.TIME_MODE) {
-      this.element.innerHTML = this.buildElementContent(
-        tsToTime(this.currentStep),
-        tsToTime(step)
-      );
-    } else {
-      this.element.innerHTML = this.buildElementContent(
-        Math.round(this.currentStep).toString(),
-        Math.round(step).toString()
-      );
-    }
   }
 
   public changeMode(mode: string): void {
     this.mode = mode;
+    this.formatValueDelegate =
+      mode === StepInfo.TIME_MODE
+        ? tsToTime
+        : (value: number) => Math.round(value).toString();
     this.modeListeners.map(func => func(this.mode));
-    this.updateCurrentStep();
-    this.updateTotalSteps();
+    this.updateStepDisplay();
   }
 
   public addModeListener(modeListenerFunction: (mode: string) => void): void {

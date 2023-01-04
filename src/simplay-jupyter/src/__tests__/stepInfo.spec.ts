@@ -35,12 +35,12 @@ describe('StepInfo tests', () => {
   it('should handle updates properly', () => {
     const stepInfo = new StepInfo(0, 10);
     const element = stepInfo.render();
-    stepInfo.setCurrentStep(2);
-    stepInfo.setTotalSteps(20);
+    stepInfo.currentStep = 2;
+    stepInfo.totalSteps = 20;
     expect(element.innerHTML).toEqual('2 / 20');
     stepInfo.changeMode(StepInfo.TIME_MODE);
-    stepInfo.setCurrentStep(5);
-    stepInfo.setTotalSteps(15);
+    stepInfo.currentStep = 5;
+    stepInfo.totalSteps = 15;
     expect(element.innerHTML).toEqual('00:05 / 00:15');
   });
 
