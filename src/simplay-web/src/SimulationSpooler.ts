@@ -54,7 +54,7 @@ export class SimulationSpooler {
   }
 
   private setSimulationStep(step: number) {
-    this.currentSimTimeStamp = step;
+    this.currentSimTimeStamp = Math.round(step);
     this.notifyStepChanged();
   }
 

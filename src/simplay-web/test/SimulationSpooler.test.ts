@@ -233,6 +233,58 @@ describe('SimulationSpooler tests', async function () {
       expect(timesCalledSecond).to.equal(0);
     });
 
+    it('should round requested fractional skipTo', async () => {
+      const events = [
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: true,
+          },
+          timestamp: 0,
+        },
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: false,
+          },
+          timestamp: 10,
+        },
+      ];
+
+      const simData = {
+        ...simulationDataSerialized,
+        events,
+      } as SimulationDataSerialized;
+      const containerMock = mock(HTMLDivElement);
+      const container = instance(containerMock);
+      const spooler = new SimulationSpooler(simData, container);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      setTimeout(() => {
+        spooler.pause();
+      }, 100);
+      let timesCalledFirst = 0;
+      spooler.context.simulationData.events[0].execute = (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _: SimplayContext
+      ) => {
+        timesCalledFirst++;
+      };
+      let timesCalledSecond = 0;
+      spooler.context.simulationData.events[1].execute = (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _: SimplayContext
+      ) => {
+        timesCalledSecond++;
+      };
+
+      // this fire and forget is intentional, we're requestion to pause soon
+      spooler.skipTo(1.535  );
+      expect(timesCalledFirst).to.equal(1);
+      expect(timesCalledSecond).to.equal(0);
+    });
+
     it('should skip until the requested, but not further', async () => {
       const events = [
         {
