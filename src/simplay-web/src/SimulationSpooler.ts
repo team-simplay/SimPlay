@@ -125,6 +125,7 @@ export class SimulationSpooler {
    * @param timestamp to skip to
    */
   async skipTo(timestamp: number) {
+    timestamp = Math.round(timestamp);
     await this.pause();
     if (timestamp < this.currentSimTimeStamp) {
       this.reset();

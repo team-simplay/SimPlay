@@ -264,25 +264,15 @@ describe('SimulationSpooler tests', async function () {
       setTimeout(() => {
         spooler.pause();
       }, 100);
-      let timesCalledFirst = 0;
-      spooler.context.simulationData.events[0].execute = (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _: SimplayContext
-      ) => {
-        timesCalledFirst++;
-      };
-      let timesCalledSecond = 0;
-      spooler.context.simulationData.events[1].execute = (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _: SimplayContext
-      ) => {
-        timesCalledSecond++;
-      };
-
-      // this fire and forget is intentional, we're requestion to pause soon
-      spooler.skipTo(1.535);
-      expect(timesCalledFirst).to.equal(1);
-      expect(timesCalledSecond).to.equal(0);
+      spooler.setSpeedFactor(10);
+      let lastExecutedStep = 0;
+      spooler.addStepChangedEventListener((step) => {
+        lastExecutedStep = step;
+      });
+      await spooler.skipTo(1.49);
+      expect(lastExecutedStep).to.equal(1);
+      await spooler.skipTo(1.51);
+      expect(lastExecutedStep).to.equal(2);
     });
 
     it('should skip until the requested, but not further', async () => {
@@ -329,6 +319,7 @@ describe('SimulationSpooler tests', async function () {
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
       await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -423,6 +414,7 @@ describe('SimulationSpooler tests', async function () {
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
       await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
