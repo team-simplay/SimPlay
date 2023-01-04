@@ -32,7 +32,11 @@ export class StepInfo {
     this.updateStepDisplay();
   }
 
-  constructor(id: string, private _currentStep: number, private _totalSteps: number) {
+  constructor(
+    id: string,
+    private _currentStep: number,
+    private _totalSteps: number
+  ) {
     this.mode = StepInfo.STEP_MODE;
 
     this.element = document.createElement('p') as HTMLParagraphElement;

@@ -65,9 +65,7 @@ describe('RenderSimplay tests', () => {
       expect(
         controlsContainer.querySelector('#simplay-step-info')
       ).toBeDefined();
-      expect(
-        sliderContainer.querySelector('#simplay-slider')
-      ).toBeDefined();
+      expect(sliderContainer.querySelector('#simplay-slider')).toBeDefined();
     });
   });
 
@@ -130,8 +128,9 @@ describe('RenderSimplay tests', () => {
         .getElementsByClassName('simplay-controls')
         .item(0) as HTMLDivElement;
 
-      const skipToInput = controlsContainer
-        .querySelector('#simplay-slider') as HTMLDivElement;
+      const skipToInput = controlsContainer.querySelector(
+        '#simplay-slider'
+      ) as HTMLDivElement;
 
       const mouseDown = new MouseEvent('mousedown', {});
       Object.assign(mouseDown, {

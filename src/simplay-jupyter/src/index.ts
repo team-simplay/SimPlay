@@ -97,7 +97,11 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
         plugins: [followCursor]
       });
 
-      const stepInfo = new StepInfo('simplay-step-info', 0, simulationSpooler.getTotalSteps());
+      const stepInfo = new StepInfo(
+        'simplay-step-info',
+        0,
+        simulationSpooler.getTotalSteps()
+      );
       stepSlider.addOnHoverPositionChangedListener((value: number) => {
         stepSliderPopup.setContent(stepInfo.formatValueDelegate(value));
       });
