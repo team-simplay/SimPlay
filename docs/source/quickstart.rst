@@ -105,7 +105,7 @@ Keep in mind, that the ``id`` parameter should be unique across the whole enviro
 Reading the ``__super__`` call of the ``MyProcess`` constructor carefully, notice
 that it takes a ``visual`` and a ``tint`` parameter.
 In the example, the value of ``visual`` is ``SOMEPNG``.
-In order for the visualzation to work,
+In order for the visualization to work,
 the :class:`~simplay.core.VisualizationManager` -
 which exists on :class:`~simplay.core.VisualEnvironment` -
 needs to know where to find the visual.
@@ -171,7 +171,14 @@ The following example shows how to create a :class:`~simplay.visualization.Visua
     # add the grid to the environment
     env.visualization_manager.set_grid(grid)
 
-The code above creates a grid with a width of 1000 and a height of 500, split into 10x5 cells.
+The code above creates a grid with a width of 1000 pixels and a height of 500 pixels, split into 10x5 cells.
+
+.. note::
+
+    Be aware that different machines have different screen resolutions and if the visualization is watched on 
+    a different machine it may appear different. Also be aware that when looking at a file directly in JupyterLab, 
+    there is no scrolling enabled and some parts may get cut off.
+
 The grid must be registered with the :class:`~simplay.core.VisualizationManager` of the environment.
 Additionally, the code above adds an area to the grid.
 The area is a rectangle that is drawn on the grid, and can be used to visually separate different parts of the simulation.

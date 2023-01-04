@@ -1,4 +1,3 @@
-import { JSONObject } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler, SimulationDataSerialized } from 'simplay-web';
@@ -35,12 +34,14 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
    * Render SimPlay into this widget's node.
    */
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
-    let simulationSpooler: SimulationSpooler;
-    const data = model.data[this._mimeType] as JSONObject;
+    const data = model.data[
+      this._mimeType
+    ] as unknown as SimulationDataSerialized;
 
     const simplayContainer = document.createElement('div');
     simplayContainer.id = 'simplayContainer';
     simplayContainer.classList.add('simplay-container');
+    simplayContainer.style.width = data.grid.width + 'px';
 
     const simplayGridContainer = document.createElement('div');
     simplayGridContainer.id = 'simplayGridContainer';
@@ -53,81 +54,74 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const controls = document.createElement('div');
     controls.classList.add('simplay-controls');
 
-    const observer = new ResizeObserver(() => {
-      simulationSpooler = new SimulationSpooler(
-        data as unknown as SimulationDataSerialized,
-        simplayGridContainer
-      );
-      const currentStepInfo = document.createElement('p');
-      currentStepInfo.id = 'currentStepInfo';
-      currentStepInfo.classList.add('simplay-label');
-      simulationSpooler.addStepChangedEventListener(ts => {
-        currentStepInfo.innerText = 'Current Step: ' + ts;
-      });
-      const startPauseButton = this.createStartPauseButton(
-        'startPauseButton',
-        simulationSpooler
-      );
+    const simulationSpooler = new SimulationSpooler(data, simplayGridContainer);
+    const currentStepInfo = document.createElement('p');
+    currentStepInfo.id = 'currentStepInfo';
+    currentStepInfo.classList.add('simplay-label');
+    simulationSpooler.addStepChangedEventListener(ts => {
+      currentStepInfo.innerText = 'Current Step: ' + ts;
+    });
+    const startPauseButton = this.createStartPauseButton(
+      'startPauseButton',
+      simulationSpooler
+    );
 
-      const resetButton = this.createResetButton();
-      resetButton.addEventListener('click', () => {
-        startPauseButton.reset();
-        simulationSpooler.reset();
-      });
-
-      const advanceOneStepButton = this.createAdvanceOneStepButton();
-      advanceOneStepButton.addEventListener('click', () => {
-        simulationSpooler.advanceOneStep();
-      });
-
-      const spacer = this.createSpacer();
-
-      const speedInputName = 'skipTo';
-      const speedInputLabel = this.createLabel(
-        'speedInputLabelId',
-        speedInputName,
-        'Speed: '
-      );
-      const speedInput = this.createSpeedInput(speedInputName);
-      speedInput.addEventListener('change', (event: Event) => {
-        if (event.currentTarget) {
-          simulationSpooler.setSpeedFactor(
-            Number((event.currentTarget as HTMLInputElement).value)
-          );
-        }
-      });
-
-      const skipToInputName = 'skipTo';
-      const skipToLabel = this.createLabel(
-        'skipToLabelId',
-        skipToInputName,
-        'Skip to: '
-      );
-      const skipToInput = this.createSkipToInput(skipToInputName);
-      skipToInput.addEventListener('keyup', (event: Event) => {
-        if (event.currentTarget) {
-          simulationSpooler.skipTo(
-            Number((event.currentTarget as HTMLInputElement).value)
-          );
-        }
-      });
-
-      const spacer2 = this.createSpacer();
-
-      // Changing the order of the append calls affects the actual order in the UI.
-      controls.appendChild(startPauseButton.button);
-      controls.appendChild(resetButton);
-      controls.appendChild(advanceOneStepButton);
-      controls.appendChild(spacer);
-      controls.appendChild(speedInputLabel);
-      controls.appendChild(speedInput);
-      controls.appendChild(skipToLabel);
-      controls.appendChild(skipToInput);
-      controls.appendChild(currentStepInfo);
-      controls.appendChild(spacer2);
+    const resetButton = this.createResetButton();
+    resetButton.addEventListener('click', () => {
+      startPauseButton.reset();
+      simulationSpooler.reset();
     });
 
-    observer.observe(simplayContainer);
+    const advanceOneStepButton = this.createAdvanceOneStepButton();
+    advanceOneStepButton.addEventListener('click', () => {
+      simulationSpooler.advanceOneStep();
+    });
+
+    const spacer = this.createSpacer();
+
+    const speedInputName = 'skipTo';
+    const speedInputLabel = this.createLabel(
+      'speedInputLabelId',
+      speedInputName,
+      'Speed: '
+    );
+    const speedInput = this.createSpeedInput(speedInputName);
+    speedInput.addEventListener('change', (event: Event) => {
+      if (event.currentTarget) {
+        simulationSpooler.setSpeedFactor(
+          Number((event.currentTarget as HTMLInputElement).value)
+        );
+      }
+    });
+
+    const skipToInputName = 'skipTo';
+    const skipToLabel = this.createLabel(
+      'skipToLabelId',
+      skipToInputName,
+      'Skip to: '
+    );
+    const skipToInput = this.createSkipToInput(skipToInputName);
+    skipToInput.addEventListener('keyup', (event: Event) => {
+      if (event.currentTarget) {
+        simulationSpooler.skipTo(
+          Number((event.currentTarget as HTMLInputElement).value)
+        );
+      }
+    });
+
+    const spacer2 = this.createSpacer();
+
+    // Changing the order of the append calls affects the actual order in the UI.
+    controls.appendChild(startPauseButton.button);
+    controls.appendChild(resetButton);
+    controls.appendChild(advanceOneStepButton);
+    controls.appendChild(spacer);
+    controls.appendChild(speedInputLabel);
+    controls.appendChild(speedInput);
+    controls.appendChild(skipToLabel);
+    controls.appendChild(skipToInput);
+    controls.appendChild(currentStepInfo);
+    controls.appendChild(spacer2);
 
     simplayContainer.appendChild(controls);
     return Promise.resolve();

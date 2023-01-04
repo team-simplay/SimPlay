@@ -22,6 +22,8 @@ describe('Grid tests', function () {
     ],
     cols: 5,
     rows: 5,
+    width: 900,
+    height: 1000,
   };
 
   const simulationData = {
@@ -84,6 +86,8 @@ describe('Grid tests', function () {
         ],
         cols: 5,
         rows: 5,
+        width: 900,
+        height: 1000,
       };
 
       const containerWidth = 500;
@@ -123,6 +127,8 @@ describe('Grid tests', function () {
         ],
         cols: 5,
         rows: 5,
+        width: 900,
+        height: 1000,
       };
 
       const containerWidth = 500;

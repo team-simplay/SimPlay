@@ -1,8 +1,7 @@
 Examples
 ========
 
-The following examples are based on SimPy's examples which you 
-can find `here <http://simpy.readthedocs.org/en/latest/examples/index.html>`_.
+The following examples are based on `SimPy's examples <http://simpy.readthedocs.org/en/latest/examples/index.html>`_.
 
 Bank Renege
 --------------------------------
