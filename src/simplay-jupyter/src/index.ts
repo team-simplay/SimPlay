@@ -48,10 +48,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const simplayGridContainer = this.createSimplayGridContainer();
     const controlsContainer = this.createControlsContainer();
 
-    const simulationSpooler = new SimulationSpooler(
-      data as unknown as SimulationDataSerialized,
-      simplayGridContainer
-    );
+    const simulationSpooler = new SimulationSpooler(data, simplayGridContainer);
 
     this.createControls(controlsContainer, simulationSpooler);
 
@@ -173,10 +170,15 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     });
     stepSlider.addOnValueChangedListener((value: number) => {
       controlHandler.disable();
-      simulationSpooler.skipTo(value).finally(() => {
-        startPauseButton.reset();
-        controlHandler.enable();
-      });
+      simulationSpooler
+        .skipTo(value)
+        .then(() => {
+          startPauseButton.reset();
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
     });
     return stepSlider;
   }
@@ -245,9 +247,14 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     advanceOneStepButton.addEventListener('click', () => {
       controlHandler.disable();
       startPauseButton.reset();
-      simulationSpooler.advanceOneStep().finally(() => {
-        controlHandler.enable();
-      });
+      simulationSpooler
+        .advanceOneStep()
+        .then(() => {
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
     });
     return advanceOneStepButton;
   }
@@ -275,9 +282,14 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     resetButton.addEventListener('click', () => {
       controlHandler.disable();
       startPauseButton.reset();
-      simulationSpooler.reset().finally(() => {
-        controlHandler.enable();
-      });
+      simulationSpooler
+        .reset()
+        .then(() => {
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
     });
     return resetButton;
   }

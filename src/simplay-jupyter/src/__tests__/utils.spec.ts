@@ -1,5 +1,5 @@
 import {
-  ControlHandler,
+  Handler,
   createButton,
   createIconSpan,
   tsToTime
@@ -44,7 +44,7 @@ describe('Utils tests', () => {
   });
 
   it('should call all disable functions of ControlHandler', () => {
-    const controlHandler = new ControlHandler();
+    const controlHandler = new Handler();
     const disable1 = jest.fn();
     const disable2 = jest.fn();
     controlHandler.attachDisable(disable1);
@@ -56,7 +56,7 @@ describe('Utils tests', () => {
   });
 
   it('should call all enable functions of ControlHandler', () => {
-    const controlHandler = new ControlHandler();
+    const controlHandler = new Handler();
     const enable1 = jest.fn();
     const enable2 = jest.fn();
     controlHandler.attachEnable(enable1);

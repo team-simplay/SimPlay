@@ -5,8 +5,8 @@ import { makeCustomResizeObseverGloballyAvailable } from './CustomResizeObserver
 
 const mockRun = jest.fn();
 const mockPause = jest.fn().mockResolvedValue(true);
-const mockReset = jest.fn();
-const mockAdvanceOneStep = jest.fn();
+const mockReset = jest.fn().mockResolvedValue(true);
+const mockAdvanceOneStep = jest.fn().mockResolvedValue(true);
 const mockSetSpeedFactor = jest.fn();
 const mockSkipTo = jest.fn().mockResolvedValue(true);
 const mockGetTotalSteps = () => 100;
@@ -34,7 +34,7 @@ describe('RenderSimplay tests', () => {
   let renderSimplay: RenderSimplay;
   const model = {
     data: {
-      'application/simplay+json': undefined
+      'application/simplay+json': { grid: { width: 0 } }
     } as IRenderMime.IMimeModel.ISetDataOptions
   } as IRenderMime.IMimeModel;
 
@@ -58,7 +58,7 @@ describe('RenderSimplay tests', () => {
         .getElementsByClassName('simplay-controls')
         .item(1) as HTMLDivElement;
       expect(SimulationSpooler).toHaveBeenCalled();
-      // expect the three buttons play, reset and skip to be around
+      // expect the buttons play, reset, speed and skip to be around
       expect(
         controlsContainer.getElementsByClassName('simplay-button').length
       ).toBe(4);
