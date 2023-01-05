@@ -15,7 +15,7 @@ import { EMOJI, TRANSPARENT_PIXEL } from './testImages';
 
 const forId = 'leet';
 const timestamp = 1337;
-const content = [{ resourceId: 98, amount: 76 }];
+const content = "[{ resourceId: 'foo', amount: 76 }]";
 
 const simData = {
   entities: [
@@ -88,7 +88,7 @@ describe('StoreSetContentEvent tests', function () {
       forId
     ) as ExtendedDisplayEntity;
     expect(displayObject.informationText.text).to.equal(
-      `capacity: 0\n${content[0].resourceId}: ${content[0].amount}`
+      `capacity: 0\n${content}`
     );
   });
 });

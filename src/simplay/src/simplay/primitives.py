@@ -59,6 +59,12 @@ class ErrorText:
     WIDTH_MUST_BE_POSITIVE_INT = "Width must be a positive integer."
     AREA_OVERLAP = "Area must not overlap with other areas."
 
+    CONTENT_MUST_BE_LIST = "Content must be a list."
+    CONTENT_MUST_BE_LIST_OF_TUPLES = ("Content must be a list of tuples"
+                                      " (id, amount).")
+    RESOURCE_ID_MUST_BE_STR = "Resource id must be a string."
+    AMOUNT_MUST_BE_INT_OR_FLOAT = ("Amount must be a integer or float.")
+
 
 class EventAction(Enum):
     """Enum for event actions."""

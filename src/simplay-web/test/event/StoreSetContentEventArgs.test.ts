@@ -1,10 +1,7 @@
 import { StoreSetContentEventArgs } from '../../src/event/StoreSetContentEventArgs';
 import { expect } from 'chai';
 
-const content = [
-  { resourceId: 12, amount: 34 },
-  { resourceId: 56, amount: 78 },
-];
+const content = "[my: content]";
 
 describe('StoreSetContentEventArgs tests', function () {
   it('should initialize correctly', () => {

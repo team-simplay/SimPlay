@@ -1,3 +1,4 @@
+import jsons
 from .primitives import ErrorText, EventAction
 from simpy.core import SimTime
 from typing import Union
@@ -316,10 +317,12 @@ class StoreSetContent(VisualEvent):
 
     :param for_id: The if of the component this event is for.
     :param timestamp: The timestamp of the event.
-    :param content: The content to set the store to.
+    :param content: The content to set the store to. Must be JSON serializable.
     """
 
     def __init__(self, for_id: str,
                  timestamp: SimTime, content):
+        content = jsons.dumps(content, strip_privates=True,
+                              key_transformer=jsons.KEY_TRANSFORMER_CAMELCASE)
         super().__init__(for_id, timestamp, EventAction.STORE_SET_CONTENT,
                          content=content)

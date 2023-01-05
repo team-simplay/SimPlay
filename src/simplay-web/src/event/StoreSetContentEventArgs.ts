@@ -1,14 +1,9 @@
 import { EventArgs } from './EventArgs';
 
-export interface StoreContentItem {
-  resourceId: number;
-  amount: number;
-}
-
 export class StoreSetContentEventArgs extends EventArgs {
-  readonly content: StoreContentItem[];
+  readonly content: string;
 
-  constructor(args: { content: { resourceId: number; amount: number }[] }) {
+  constructor(args: { content: string }) {
     super(args);
     this.content = args.content;
   }
