@@ -54,7 +54,7 @@ export class SimulationSpooler {
   }
 
   private setSimulationStep(step: number) {
-    this.currentSimTimeStamp = step;
+    this.currentSimTimeStamp = Math.round(step);
     this.notifyStepChanged();
   }
 
@@ -125,6 +125,7 @@ export class SimulationSpooler {
    * @param timestamp to skip to
    */
   async skipTo(timestamp: number) {
+    timestamp = Math.round(timestamp);
     await this.pause();
     if (timestamp < this.currentSimTimeStamp) {
       await this.reset();

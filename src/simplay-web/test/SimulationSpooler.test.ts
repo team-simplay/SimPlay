@@ -233,6 +233,48 @@ describe('SimulationSpooler tests', async function () {
       expect(timesCalledSecond).to.equal(0);
     });
 
+    it('should round requested fractional skipTo', async () => {
+      const events = [
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: true,
+          },
+          timestamp: 0,
+        },
+        {
+          action: 'SET_VISIBLE',
+          forId: 'entity1',
+          args: {
+            visible: false,
+          },
+          timestamp: 10,
+        },
+      ];
+
+      const simData = {
+        ...simulationDataSerialized,
+        events,
+      } as SimulationDataSerialized;
+      const containerMock = mock(HTMLDivElement);
+      const container = instance(containerMock);
+      const spooler = new SimulationSpooler(simData, container);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      setTimeout(() => {
+        spooler.pause();
+      }, 100);
+      spooler.setSpeedFactor(10);
+      let lastExecutedStep = 0;
+      spooler.addStepChangedEventListener((step) => {
+        lastExecutedStep = step;
+      });
+      await spooler.skipTo(1.49);
+      expect(lastExecutedStep).to.equal(1);
+      await spooler.skipTo(1.51);
+      expect(lastExecutedStep).to.equal(2);
+    });
+
     it('should skip until the requested, but not further', async () => {
       const events = [
         {
@@ -277,6 +319,7 @@ describe('SimulationSpooler tests', async function () {
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
       await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -371,6 +414,7 @@ describe('SimulationSpooler tests', async function () {
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
       await new Promise((resolve) => setTimeout(resolve, 100));
+      spooler.setSpeedFactor(10);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
