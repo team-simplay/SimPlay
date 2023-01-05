@@ -375,9 +375,13 @@ class TestVisualFilterStore:
         env = simplay.VisualEnvironment()
         store = simplay.VisualFilterStore(env, "test", 10, "")
         manager = env.visualization_manager
-        store.put({1: 2})
+        some_thing = {"my": "thing"}
+        store.put(some_thing)
         assert (manager.events[2].action ==
                 EventAction.STORE_SET_CONTENT.value)
         assert manager.events[2].for_id == "test"
-        assert manager.events[2].args["content"] == [{1: 2}]
+        assert manager.events[2].args["content"] == jsons.dumps(
+            [some_thing],
+            strip_privates=True,
+            key_transformer=jsons.KEY_TRANSFORMER_CAMELCASE)
         assert manager.events[2].timestamp == 0

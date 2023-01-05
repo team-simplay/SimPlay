@@ -223,4 +223,4 @@ def test_store_set_content():
     assert event.for_id == "id"
     assert event.timestamp == 0
     assert event.action == EventAction.STORE_SET_CONTENT.value
-    assert event.args == {"content": 1}
+    assert event.args == {"content": "1"}
