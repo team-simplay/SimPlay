@@ -4,15 +4,12 @@
     https://jupyterlab.readthedocs.io/en/stable/developer/css.html
 */
 
-/* .simplay-container {
-  width: 100%;
-  height: 100%;
+.simplay-container {
 }
-
+ 
 .simplay-grid-container {
-  width: 100%;
-  height: 100%;
-} */
+  padding-left: 2px;
+} 
 
 .simplay-controls-container {
   display: flex;
