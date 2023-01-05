@@ -175,7 +175,7 @@ The code above creates a grid with a width of 1000 pixels and a height of 500 pi
 
 .. note::
 
-    Be aware that different machines have different screen resolutions and if the visualization is watched on 
+    Be aware that different machines have different screen resolutions and if the visualization is viewed on 
     a different machine it may appear different. Also be aware that when looking at a file directly in JupyterLab, 
     there is no scrolling enabled and some parts may get cut off.
 
