@@ -109,7 +109,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     controlButtonsContainer.appendChild(resetButton);
     controlButtonsContainer.appendChild(advanceOneStepButton);
     controlButtonsContainer.appendChild(speedSelectorButton);
-    controlButtonsContainer.appendChild(stepInfo.render());
+    controlButtonsContainer.appendChild(stepInfo.render(['simplay-button']));
 
     sliderContainer.appendChild(stepSlider.slider);
 
@@ -124,6 +124,10 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
   private createControlsContainer() {
     const controlsContainer = document.createElement('div');
     controlsContainer.classList.add('simplay-controls-container');
+    controlsContainer.setAttribute(
+      'aria-label',
+      'Container for the simulation controls'
+    );
     return controlsContainer;
   }
 
@@ -131,12 +135,17 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     const simplayGridContainer = document.createElement('div');
     simplayGridContainer.id = 'simplay-grid-container';
     simplayGridContainer.classList.add('simplay-grid-container');
+    simplayGridContainer.setAttribute(
+      'aria-label',
+      "Container for the simulation's animation"
+    );
     return simplayGridContainer;
   }
 
   private createSimplayContainer(width: number) {
     const simplayContainer = document.createElement('div');
     simplayContainer.id = 'simplay-container';
+    simplayContainer.setAttribute('lang', 'en-US');
     simplayContainer.classList.add('simplay-container');
     simplayContainer.style.width = width + 'px';
     return simplayContainer;
@@ -231,6 +240,10 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
       advanceOneStepButtonIconSpan,
       ['simplay-button']
     );
+    advanceOneStepButton.setAttribute(
+      'aria-label',
+      'Advance one step in the simulation'
+    );
     tippy(advanceOneStepButton, {
       placement: 'top',
       content: 'Forward 1 Step',
@@ -266,6 +279,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
   ) {
     const resetIconSpan = this.createIconSpan(resetIcon);
     const resetButton = this.createButton(resetIconSpan, ['simplay-button']);
+    resetButton.setAttribute('aria-label', 'Reset the simulation to step 0');
     tippy(resetButton, {
       placement: 'top',
       content: 'Reset',
