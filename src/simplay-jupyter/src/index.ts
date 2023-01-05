@@ -1,4 +1,3 @@
-import { JSONObject } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { SimulationSpooler, SimulationDataSerialized } from 'simplay-web';
@@ -9,7 +8,7 @@ import resetIcon from '../style/icons/restart.svg';
 import tippy, { followCursor } from 'tippy.js';
 import '../style/index.css';
 import { StartPauseButton } from './startPauseButton';
-import { ControlHandler } from './utils';
+import { Handler } from './utils';
 import { SpeedSelector, SpeedSelectorValues } from './speedSelector';
 import { AccurateSlider } from './accurateSlider';
 import { StepInfo } from './stepInfo';
@@ -39,129 +38,155 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
    * Render SimPlay into this widget's node.
    */
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
-    let simulationSpooler: SimulationSpooler;
-    const data = model.data[this._mimeType] as JSONObject;
+    this.reset();
+    const data = model.data[
+      this._mimeType
+    ] as unknown as SimulationDataSerialized;
 
-    const simplayContainer = document.createElement('div');
-    simplayContainer.id = 'simplayContainer';
-    simplayContainer.classList.add('simplay-container');
+    // add 4 to align the left and right side of the grid and the slider
+    const simplayContainer = this.createSimplayContainer(data.grid.width + 4);
+    const simplayGridContainer = this.createSimplayGridContainer();
+    const controlsContainer = this.createControlsContainer();
 
-    const simplayGridContainer = document.createElement('div');
-    simplayGridContainer.id = 'simplayGridContainer';
-    simplayGridContainer.classList.add('simplay-grid-container');
+    const simulationSpooler = new SimulationSpooler(data, simplayGridContainer);
+
+    this.createControls(controlsContainer, simulationSpooler);
+
     simplayContainer.appendChild(simplayGridContainer);
-
-    this.node.innerHTML = '';
+    simplayContainer.appendChild(controlsContainer);
     this.node.appendChild(simplayContainer);
+    return Promise.resolve();
+  }
 
-    const controlsContainer = document.createElement('div');
-    controlsContainer.classList.add('simplay-controls-container');
+  private createControls(
+    controlsContainer: HTMLDivElement,
+    simulationSpooler: SimulationSpooler
+  ) {
+    const sliderContainer = document.createElement('div');
+    sliderContainer.classList.add('simplay-controls');
+    const controlButtonsContainer = document.createElement('div');
+    controlButtonsContainer.classList.add('simplay-controls');
 
-    const controlsStepInfo = document.createElement('div');
-    controlsStepInfo.classList.add('simplay-controls');
+    const controlHandler = new Handler();
 
-    const controls = document.createElement('div');
-    controls.classList.add('simplay-controls');
+    const startPauseButton = this.createStartPauseButton(
+      'startPauseButton',
+      simulationSpooler,
+      controlHandler
+    );
+    const stepInfo = new StepInfo(
+      'simplay-step-info',
+      0,
+      simulationSpooler.getTotalSteps()
+    );
+    const stepSlider = this.createStepSlider(
+      simulationSpooler,
+      stepInfo,
+      controlHandler,
+      startPauseButton
+    );
+    const resetButton = this.createResetButton(
+      controlHandler,
+      simulationSpooler,
+      startPauseButton
+    );
+    const advanceOneStepButton = this.createAdvanceOneStepButton(
+      controlHandler,
+      simulationSpooler,
+      startPauseButton
+    );
+    const speedSelectorButton = this.createSpeedSelector(simulationSpooler);
 
-    const observer = new ResizeObserver(() => {
-      const controlHandler = new ControlHandler();
-
-      simulationSpooler = new SimulationSpooler(
-        data as unknown as SimulationDataSerialized,
-        simplayGridContainer
-      );
-
-      const stepSlider = new AccurateSlider(
-        'simplay-slider',
-        0,
-        simulationSpooler.getTotalSteps(),
-        0
-      );
-
-      stepSlider.addOnValueChangedListener((value: number) => {
-        controlHandler.disable();
-        simulationSpooler.skipTo(value).then(() => {
-          startPauseButton.reset();
-          controlHandler.enable();
-        });
-      });
-
-      const stepSliderPopup = tippy(stepSlider.slider, {
-        placement: 'top',
-        content: '00:00',
-        allowHTML: true,
-        delay: [300, 50],
-        arrow: false,
-        followCursor: 'horizontal',
-        theme: RenderSimplay.TOOLTIP_THEME,
-        plugins: [followCursor]
-      });
-
-      const stepInfo = new StepInfo(
-        'simplay-step-info',
-        0,
-        simulationSpooler.getTotalSteps()
-      );
-      stepSlider.addOnHoverPositionChangedListener((value: number) => {
-        stepSliderPopup.setContent(stepInfo.formatValueDelegate(value));
-      });
-
-      simulationSpooler.addStepChangedEventListener(ts => {
-        stepInfo.currentStep = ts;
-        if (controlHandler.state === 'enabled') {
-          stepSlider.value = ts;
-        }
-      });
-
-      controlsStepInfo.appendChild(stepSlider.slider);
-
-      const startPauseButton = this.createStartPauseButton(
-        'startPauseButton',
-        simulationSpooler,
-        controlHandler
-      );
-
-      const resetButton = this.createResetButton(controlHandler);
-      resetButton.addEventListener('click', () => {
-        startPauseButton.reset();
-        simulationSpooler.reset();
-      });
-
-      const advanceOneStepButton =
-        this.createAdvanceOneStepButton(controlHandler);
-      advanceOneStepButton.addEventListener('click', () => {
-        simulationSpooler.advanceOneStep();
-        startPauseButton.reset();
-      });
-
-      const speedInput = new SpeedSelector((value: string) => {
-        simulationSpooler.setSpeedFactor(SpeedSelectorValues[Number(value)]);
-      });
-      // container to have tippy popover in the same parent as the button supporting better accessibility
-      const speedInputContainer = document.createElement('div');
-      speedInputContainer.appendChild(speedInput.button);
-
-      // Changing the order of the append calls affects the actual order in the UI.
-      controls.appendChild(startPauseButton.button);
-      controls.appendChild(resetButton);
-      controls.appendChild(advanceOneStepButton);
-      controls.appendChild(speedInputContainer);
-      controls.appendChild(stepInfo.render());
-
-      controlsContainer.appendChild(controlsStepInfo);
-      controlsContainer.appendChild(controls);
+    simulationSpooler.addStepChangedEventListener(ts => {
+      stepInfo.currentStep = ts;
+      if (controlHandler.state === Handler.ENABLED) {
+        stepSlider.value = ts;
+      }
     });
 
-    observer.observe(simplayContainer);
+    // Changing the order of the append calls affects the actual order in the UI.
+    controlButtonsContainer.appendChild(startPauseButton.button);
+    controlButtonsContainer.appendChild(resetButton);
+    controlButtonsContainer.appendChild(advanceOneStepButton);
+    controlButtonsContainer.appendChild(speedSelectorButton);
+    controlButtonsContainer.appendChild(stepInfo.render());
 
-    simplayContainer.appendChild(controlsContainer);
-    return Promise.resolve();
+    sliderContainer.appendChild(stepSlider.slider);
+
+    controlsContainer.appendChild(sliderContainer);
+    controlsContainer.appendChild(controlButtonsContainer);
+  }
+
+  private reset() {
+    this.node.innerHTML = '';
+  }
+
+  private createControlsContainer() {
+    const controlsContainer = document.createElement('div');
+    controlsContainer.classList.add('simplay-controls-container');
+    return controlsContainer;
+  }
+
+  private createSimplayGridContainer() {
+    const simplayGridContainer = document.createElement('div');
+    simplayGridContainer.id = 'simplay-grid-container';
+    simplayGridContainer.classList.add('simplay-grid-container');
+    return simplayGridContainer;
+  }
+
+  private createSimplayContainer(width: number) {
+    const simplayContainer = document.createElement('div');
+    simplayContainer.id = 'simplay-container';
+    simplayContainer.classList.add('simplay-container');
+    simplayContainer.style.width = width + 'px';
+    return simplayContainer;
+  }
+
+  private createStepSlider(
+    simulationSpooler: SimulationSpooler,
+    stepInfo: StepInfo,
+    controlHandler: Handler,
+    startPauseButton: StartPauseButton
+  ) {
+    const stepSlider = new AccurateSlider(
+      'simplay-slider',
+      0,
+      simulationSpooler.getTotalSteps(),
+      0
+    );
+
+    const stepSliderPopup = tippy(stepSlider.slider, {
+      placement: 'top',
+      content: '00:00',
+      allowHTML: true,
+      delay: [300, 50],
+      arrow: false,
+      followCursor: 'horizontal',
+      theme: RenderSimplay.TOOLTIP_THEME,
+      plugins: [followCursor]
+    });
+    stepSlider.addOnHoverPositionChangedListener((value: number) => {
+      stepSliderPopup.setContent(stepInfo.formatValueDelegate(value));
+    });
+    stepSlider.addOnValueChangedListener((value: number) => {
+      controlHandler.disable();
+      simulationSpooler
+        .skipTo(value)
+        .then(() => {
+          startPauseButton.reset();
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
+    });
+    return stepSlider;
   }
 
   private createStartPauseButton(
     id: string,
     simulationSpooler: SimulationSpooler,
-    controlHandler: ControlHandler
+    controlHandler: Handler
   ) {
     const startPauseButton = new StartPauseButton(
       playIcon,
@@ -186,7 +211,21 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     return startPauseButton;
   }
 
-  private createAdvanceOneStepButton(controlHandler: ControlHandler) {
+  private createSpeedSelector(simulationSpooler: SimulationSpooler) {
+    const speedInput = new SpeedSelector((value: string) => {
+      simulationSpooler.setSpeedFactor(SpeedSelectorValues[Number(value)]);
+    });
+    // container to have tippy popover in the same parent as the button supporting better accessibility
+    const speedInputContainer = document.createElement('div');
+    speedInputContainer.appendChild(speedInput.button);
+    return speedInputContainer;
+  }
+
+  private createAdvanceOneStepButton(
+    controlHandler: Handler,
+    simulationSpooler: SimulationSpooler,
+    startPauseButton: StartPauseButton
+  ) {
     const advanceOneStepButtonIconSpan = this.createIconSpan(skipIcon);
     const advanceOneStepButton = this.createButton(
       advanceOneStepButtonIconSpan,
@@ -205,10 +244,26 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     controlHandler.attachEnable(() => {
       advanceOneStepButton.disabled = false;
     });
+    advanceOneStepButton.addEventListener('click', () => {
+      controlHandler.disable();
+      startPauseButton.reset();
+      simulationSpooler
+        .advanceOneStep()
+        .then(() => {
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
+    });
     return advanceOneStepButton;
   }
 
-  private createResetButton(controlHandler: ControlHandler) {
+  private createResetButton(
+    controlHandler: Handler,
+    simulationSpooler: SimulationSpooler,
+    startPauseButton: StartPauseButton
+  ) {
     const resetIconSpan = this.createIconSpan(resetIcon);
     const resetButton = this.createButton(resetIconSpan, ['simplay-button']);
     tippy(resetButton, {
@@ -223,6 +278,18 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
     });
     controlHandler.attachEnable(() => {
       resetButton.disabled = false;
+    });
+    resetButton.addEventListener('click', () => {
+      controlHandler.disable();
+      startPauseButton.reset();
+      simulationSpooler
+        .reset()
+        .then(() => {
+          controlHandler.enable();
+        })
+        .catch(() => {
+          controlHandler.enable();
+        });
     });
     return resetButton;
   }

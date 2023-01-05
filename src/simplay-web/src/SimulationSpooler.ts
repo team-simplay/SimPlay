@@ -24,7 +24,7 @@ export class SimulationSpooler {
   ) {
     this.simulationData = simulationDataFactory(simulationData);
     this.DOMContainer = container;
-    const app = createApp(this.DOMContainer);
+    const app = this.createApp();
     this.context = createContext(app, this.simulationData);
     createGrid(this.context);
     createEntities(this.context);
@@ -164,21 +164,21 @@ export class SimulationSpooler {
     this.speedFactor = value;
     return this.speedFactor;
   }
-}
 
-function createApp(container: HTMLElement) {
-  const app = new PIXI.Application({
-    width: container.clientWidth,
-    height: container.clientHeight,
-    backgroundColor: 0xd3d3d3,
-    antialias: true,
-    powerPreference: 'high-performance',
-  });
-  container.appendChild(app.view as HTMLCanvasElement);
+  private createApp() {
+    const app = new PIXI.Application({
+      width: this.simulationData.grid.width,
+      height: this.simulationData.grid.height,
+      backgroundColor: 0xd3d3d3,
+      antialias: true,
+      powerPreference: 'high-performance',
+    });
+    this.DOMContainer.appendChild(app.view as HTMLCanvasElement);
 
-  app.stage = new PIXILAYERS.Stage();
+    app.stage = new PIXILAYERS.Stage();
 
-  PIXI.settings.ROUND_PIXELS = true;
-  PIXI.settings.MIPMAP_TEXTURES = PIXI.MIPMAP_MODES.ON;
-  return app;
+    PIXI.settings.ROUND_PIXELS = true;
+    PIXI.settings.MIPMAP_TEXTURES = PIXI.MIPMAP_MODES.ON;
+    return app;
+  }
 }

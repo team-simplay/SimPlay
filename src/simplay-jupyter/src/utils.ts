@@ -57,14 +57,17 @@ function padWithZero(time: number) {
   return time;
 }
 
-export class ControlHandler {
-  public state = 'enabled';
+export class Handler {
+  public static ENABLED = 'enabled';
+  public static DISABLED = 'disabled';
+
+  public state = Handler.ENABLED;
   private disableCallbacks: (() => void)[] = [];
   attachDisable(callback: () => void): void {
     this.disableCallbacks.push(callback);
   }
   disable(): void {
-    this.state = 'disabled';
+    this.state = Handler.DISABLED;
     this.disableCallbacks.map(callback => {
       callback();
     });
@@ -75,7 +78,7 @@ export class ControlHandler {
     this.enableCallbacks.push(callback);
   }
   enable(): void {
-    this.state = 'enabled';
+    this.state = Handler.ENABLED;
     this.enableCallbacks.map(callback => {
       callback();
     });

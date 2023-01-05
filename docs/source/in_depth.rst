@@ -30,7 +30,7 @@ The :class:`~simplay.components.VisualResource` class inherits from the ``Resour
 The API is the same, except that the ``request`` and ``release`` methods are overridden to
 reflect for changes in the utilization and capacity of the resource, and will automatically create the
 corresponding events.
-Spezialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
+Specialized classes like ``PreemptiveResource`` and ``PriorityResource`` are also supported,
 and are inherited by the :class:`~simplay.components.VisualPreemptiveResource`
 and :class:`~simplay.components.VisualPriorityResource` respectively.
 
@@ -130,7 +130,7 @@ The API is the same, except that the ``put`` and ``get`` methods are overridden 
 reflect for changes in the contents and capacity of the store, and will automatically create the
 corresponding events.
 
-The spezialized ``FilterStore`` is also supported, and is inherited by the
+The specialized ``FilterStore`` is also supported, and is inherited by the
 :class:`~simplay.components.VisualStore` class.
 
 The code example above creates a custom class for your store, and by doing so declares
@@ -152,4 +152,4 @@ Alternatively, you can create the store without a custom class.
 
     env.run()
 
-More detailes about the functions and classes of SimPlay are available in :ref:`api`.
+More details about the functions and classes of SimPlay are available in :ref:`api`.

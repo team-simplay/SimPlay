@@ -23,6 +23,8 @@ const simulationDataSerialized = {
   grid: {
     cols: 5,
     rows: 5,
+    width: 900,
+    height: 900,
     areas: [
       {
         id: 'area1',
