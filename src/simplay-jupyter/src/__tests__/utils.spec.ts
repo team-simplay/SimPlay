@@ -1,9 +1,4 @@
-import {
-  Handler,
-  createButton,
-  createIconSpan,
-  tsToTime
-} from '../utils';
+import { Handler, createButton, createIconSpan, tsToTime } from '../utils';
 
 describe('Utils tests', () => {
   it('should create a button', () => {
