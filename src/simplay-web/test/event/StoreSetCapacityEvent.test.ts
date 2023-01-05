@@ -75,12 +75,12 @@ describe('StoreSetCapacityEvent tests', function () {
     const spooler = new SimulationSpooler(simData, container);
     await new Promise((resolve) => setTimeout(resolve, 100));
 
-    // set the content to [] to make the text predictable
+    // set the content to "" to make the text predictable
     (
       spooler.context.simulationData.entities.find(
         (entity) => entity.id === forId
       ) as StoreEntity
-    ).content = [];
+    ).content = "";
 
     event.execute(spooler.context);
     const displayObject = getEntityDisplayObjectById(

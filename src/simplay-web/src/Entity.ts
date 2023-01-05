@@ -1,6 +1,5 @@
 import { SimplayContext } from './SimplayContext';
 import * as PIXI from 'pixi.js';
-import { StoreContentItem } from './event/StoreSetContentEventArgs';
 import { InteractionLine } from './event/InteractionLine';
 
 export type EntityType =
@@ -26,7 +25,7 @@ export interface ContainerEntity extends Entity {
 export interface StoreEntity extends Entity {
   type: 'STORE';
   capacity: number;
-  content: StoreContentItem[];
+  content: string;
 }
 
 export interface ResourceEntity extends Entity {

@@ -28,8 +28,7 @@ export class StoreSetCapacityEvent extends Event {
     entityDisplayObject.informationText.text = `capacity: ${
       entity.capacity ?? 0
     }`;
-    for (const item of entity.content ?? []) {
-      entityDisplayObject.informationText.text += `\n${item.resourceId}: ${item.amount}`;
-    }
+    entityDisplayObject.informationText.text += `\n${entity.content}`;
+    entityDisplayObject.informationText.text = entityDisplayObject.informationText.text.trim();
   }
 }
