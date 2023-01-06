@@ -23,7 +23,6 @@ Bank Renege
 
 .. literalinclude:: examples/bank_renege.py
    :language: python
-   :linenos:
 
 Carwash
 --------------------------------
@@ -45,7 +44,6 @@ Carwash
 
 .. literalinclude:: examples/carwash.py
    :language: python
-   :linenos:
 
 Machine Shop
 --------------------------------
@@ -70,7 +68,6 @@ Machine Shop
 
 .. literalinclude:: examples/machine_shop.py
    :language: python
-   :linenos:
 
 Movie Renege
 --------------------------------
@@ -92,7 +89,6 @@ Movie Renege
 
 .. literalinclude:: examples/movie_renege.py
    :language: python
-   :linenos:
 
 Gas Station Refueling
 --------------------------------
@@ -138,7 +134,6 @@ Gas Station Refueling
 
 .. literalinclude:: examples/gas_station.py
    :language: python
-   :linenos:
 
 
 Process Communication
@@ -161,7 +156,6 @@ Process Communication
 
 .. literalinclude:: examples/process_communication.py
    :language: python
-   :linenos:
 
 Event Latency
 --------------------------------
@@ -189,4 +183,3 @@ Event Latency
 
 .. literalinclude:: examples/process_communication.py
    :language: python
-   :linenos:
