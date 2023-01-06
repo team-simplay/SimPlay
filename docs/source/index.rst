@@ -13,9 +13,6 @@
         `Issues
         <https://github.com/team-simplay/SimPlay/issues>`_ 
 
-.. note::
-
-   This project is under active development, expect changes and bugs.
 
 Overview
 ===================================
