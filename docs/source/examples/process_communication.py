@@ -165,7 +165,7 @@ grid = VisualGrid(1000, 1000, 3, 3)
 env.visualization_manager.set_grid(grid)
 
 # For one-to-one or many-to-one type pipes, use Store
-pipe = VisualStore(env, "pipe", "PIPE")
+pipe = VisualStore(env, "pipe", "PIPE", capacity=1000)
 pipe.is_at(1, 1)
 pipe.is_visible()
 env.process(Message_generator(env, 'Generator A', pipe).run())

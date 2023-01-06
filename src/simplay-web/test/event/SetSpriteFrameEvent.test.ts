@@ -48,7 +48,7 @@ describe('SetSpriteFrameEvent tests', function () {
     const containerMock = mock(HTMLDivElement);
     const container = instance(containerMock);
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
     const entityObject = getEntityDisplayObjectById(
       spooler.context,
@@ -63,7 +63,7 @@ describe('SetSpriteFrameEvent tests', function () {
     const containerMock = mock(HTMLDivElement);
     const container = instance(containerMock);
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     expect(() => event.execute(spooler.context)).to.throw(
       `Frame ${args.frame} does not exist for entity ${forId}`
     );

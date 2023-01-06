@@ -62,7 +62,7 @@ describe('MoveNearCellEvent tests', function () {
     when(containerMock.clientWidth).thenReturn(500);
     const container = instance(containerMock);
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
     const targetCenterX =
       spooler.context.tileWidth * 2 + spooler.context.tileWidth / 2;

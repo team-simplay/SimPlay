@@ -57,7 +57,7 @@ describe('ResourceSetUtilizationEvent tests', function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
     expect(
       (
@@ -77,7 +77,7 @@ describe('ResourceSetUtilizationEvent tests', function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     // set the capacity to 0 so the text is predictable
     (

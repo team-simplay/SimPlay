@@ -75,7 +75,7 @@ describe('SetVisibleEvent tests', async function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simulationDataSerialized, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
 
     const entity = spooler.context.entityContainer.getChildByName(forId);
@@ -90,7 +90,7 @@ describe('SetVisibleEvent tests', async function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simulationDataSerialized, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
 
     const entity = spooler.context.entityContainer.getChildByName(forId);

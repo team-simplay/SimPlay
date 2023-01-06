@@ -61,7 +61,7 @@ describe('MoveNearEvent tests', function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     getEntityDisplayObjectById(spooler.context, 'bar').container.position.set(
       2 * spooler.context.tileWidth + spooler.context.tileWidth / 2,
       2 * spooler.context.tileHeight + spooler.context.tileHeight / 2

@@ -88,8 +88,9 @@ export class SimulationSpooler {
       this.spoolTimestamp(this.currentSimTimeStamp);
 
       const executionDuration = now - Date.now();
-      if (this.currentSimTimeStamp > maxTimestamp) {
+      if (this.currentSimTimeStamp >= maxTimestamp) {
         this.stopRequested = true;
+        break;
       }
       await new Promise((resolve) =>
         setTimeout(resolve, frameDuration - executionDuration)
