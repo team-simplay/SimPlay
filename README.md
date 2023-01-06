@@ -1,6 +1,6 @@
 # SimPlay
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](./CODE_OF_CONDUCT.md)
 [![Documentation Status](https://readthedocs.org/projects/simplay/badge/?version=latest)](https://simplay.readthedocs.io/en/latest/?badge=latest)
 
 **SimPlay** is a project that aims to bring simple animation capabilities to the [SimPy](https://simpy.readthedocs.io/en/latest/) project.
