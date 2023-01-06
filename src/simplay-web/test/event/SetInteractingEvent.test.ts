@@ -58,7 +58,7 @@ describe('SetInteractingEvent tests', async function () {
     const containerMock = mock(HTMLDivElement);
     const container = instance(containerMock);
     const spooler = new SimulationSpooler(simulationDataSerialized, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     event.execute(spooler.context);
     const sourceEntity = getEntityDisplayObjectById(spooler.context, forId);

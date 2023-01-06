@@ -60,7 +60,7 @@ describe('SetPositionEvent tests', async function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simulationDataSerialized, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
     const entity = getEntityDisplayObjectById(spooler.context, forId);
     expect(entity.container.x).to.equal(

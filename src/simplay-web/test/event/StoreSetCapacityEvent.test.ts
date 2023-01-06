@@ -53,7 +53,7 @@ describe('StoreSetCapacityEvent tests', function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     event.execute(spooler.context);
 
@@ -73,7 +73,7 @@ describe('StoreSetCapacityEvent tests', function () {
     const container = instance(containerMock);
 
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     // set the content to "" to make the text predictable
     (

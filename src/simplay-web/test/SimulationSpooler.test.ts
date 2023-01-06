@@ -145,7 +145,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       expect(spooler.getTotalSteps()).to.equal(10);
     });
   });
@@ -170,7 +171,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let timesCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -178,7 +180,6 @@ describe('SimulationSpooler tests', async function () {
       ) => {
         timesCalled++;
       };
-      spooler.setSpeedFactor(100);
       await spooler.run();
       expect(timesCalled).to.equal(1);
     });
@@ -210,7 +211,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       setTimeout(() => {
         spooler.pause();
       }, 100);
@@ -262,11 +264,9 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      setTimeout(() => {
-        spooler.pause();
-      }, 100);
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
+      await spooler.pause();
       let lastExecutedStep = 0;
       spooler.addStepChangedEventListener((step) => {
         lastExecutedStep = step;
@@ -320,8 +320,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -370,7 +370,7 @@ describe('SimulationSpooler tests', async function () {
           args: {
             visible: false,
           },
-          timestamp: 10,
+          timestamp: 4,
         },
       ];
 
@@ -381,11 +381,15 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      const maxTimeStamp = spooler.getTotalSteps();
+      await new Promise((resolve) => setTimeout(resolve, 10));
       spooler.setSpeedFactor(100);
+      let lastExecutedStep = 0;
+      spooler.addStepChangedEventListener((step) => {
+        lastExecutedStep = step;
+      });
       await spooler.run();
-      // this test does not need any assertions, it's just to make sure that the
-      // spooler does not run forever
+      expect(lastExecutedStep).to.equal(maxTimeStamp);
     });
 
     it('should advance one step when requested', async () => {
@@ -415,8 +419,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let eventsWithinRangeCalled = 0;
       spooler.context.simulationData.events[0].execute = (
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -463,9 +467,9 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      let resetCalled = 0;
+      await new Promise((resolve) => setTimeout(resolve, 10));
       spooler.setSpeedFactor(100);
+      let resetCalled = 0;
       spooler.reset = async () => {
         resetCalled++;
       };
@@ -511,9 +515,9 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      // setting the speedFactor to 2 makes one step take 500ms
-      spooler.setSpeedFactor(2);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      // setting the speedFactor to 20 makes one step take 50ms
+      spooler.setSpeedFactor(20);
       let firstEventCalled = 0;
       let secondEventCalled = 0;
       let thirdEventCalled = 0;
@@ -535,16 +539,16 @@ describe('SimulationSpooler tests', async function () {
       ) => {
         thirdEventCalled++;
       };
-      // requesting the stop after 750ms should let the first two events execute
+      // requesting the stop after 75ms should let the first two events execute
       // but not the third one
       setTimeout(() => {
         spooler.reset();
-      }, 750);
+      }, 75);
       // this fire and forget is intentional, we're resetting the spooler soon
       spooler.run();
 
       // wait for the previous setTimeout to execute
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       expect(firstEventCalled).to.equal(1);
       expect(secondEventCalled).to.equal(1);
@@ -578,8 +582,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let firstEventCalled = 0;
       let secondEventCalled = 0;
       const displayEntity = spooler.context.entityDictionary.get('entity1');
@@ -646,8 +650,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let firstListenerCalled = 0;
       let firstTimestampTold = 0;
       let secondListenerCalled = 0;
@@ -694,8 +698,8 @@ describe('SimulationSpooler tests', async function () {
       const containerMock = mock(HTMLDivElement);
       const container = instance(containerMock);
       const spooler = new SimulationSpooler(simData, container);
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      spooler.setSpeedFactor(10);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      spooler.setSpeedFactor(100);
       let firstListenerCalled = 0;
       let firstTimestampTold = 0;
       let secondListenerCalled = 0;

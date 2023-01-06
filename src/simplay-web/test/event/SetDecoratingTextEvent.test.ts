@@ -48,7 +48,7 @@ describe('SetDecoratingTextEvent tests', function () {
     const containerMock = mock(HTMLDivElement);
     const container = instance(containerMock);
     const spooler = new SimulationSpooler(simData, container);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     event.execute(spooler.context);
     const displayObject = getEntityDisplayObjectById(spooler.context, forId);
     expect(displayObject.decoratingText.text).to.equal(text);
