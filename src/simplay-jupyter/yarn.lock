@@ -8798,10 +8798,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.7:
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simplay-web@0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/simplay-web/-/simplay-web-0.3.4.tgz#ec24ee8c6f0e58720657ae78301b4503cbcd365e"
-  integrity sha512-E0gbE3Csb/m4/hljRYuMkI09t+dalKR3XnxWM8W5kT8MtZTQVfdqYRvrhuBOenWoVOTNDeqYzKFueG33Nc+QsQ==
+simplay-web@0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/simplay-web/-/simplay-web-0.3.5.tgz#061968dd2b4054a06bb356c53054699e892d2c68"
+  integrity sha512-PwxXrcUzKTmpZ7plqDdjC/bqIJfugHxsd/6YggLCLSrCxkEE3t4JSOwshinilv4AW6PiwiF/c3jukDs0lL11HQ==
   dependencies:
     "@pixi/layers" "2.0.0"
     pixi.js "7.0.4"

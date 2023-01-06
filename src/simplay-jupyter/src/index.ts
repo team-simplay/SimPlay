@@ -99,9 +99,7 @@ export class RenderSimplay extends Widget implements IRenderMime.IRenderer {
 
     simulationSpooler.addStepChangedEventListener(ts => {
       stepInfo.currentStep = ts;
-      if (controlHandler.state === Handler.ENABLED) {
-        stepSlider.value = ts;
-      }
+      stepSlider.value = ts;
     });
 
     // Changing the order of the append calls affects the actual order in the UI.
