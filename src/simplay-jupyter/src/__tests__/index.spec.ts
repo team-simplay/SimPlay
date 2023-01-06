@@ -58,10 +58,10 @@ describe('RenderSimplay tests', () => {
         .getElementsByClassName('simplay-controls')
         .item(1) as HTMLDivElement;
       expect(SimulationSpooler).toHaveBeenCalled();
-      // expect the buttons play, reset, speed and skip to be around
+      // expect the buttons play, reset, speed, skip and stepInfo to be around
       expect(
         controlsContainer.getElementsByClassName('simplay-button').length
-      ).toBe(4);
+      ).toBe(5);
       expect(
         controlsContainer.querySelector('#simplay-step-info')
       ).toBeDefined();
