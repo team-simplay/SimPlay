@@ -57,6 +57,7 @@ export class StartPauseButton {
   public reset(): void {
     this.iconSpan.innerHTML = this.playIcon;
     this.tooltip.setContent(StartPauseButton.TOOLTIP_PLAY);
+    this.button.setAttribute('aria-label', 'Play');
     this._playing = false;
   }
 }

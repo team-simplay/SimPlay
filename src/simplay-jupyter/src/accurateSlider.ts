@@ -172,6 +172,7 @@ export class AccurateSlider {
     root.style.cursor = 'pointer';
     root.style.paddingLeft = `${AccurateSlider.PADDING}px`;
     root.style.paddingRight = `${AccurateSlider.PADDING}px`;
+    root.setAttribute('aria-hidden', 'true');
     return root;
   }
 

@@ -7,7 +7,7 @@ export class StepInfo {
   private mode: string;
   private _formatValueDelegate: (value: number) => string = (value: number) =>
     Math.round(value).toString();
-  private element: HTMLParagraphElement;
+  private element: HTMLButtonElement;
   private modeListeners: ((mode: string) => void)[] = [];
 
   get formatValueDelegate(): (value: number) => string {
@@ -39,7 +39,7 @@ export class StepInfo {
   ) {
     this.mode = StepInfo.STEP_MODE;
 
-    this.element = document.createElement('p') as HTMLParagraphElement;
+    this.element = document.createElement('button') as HTMLButtonElement;
     this.element.id = id;
     this.element.addEventListener('click', () => {
       if (this.mode === StepInfo.TIME_MODE) {
@@ -53,10 +53,17 @@ export class StepInfo {
   }
 
   private updateStepDisplay(): void {
-    this.element.innerHTML = this.buildElementContent();
+    this.element.innerHTML = this.buildParagraphElementContent();
+    this.element.setAttribute('aria-label', this.buildAriaLabel());
   }
 
-  private buildElementContent() {
+  private buildAriaLabel(): string {
+    return `Current position in the simulation: ${this.formatValueDelegate(
+      this.currentStep
+    )} of ${this.formatValueDelegate(this.totalSteps)}`;
+  }
+
+  private buildParagraphElementContent() {
     const current = this.formatValueDelegate(this.currentStep);
     const total = this.formatValueDelegate(this.totalSteps);
     return `${current} / ${total}`;
@@ -83,11 +90,16 @@ export class StepInfo {
     }
   }
 
-  public render(): HTMLParagraphElement {
+  public render(classList?: [string]): HTMLButtonElement {
     this.element.style.cursor = 'pointer';
     this.element.style.flexGrow = '0';
     this.element.style.textAlign = 'center';
     this.element.style.alignSelf = 'center';
+    if (classList) {
+      for (const className of classList) {
+        this.element.classList.add(className);
+      }
+    }
     return this.element;
   }
 }
