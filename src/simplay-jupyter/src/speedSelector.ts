@@ -39,7 +39,6 @@ export class SpeedSelector {
     const button = createButton(buttonSpan, ['simplay-button']);
     button.setAttribute('aria-label', 'Select speed');
     button.setAttribute('aria-haspopup', 'true');
-    button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-controls', 'speedslider');
     button.setAttribute('aria-owns', 'speedslider');
     tippy(button, {
