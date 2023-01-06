@@ -90,13 +90,15 @@ export class StepInfo {
     }
   }
 
-  public render(classList: [string]): HTMLButtonElement {
+  public render(classList?: [string]): HTMLButtonElement {
     this.element.style.cursor = 'pointer';
     this.element.style.flexGrow = '0';
     this.element.style.textAlign = 'center';
     this.element.style.alignSelf = 'center';
-    for (const className of classList) {
-      this.element.classList.add(className);
+    if (classList) {
+      for (const className of classList) {
+        this.element.classList.add(className);
+      }
     }
     return this.element;
   }
