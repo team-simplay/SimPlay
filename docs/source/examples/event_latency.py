@@ -31,7 +31,7 @@ class Cable(VisualStore):
     """This class represents the propagation through a cable."""
 
     def __init__(self, env, delay):
-        super().__init__(env, "Cable", "CABLE")
+        super().__init__(env, "Cable", "CABLE", capacity=1000)
         self.delay = delay
         self.is_at(1, 0)
         self.number_of_messages_in_cable = 0
