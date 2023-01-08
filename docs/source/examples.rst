@@ -181,5 +181,5 @@ Event Latency
 
    `Email Icons created by IconMark - Flaticon <https://www.flaticon.com/free-icons/email>`_
 
-.. literalinclude:: examples/process_communication.py
+.. literalinclude:: examples/event_latency.py
    :language: python
