@@ -40,7 +40,7 @@ Alternatively, you can create the resource without a custom class.
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualResource, BasicVisualUtil, ResourceVisualUtil
+    from simplay import VisualEnvironment, VisualResource
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
@@ -89,7 +89,6 @@ Alternatively, you can create the container without a custom class.
 .. code-block:: python
 
     from simplay import VisualEnvironment, VisualContainer
-    from simplay import BasicVisualUtil, ContainerVisualUtil
 
     env = VisualEnvironment()
     grid = VisualGrid(1000, 1000, 10, 10)
