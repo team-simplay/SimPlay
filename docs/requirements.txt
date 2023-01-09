@@ -1,3 +1,4 @@
 jsons
 simpy
 sphinx_rtd_theme
+sphinxcontrib-jquery
