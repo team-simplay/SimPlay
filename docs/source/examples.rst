@@ -112,25 +112,37 @@ Gas Station Refueling
       :width: 100px
       :align: center
    
+   `Adapted from Gas Tank icon created by Freepik - Flaticon <https://www.flaticon.com/free-icons/gas-tank_4230926>`_
+   
    .. image:: examples/gas_station_assets/pump_025.png
       :width: 100px
       :align: center
+   
+   `Adapted from Gas Tank icon created by Freepik - Flaticon <https://www.flaticon.com/free-icons/gas-tank_4230926>`_
    
    .. image:: examples/gas_station_assets/pump_050.png
       :width: 100px
       :align: center
    
+   `Adapted from Gas Tank icon created by Freepik - Flaticon <https://www.flaticon.com/free-icons/gas-tank_4230926>`_
+   
    .. image:: examples/gas_station_assets/pump_075.png
       :width: 100px
       :align: center
+   
+   `Adapted from Gas Tank icon created by Freepik - Flaticon <https://www.flaticon.com/free-icons/gas-tank_4230926>`_
    
    .. image:: examples/gas_station_assets/pump_100.png
       :width: 100px
       :align: center
    
+   `Adapted from Gas Tank icon created by Freepik - Flaticon <https://www.flaticon.com/free-icons/gas-tank_4230926>`_
+   
    .. image:: examples/gas_station_assets/truck.png
       :width: 100px
       :align: center
+   
+   `Truck icon created by iconpacks.net - <https://www.iconpacks.net/free-icon/truck-1058.html>`_
 
 .. literalinclude:: examples/gas_station.py
    :language: python
