@@ -137,7 +137,7 @@ The following example shows how to set the position of a component:
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualProcess, VisualComponent, BasicVisualUtil
+    from simplay import VisualEnvironment, VisualProcess, VisualComponent
 
     class MyProcess(VisualProcess):
         def __init__(self, env, id):
@@ -219,7 +219,7 @@ Once the installation is complete, start a new notebook and import the ``simplay
 
 .. code-block:: python
 
-    from simplay import VisualEnvironment, VisualGrid, BasicVisualUtil
+    from simplay import VisualEnvironment, VisualGrid
 
     env = VisualEnvironment()
     # create a grid
