@@ -281,19 +281,6 @@ class TestVisualizationManager:
         self.manager.add_event(event)
         assert event in self.manager.events
 
-    def test_add_event_order(self):
-        self.reset()
-        comp = simplay.VisualComponent(
-            self.env, "test", ComponentType.RESOURCE, "", 0)
-        event1 = simplay.VisualEvent(
-            comp.id, 1, EventAction.MOVE_NEAR_CELL, test="test")
-        event2 = simplay.VisualEvent(
-            comp.id, 0, EventAction.MOVE_NEAR_CELL, test="test")
-        self.manager.add_event(event1)
-        self.manager.add_event(event2)
-        assert self.manager.events[0] == event2
-        assert self.manager.events[1] == event1
-
     def test_register_visual(self):
         self.reset()
         self.manager.register_visual("test", SAMPLE_IMG_PATH)

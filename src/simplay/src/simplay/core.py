@@ -297,7 +297,6 @@ class VisualizationManager:
         :param event: The event to add.
         """
         self.events.append(event)
-        self.events.sort(key=lambda x: x.timestamp)
 
     def register_visual(self, id: str, path: str):
         """
